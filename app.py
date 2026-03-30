@@ -3,15 +3,18 @@ import yfinance as yf
 import plotly.graph_objects as go
 from datetime import date
 
-st.set_page_config(page_title="Exec Comp Optimizer", layout="centered", page_icon="🚀")
+st.set_page_config(page_title="Exec Comp Optimizer | Forecast Capital Management", layout="centered", page_icon="🚀")
+
+# Display Logo at the top
+st.image("https://i.imgur.com/PLACEHOLDER.png", width=180)  # ← Replace this URL with your actual logo link later
 
 st.title("🚀 Exec Comp Optimizer")
-st.markdown("### Stock Options & RSU Decision Tool for Executives")
+st.markdown("### Stock Options & RSU Decision Tool by **Forecast Capital Management**")
 
 st.info("💡 This tool provides illustrative calculations. State taxes may apply depending on your residence. Always consult your CPA or financial advisor.")
 
 # ====================== LEAD CAPTURE ======================
-st.sidebar.header("🔓 Unlock Deeper Analysis")
+st.sidebar.header("🔓 Unlock Deeper Analysis & Action Plan")
 with st.sidebar.form("lead_form"):
     name = st.text_input("Your first name", placeholder="Jane")
     email = st.text_input("Work email", placeholder="jane@yourcompany.com")
@@ -23,7 +26,7 @@ with st.sidebar.form("lead_form"):
         st.success(f"Thanks, {name or 'there'}! Deeper analysis unlocked.")
 
 if "lead_captured" not in st.session_state:
-    st.info("💡 Complete the quick form in the sidebar to unlock the full personalized action plan, hold vs sell scenarios, and next-step guidance.")
+    st.info("💡 Enter your name and email in the sidebar to unlock the full personalized action plan, hold vs sell scenarios, and next-step guidance.")
 
 # ====================== MAIN TOOL ======================
 st.subheader("Enter your grant details")
@@ -82,7 +85,7 @@ if ticker:
 if not price:
     price = 150.0
 
-# Calculations
+# Calculations (same as before)
 gross_value = price * total_shares
 intrinsic_value = max(0, price - strike) * total_shares
 vesting_gross = price * shares_vesting
@@ -124,7 +127,7 @@ else:
 
 vesting_concentration = (vesting_gross / net_worth * 100) if net_worth > 0 else 0
 
-# ====================== RESULTS (Always Visible) ======================
+# ====================== RESULTS ======================
 st.subheader("📊 Your Results")
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Current Price", f"${price:,.2f}")
@@ -143,7 +146,7 @@ if vesting_concentration > 5:
 
 st.markdown(f"**Risk Level**: <span style='color:{risk_color}'>{risk_text}</span>", unsafe_allow_html=True)
 
-# Growth Chart (Always Visible)
+# Growth Chart
 st.subheader("What if the stock price grows in the next year?")
 growth_rates = [0.0, 0.05, 0.10, 0.15, 0.20]
 future_net = []
@@ -160,11 +163,10 @@ fig.add_trace(go.Bar(x=[f"{int(r*100)}%" for r in growth_rates], y=future_net, m
 fig.update_layout(title="Projected Net After-Tax Value in 1 Year", xaxis_title="Annual Growth Rate", yaxis_title="Net Value ($)", template="plotly_white", height=400)
 st.plotly_chart(fig, use_container_width=True)
 
-# ====================== DEEPER ANALYSIS (Unlocked after email) ======================
+# ====================== DEEPER ANALYSIS (Unlocked) ======================
 if "lead_captured" in st.session_state:
     st.subheader("🔓 Deeper Personalized Analysis")
-    
-    st.write(f"**Hi {st.session_state['user_name']},** here’s more detailed guidance based on your inputs:")
+    st.write(f"**Hi {st.session_state['user_name']},** here’s more detailed guidance based on your situation:")
 
     # Hold vs Sell Scenario
     st.write("**Hold vs Sell Post-Vesting Scenario**")
@@ -173,28 +175,37 @@ if "lead_captured" in st.session_state:
 
     col_a, col_b = st.columns(2)
     with col_a:
-        st.metric("If Sell Immediately After Vesting", f"${sell_after_tax:,.0f} (after est. tax)")
+        st.metric("Sell Immediately After Vesting (est. after tax)", f"${sell_after_tax:,.0f}")
     with col_b:
-        st.metric("If Hold the Vested Shares", f"${hold_value:,.0f}")
+        st.metric("Hold the Vested Shares", f"${hold_value:,.0f}")
 
     # Post-vesting concentration
     post_vesting_conc = ((position_value + vesting_gross) / net_worth * 100) if net_worth > 0 else 0
-    st.write(f"**Post-Vesting Concentration Projection**: {post_vesting_conc:.1f}% of your investable assets")
+    st.metric("Projected Post-Vesting Concentration", f"{post_vesting_conc:.1f}%")
 
     # Actionable Next Steps
-    st.write("**Actionable Next Steps**")
+    st.write("**Recommended Next Steps**")
     steps = [
         "Review these numbers with your CPA before the vesting date",
-        "Consider a sell-to-cover strategy to cover taxes without selling everything",
+        "Consider a sell-to-cover strategy to pay taxes without selling all shares",
         "Evaluate diversification options if concentration exceeds 15%",
-        "Model different scenarios if you have multiple grants"
+        "Model different scenarios if you have multiple grants or complex tax situations"
     ]
     for step in steps:
         st.write(f"• {step}")
 
-    st.success("✅ Your full analysis is now unlocked. Feel free to screenshot or bookmark this page.")
+    # Book a Call Button
+    st.markdown("---")
+    st.markdown("### Ready to create your personalized executive compensation strategy?")
+    col_btn1, col_btn2 = st.columns([1, 1])
+    with col_btn1:
+        st.link_button("📅 Book a Strategy Call", "https://www.forecastcapitalmanagement.com/contact", use_container_width=True)
+    with col_btn2:
+        st.link_button("🌐 Visit Our Website", "https://www.forecastcapitalmanagement.com", use_container_width=True)
+
+    st.success("✅ Your deeper analysis is unlocked. Feel free to screenshot or save this page.")
 
 else:
     st.info("🔓 Unlock the deeper analysis section (Hold vs Sell scenarios, post-vesting projections, and actionable steps) by entering your details in the sidebar.")
 
-st.caption("⚠️ Illustrative only. Not financial, tax, or investment advice. Consult your professional advisors.")
+st.caption("Forecast Capital Management • www.forecastcapitalmanagement.com • Not financial, tax, or investment advice.")
