@@ -2,9 +2,6 @@ import streamlit as st
 import yfinance as yf
 import plotly.graph_objects as go
 from datetime import date
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-import io
 
 st.set_page_config(page_title="Exec Comp Optimizer", layout="centered", page_icon="🚀")
 
@@ -13,20 +10,20 @@ st.markdown("### Stock Options & RSU Decision Tool for Executives")
 
 st.info("💡 This tool provides illustrative calculations. State taxes may apply depending on your residence. Always consult your CPA or financial advisor.")
 
-# ====================== LEAD CAPTURE (Marketing Funnel) ======================
-st.sidebar.header("👋 Get Your Free Personalized PDF Report")
+# ====================== LEAD CAPTURE ======================
+st.sidebar.header("🔓 Unlock Deeper Analysis")
 with st.sidebar.form("lead_form"):
     name = st.text_input("Your first name", placeholder="Jane")
     email = st.text_input("Work email", placeholder="jane@yourcompany.com")
-    submitted = st.form_submit_button("Unlock Full Report + PDF")
+    submitted = st.form_submit_button("Unlock Full Personalized Action Plan")
     if submitted and email:
         st.session_state["lead_captured"] = True
         st.session_state["user_name"] = name or "Executive"
         st.session_state["user_email"] = email
-        st.success(f"Thanks, {name or 'there'}! PDF unlocked.")
+        st.success(f"Thanks, {name or 'there'}! Deeper analysis unlocked.")
 
 if "lead_captured" not in st.session_state:
-    st.info("💡 Complete the form in the sidebar to unlock your personalized PDF report (includes vesting tax estimate, risk summary, and next-step guidance).")
+    st.info("💡 Complete the quick form in the sidebar to unlock the full personalized action plan, hold vs sell scenarios, and next-step guidance.")
 
 # ====================== MAIN TOOL ======================
 st.subheader("Enter your grant details")
@@ -106,92 +103,98 @@ else:
 days_to_vesting = (next_vesting_date - date.today()).days
 months_to_vesting = max(0, days_to_vesting // 30)
 if months_to_vesting <= 3:
-    timing_advice = f"With {shares_vesting:,} shares vesting in the next {months_to_vesting} months, plan for the immediate tax impact and consider a post-vesting diversification strategy."
+    timing_advice = f"With {shares_vesting:,} shares vesting in the next {months_to_vesting} months, plan for the immediate tax impact."
 elif months_to_vesting <= 12:
-    timing_advice = f"{shares_vesting:,} shares vesting in about {months_to_vesting} months gives you time to prepare a tax-efficient sell plan."
+    timing_advice = f"{shares_vesting:,} shares vesting in about {months_to_vesting} months gives you planning time."
 else:
-    timing_advice = "Vesting is further out — good opportunity to model multiple scenarios in advance."
+    timing_advice = "Vesting is further out — good opportunity to model scenarios."
 
 recommendation = f"{base_rec} {timing_advice}"
 
 # Concentration
 position_value = gross_value if option_type == "RSU" else (intrinsic_value + total_shares * strike)
 concentration_pct = (position_value / net_worth * 100) if net_worth > 0 else 0
+
 if concentration_pct < 10:
-    risk_color = "green"; risk_text = "Low concentration"
+    risk_color = "green"; risk_text = "Low"
 elif concentration_pct < 20:
-    risk_color = "orange"; risk_text = "Moderate concentration"
+    risk_color = "orange"; risk_text = "Moderate"
 else:
-    risk_color = "red"; risk_text = "High concentration — consider diversifying"
+    risk_color = "red"; risk_text = "High — consider diversifying"
 
 vesting_concentration = (vesting_gross / net_worth * 100) if net_worth > 0 else 0
 
-# ====================== RESULTS ======================
+# ====================== RESULTS (Always Visible) ======================
 st.subheader("📊 Your Results")
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Current Price", f"${price:,.2f}")
 c2.metric("Total Gross Value", f"${gross_value:,.0f}")
-c3.metric("**Net After-Tax**", f"${net_value:,.0f}")
+c3.metric("**Net After-Tax Value**", f"${net_value:,.0f}")
 c4.metric("Est. Tax on Next Vesting", f"${vesting_tax:,.0f}")
 
 st.info(f"**Tax Note**: {tax_note}")
 st.info(f"**Recommendation**: {recommendation}")
 
 st.subheader("⚠️ Concentration Risk")
-st.markdown(f"**Full Position**: <span style='color:{risk_color}; font-weight:bold'>{concentration_pct:.1f}%</span> of your investable assets", unsafe_allow_html=True)
+st.markdown(f"**Full Position**: <span style='color:{risk_color}; font-weight:bold'>{concentration_pct:.1f}%</span> of investable assets", unsafe_allow_html=True)
 st.progress(concentration_pct / 100)
 if vesting_concentration > 5:
-    st.warning(f"⚠️ Next vesting could add ~{vesting_concentration:.1f}% concentration impact.")
+    st.warning(f"⚠️ Next vesting could add ~{vesting_concentration:.1f}% concentration.")
+
 st.markdown(f"**Risk Level**: <span style='color:{risk_color}'>{risk_text}</span>", unsafe_allow_html=True)
 
-# Growth Chart
+# Growth Chart (Always Visible)
 st.subheader("What if the stock price grows in the next year?")
 growth_rates = [0.0, 0.05, 0.10, 0.15, 0.20]
-future_net_values = []
+future_net = []
 for rate in growth_rates:
     fp = price * (1 + rate)
     if option_type == "RSU":
-        future_net_values.append(fp * total_shares * (1 - federal_tax_rate/100))
+        future_net.append(fp * total_shares * (1 - federal_tax_rate/100))
     else:
         fi = max(0, fp - strike) * total_shares
-        future_net_values.append(fi * (1 - federal_tax_rate/100) + total_shares * strike)
+        future_net.append(fi * (1 - federal_tax_rate/100) + total_shares * strike)
 
 fig = go.Figure()
-fig.add_trace(go.Bar(x=[f"{int(r*100)}%" for r in growth_rates], y=future_net_values, marker_color="#00cc96"))
+fig.add_trace(go.Bar(x=[f"{int(r*100)}%" for r in growth_rates], y=future_net, marker_color="#00cc96"))
 fig.update_layout(title="Projected Net After-Tax Value in 1 Year", xaxis_title="Annual Growth Rate", yaxis_title="Net Value ($)", template="plotly_white", height=400)
 st.plotly_chart(fig, use_container_width=True)
 
-# ====================== PDF DOWNLOAD (only after email) ======================
+# ====================== DEEPER ANALYSIS (Unlocked after email) ======================
 if "lead_captured" in st.session_state:
-    if st.button("📄 Download My Professional PDF Report"):
-        buffer = io.BytesIO()
-        p = canvas.Canvas(buffer, pagesize=letter)
-        p.setFont("Helvetica-Bold", 18)
-        p.drawString(50, 750, f"Exec Comp Optimizer Report — {date.today().strftime('%B %d, %Y')}")
-        p.setFont("Helvetica", 12)
-        y = 700
-        p.drawString(50, y, f"Executive: {st.session_state['user_name']}")
-        p.drawString(50, y-20, f"Company Ticker: {ticker}")
-        p.drawString(50, y-40, f"Type: {option_type} • Total Shares: {total_shares:,}")
-        p.drawString(50, y-60, f"Current Price: ${price:,.2f} → Gross Value: ${gross_value:,.0f}")
-        p.drawString(50, y-80, f"Net After-Tax Value: ${net_value:,.0f}")
-        p.drawString(50, y-100, f"Est. Tax on Next Vesting ({shares_vesting:,} shares): ${vesting_tax:,.0f}")
-        p.drawString(50, y-120, f"Concentration Risk: {concentration_pct:.1f}% ({risk_text})")
-        p.drawString(50, y-160, "Recommendation:")
-        p.drawString(70, y-180, recommendation[:200] + "..." if len(recommendation) > 200 else recommendation)
-        p.drawString(50, y-220, "Next Steps:")
-        p.drawString(70, y-240, "• Consider a post-vesting sell-to-cover or diversification plan")
-        p.drawString(70, y-260, "• Review with your CPA for AMT / long-term capital gains strategy")
-        p.drawString(50, y-300, "Ready to optimize your executive compensation plan?")
-        p.drawString(70, y-320, "Book a 30-minute strategy call with Forecast Capital Management")
-        p.drawString(70, y-340, "→ https://calendly.com/forecastcap (or reply to this report)")
-        p.save()
-        buffer.seek(0)
-        st.download_button(
-            label="⬇️ Download PDF Now",
-            data=buffer,
-            file_name=f"Exec_Comp_Report_{ticker}.pdf",
-            mime="application/pdf"
-        )
+    st.subheader("🔓 Deeper Personalized Analysis")
+    
+    st.write(f"**Hi {st.session_state['user_name']},** here’s more detailed guidance based on your inputs:")
 
-st.caption("⚠️ Illustrative only. Not financial, tax, or investment advice.")
+    # Hold vs Sell Scenario
+    st.write("**Hold vs Sell Post-Vesting Scenario**")
+    sell_after_tax = vesting_gross * (1 - federal_tax_rate/100) if option_type == "RSU" else (vesting_intrinsic * (1 - federal_tax_rate/100))
+    hold_value = vesting_gross if option_type == "RSU" else vesting_intrinsic + shares_vesting * strike
+
+    col_a, col_b = st.columns(2)
+    with col_a:
+        st.metric("If Sell Immediately After Vesting", f"${sell_after_tax:,.0f} (after est. tax)")
+    with col_b:
+        st.metric("If Hold the Vested Shares", f"${hold_value:,.0f}")
+
+    # Post-vesting concentration
+    post_vesting_conc = ((position_value + vesting_gross) / net_worth * 100) if net_worth > 0 else 0
+    st.write(f"**Post-Vesting Concentration Projection**: {post_vesting_conc:.1f}% of your investable assets")
+
+    # Actionable Next Steps
+    st.write("**Actionable Next Steps**")
+    steps = [
+        "Review these numbers with your CPA before the vesting date",
+        "Consider a sell-to-cover strategy to cover taxes without selling everything",
+        "Evaluate diversification options if concentration exceeds 15%",
+        "Model different scenarios if you have multiple grants"
+    ]
+    for step in steps:
+        st.write(f"• {step}")
+
+    st.success("✅ Your full analysis is now unlocked. Feel free to screenshot or bookmark this page.")
+
+else:
+    st.info("🔓 Unlock the deeper analysis section (Hold vs Sell scenarios, post-vesting projections, and actionable steps) by entering your details in the sidebar.")
+
+st.caption("⚠️ Illustrative only. Not financial, tax, or investment advice. Consult your professional advisors.")
