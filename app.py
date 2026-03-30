@@ -9,7 +9,7 @@ st.markdown("### Stock Options & RSU Decision Tool for Executives")
 
 st.info("💡 This tool provides illustrative calculations. State taxes may apply depending on your residence. Always consult your CPA or financial advisor.")
 
-# Input section
+# ====================== INPUTS ======================
 st.subheader("Enter your grant details")
 
 col1, col2 = st.columns(2)
@@ -21,6 +21,17 @@ with col1:
 with col2:
     strike = st.number_input("Strike Price per Share ($)", min_value=0.0, value=45.0, step=0.01)
     tax_rate = st.slider("Your Estimated Marginal Federal Tax Rate (%)", 22, 37, 32)
+
+# New: Concentration Risk Input
+st.subheader("Concentration Risk Assessment")
+net_worth = st.number_input(
+    "Rough estimate of your total investable assets (excluding primary home) ($)",
+    min_value=100000,
+    value=2000000,
+    step=100000,
+    format="%d",
+    help="This helps estimate how concentrated you are in this single stock."
+)
 
 # Fetch current price
 price = None
@@ -43,23 +54,49 @@ intrinsic_value = max(0, price - strike) * shares
 if option_type == "RSU":
     tax_due = gross_value * (tax_rate / 100)
     net_value = gross_value - tax_due
-    recommendation = "RSUs are taxed as ordinary income upon vesting. Many executives sell a portion immediately to diversify and manage concentration risk."
+    recommendation = "RSUs are taxed as ordinary income upon vesting. Consider selling a portion to reduce concentration risk."
 else:
     tax_due = intrinsic_value * (tax_rate / 100)
     net_value = intrinsic_value - tax_due + (shares * strike)
     if option_type == "ISO":
-        recommendation = "ISOs have special tax rules. Consider holding for long-term capital gains treatment (1 year after exercise + 2 years after grant). AMT may apply in the year of exercise."
+        recommendation = "ISOs offer potential long-term capital gains treatment if held properly. AMT may apply in the year of exercise."
     else:
-        recommendation = "NSOs are taxed as ordinary income on the spread at exercise. Exercising and selling can provide immediate liquidity but triggers tax now."
+        recommendation = "NSOs trigger ordinary income tax on the spread at exercise. This can provide liquidity but increases your tax bill now."
 
-# Display results
+# Concentration Risk Calculation
+position_value = gross_value if option_type == "RSU" else (intrinsic_value + shares * strike)
+concentration_pct = (position_value / net_worth * 100) if net_worth > 0 else 0
+
+# Color for risk level
+if concentration_pct < 10:
+    risk_color = "green"
+    risk_text = "Low concentration"
+elif concentration_pct < 20:
+    risk_color = "orange"
+    risk_text = "Moderate concentration"
+else:
+    risk_color = "red"
+    risk_text = "High concentration — consider diversifying"
+
+# ====================== RESULTS ======================
 st.subheader("📊 Your Results")
 c1, c2, c3 = st.columns(3)
 c1.metric("Current Share Price", f"${price:,.2f}")
-c2.metric("Gross Value", f"${gross_value:,.0f}")
-c3.metric("**Net After-Tax Value**", f"${net_value:,.0f}", delta=f"-{tax_rate}% federal tax")
+c2.metric("Gross Position Value", f"${gross_value:,.0f}")
+c3.metric("**Net After-Tax Value**", f"${net_value:,.0f}", delta=f"-{tax_rate}% federal")
 
 st.info(f"**Recommendation**: {recommendation}")
+
+# Concentration Risk Display
+st.subheader("⚠️ Concentration Risk")
+st.markdown(f"**This position represents** <span style='color:{risk_color}; font-weight:bold'>{concentration_pct:.1f}%</span> **of your investable assets**", unsafe_allow_html=True)
+
+st.progress(concentration_pct / 100)
+
+st.markdown(f"**Risk Level**: <span style='color:{risk_color}'>{risk_text}</span>", unsafe_allow_html=True)
+
+if concentration_pct >= 15:
+    st.warning("🔴 Many financial planners recommend keeping any single stock position under 10–15% of your total investable assets to manage risk.")
 
 # Growth Scenario Chart
 st.subheader("What if the stock price grows in the next year?")
@@ -91,4 +128,4 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-st.caption("⚠️ Illustrative only. Not financial, tax, or investment advice. Tax rules are complex and can change. Consult your professional advisors before making decisions.")
+st.caption("⚠️ Illustrative only. Not financial, tax, or investment advice. Tax rules are complex. Consult your CPA and financial advisor before making any decisions.")
