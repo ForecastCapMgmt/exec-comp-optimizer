@@ -20,9 +20,14 @@ with col1:
 
 with col2:
     strike = st.number_input("Strike Price per Share ($)", min_value=0.0, value=45.0, step=0.01)
-    tax_rate = st.slider("Your Estimated Marginal Federal Tax Rate (%)", 22, 37, 32)
+    federal_tax_rate = st.slider("Your Estimated Marginal Federal Tax Rate (%)", 22, 37, 32)
 
-# New: Concentration Risk Input
+# AMT input - only show for ISO
+amt_rate = 0
+if option_type == "ISO":
+    amt_rate = st.slider("Estimated AMT Rate (%)", 0, 28, 26)
+
+# Concentration Risk Input
 st.subheader("Concentration Risk Assessment")
 net_worth = st.number_input(
     "Rough estimate of your total investable assets (excluding primary home) ($)",
@@ -47,27 +52,34 @@ if ticker:
 if not price:
     price = 150.0
 
-# Calculations
+# ====================== CALCULATIONS ======================
 gross_value = price * shares
 intrinsic_value = max(0, price - strike) * shares
 
 if option_type == "RSU":
-    tax_due = gross_value * (tax_rate / 100)
+    tax_due = gross_value * (federal_tax_rate / 100)
     net_value = gross_value - tax_due
-    recommendation = "RSUs are taxed as ordinary income upon vesting. Consider selling a portion to reduce concentration risk."
-else:
-    tax_due = intrinsic_value * (tax_rate / 100)
-    net_value = intrinsic_value - tax_due + (shares * strike)
-    if option_type == "ISO":
-        recommendation = "ISOs offer potential long-term capital gains treatment if held properly. AMT may apply in the year of exercise."
-    else:
-        recommendation = "NSOs trigger ordinary income tax on the spread at exercise. This can provide liquidity but increases your tax bill now."
+    tax_note = f"RSU: Taxed as ordinary income at vesting (${tax_due:,.0f} est. federal tax)"
+    recommendation = "RSUs are taxed as ordinary income upon vesting. Many executives sell a portion right after vesting to reduce concentration risk."
 
-# Concentration Risk Calculation
+elif option_type == "NSO":
+    tax_due = intrinsic_value * (federal_tax_rate / 100)
+    net_value = intrinsic_value - tax_due + (shares * strike)
+    tax_note = f"NSO: Ordinary income tax on spread at exercise (${tax_due:,.0f} est.)"
+    recommendation = "NSOs trigger ordinary income tax on the bargain element when exercised. This provides liquidity but creates an immediate tax liability."
+
+else:  # ISO
+    regular_tax = 0
+    amt_tax = intrinsic_value * (amt_rate / 100)
+    tax_due = amt_tax  # simplified - actual tax owed may be regular + AMT difference
+    net_value = intrinsic_value - amt_tax + (shares * strike)
+    tax_note = f"ISO: No regular income tax at exercise, but AMT on spread ≈ ${amt_tax:,.0f}"
+    recommendation = "ISOs have favorable long-term capital gains potential if you hold the shares for at least 1 year after exercise AND 2 years after the grant date. However, exercising may trigger Alternative Minimum Tax (AMT)."
+
+# Concentration Risk
 position_value = gross_value if option_type == "RSU" else (intrinsic_value + shares * strike)
 concentration_pct = (position_value / net_worth * 100) if net_worth > 0 else 0
 
-# Color for risk level
 if concentration_pct < 10:
     risk_color = "green"
     risk_text = "Low concentration"
@@ -78,25 +90,25 @@ else:
     risk_color = "red"
     risk_text = "High concentration — consider diversifying"
 
-# ====================== RESULTS ======================
+# ====================== DISPLAY ======================
 st.subheader("📊 Your Results")
 c1, c2, c3 = st.columns(3)
 c1.metric("Current Share Price", f"${price:,.2f}")
 c2.metric("Gross Position Value", f"${gross_value:,.0f}")
-c3.metric("**Net After-Tax Value**", f"${net_value:,.0f}", delta=f"-{tax_rate}% federal")
+c3.metric("**Net After-Tax Value**", f"${net_value:,.0f}", delta=f"-{federal_tax_rate}% federal")
+
+st.info(f"**Tax Note**: {tax_note}")
 
 st.info(f"**Recommendation**: {recommendation}")
 
-# Concentration Risk Display
+# Concentration Risk
 st.subheader("⚠️ Concentration Risk")
 st.markdown(f"**This position represents** <span style='color:{risk_color}; font-weight:bold'>{concentration_pct:.1f}%</span> **of your investable assets**", unsafe_allow_html=True)
-
 st.progress(concentration_pct / 100)
-
 st.markdown(f"**Risk Level**: <span style='color:{risk_color}'>{risk_text}</span>", unsafe_allow_html=True)
 
 if concentration_pct >= 15:
-    st.warning("🔴 Many financial planners recommend keeping any single stock position under 10–15% of your total investable assets to manage risk.")
+    st.warning("🔴 Many financial planners recommend keeping any single stock under 10–15% of investable assets.")
 
 # Growth Scenario Chart
 st.subheader("What if the stock price grows in the next year?")
@@ -107,10 +119,10 @@ for rate in growth_rates:
     future_price = price * (1 + rate)
     if option_type == "RSU":
         future_gross = future_price * shares
-        future_net = future_gross * (1 - tax_rate/100)
+        future_net = future_gross * (1 - federal_tax_rate/100)
     else:
         future_intrinsic = max(0, future_price - strike) * shares
-        future_net = future_intrinsic * (1 - tax_rate/100) + (shares * strike)
+        future_net = future_intrinsic * (1 - federal_tax_rate/100) + (shares * strike)
     future_net_values.append(future_net)
 
 fig = go.Figure()
@@ -128,4 +140,4 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-st.caption("⚠️ Illustrative only. Not financial, tax, or investment advice. Tax rules are complex. Consult your CPA and financial advisor before making any decisions.")
+st.caption("⚠️ Illustrative only. Not financial, tax, or investment advice. Tax rules (especially AMT and ISO qualifying dispositions) are complex. Consult your CPA and financial advisor before making decisions.")
