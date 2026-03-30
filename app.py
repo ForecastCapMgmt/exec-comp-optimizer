@@ -16,7 +16,7 @@ st.subheader("Enter your grant details")
 col1, col2 = st.columns(2)
 with col1:
     ticker = st.text_input("Stock Ticker Symbol (e.g. AAPL)", value="AAPL").upper().strip()
-    shares = st.number_input("Number of Shares / Options", min_value=100, value=5000, step=100)
+    total_shares = st.number_input("Total Shares / Options in Grant", min_value=100, value=5000, step=100)
     option_type = st.selectbox("Type of Compensation", ["RSU", "NSO", "ISO"])
 
 with col2:
@@ -28,14 +28,24 @@ amt_rate = 0
 if option_type == "ISO":
     amt_rate = st.slider("Estimated AMT Rate (%)", 0, 28, 26)
 
-# Vesting Date Input
+# Vesting Details
 st.subheader("Vesting Information")
-next_vesting_date = st.date_input(
-    "Next Major Vesting Date",
-    value=date(2026, 6, 1),  # Default ~3 months from now (March 2026)
-    min_value=date.today(),
-    help="When do the next significant number of shares/options vest?"
-)
+col_v1, col_v2 = st.columns(2)
+with col_v1:
+    next_vesting_date = st.date_input(
+        "Next Major Vesting Date",
+        value=date(2026, 6, 1),
+        min_value=date.today(),
+        help="When do the next significant number of shares/options vest?"
+    )
+with col_v2:
+    shares_vesting = st.number_input(
+        "Number of Shares Vesting on That Date",
+        min_value=0,
+        value=1250,
+        step=100,
+        help="How many shares will vest on the selected date?"
+    )
 
 # Concentration Risk Input
 st.subheader("Concentration Risk Assessment")
@@ -62,43 +72,43 @@ if not price:
     price = 150.0
 
 # ====================== CALCULATIONS ======================
-gross_value = price * shares
-intrinsic_value = max(0, price - strike) * shares
+gross_value = price * total_shares
+intrinsic_value = max(0, price - strike) * total_shares
 
-days_to_vesting = (next_vesting_date - date.today()).days
-months_to_vesting = days_to_vesting // 30
+# Vesting-specific calculations
+vesting_gross = price * shares_vesting
+vesting_intrinsic = max(0, price - strike) * shares_vesting
 
 if option_type == "RSU":
-    tax_due = gross_value * (federal_tax_rate / 100)
-    net_value = gross_value - tax_due
-    tax_note = f"RSU: Taxed as ordinary income at vesting (${tax_due:,.0f} est. federal tax)"
+    vesting_tax = vesting_gross * (federal_tax_rate / 100)
+    net_value = gross_value - (gross_value * (federal_tax_rate / 100))
+    tax_note = f"RSU: Est. tax on next vesting ≈ ${vesting_tax:,.0f}"
     base_rec = "RSUs are taxed as ordinary income upon vesting."
-
-elif option_type == "NSO":
-    tax_due = intrinsic_value * (federal_tax_rate / 100)
-    net_value = intrinsic_value - tax_due + (shares * strike)
-    tax_note = f"NSO: Ordinary income tax on spread at exercise (${tax_due:,.0f} est.)"
-    base_rec = "NSOs trigger ordinary income tax on the bargain element when exercised."
-
-else:  # ISO
-    amt_tax = intrinsic_value * (amt_rate / 100)
-    tax_due = amt_tax
-    net_value = intrinsic_value - amt_tax + (shares * strike)
-    tax_note = f"ISO: No regular income tax at exercise, but AMT on spread ≈ ${amt_tax:,.0f}"
-    base_rec = "ISOs offer long-term capital gains potential if held properly (1 year after exercise + 2 years after grant)."
-
-# Timing-based smarter recommendation
-if months_to_vesting <= 3:
-    timing_advice = f"With vesting coming in the next {months_to_vesting} months, consider building a post-vesting sell plan to manage taxes and concentration."
-elif months_to_vesting <= 12:
-    timing_advice = f"Vesting is expected in about {months_to_vesting} months. This gives you time to plan a diversification strategy around the vesting event."
 else:
-    timing_advice = "Vesting is further out. Use this time to model different exercise/sale scenarios and tax implications."
+    vesting_tax = vesting_intrinsic * (federal_tax_rate / 100) if option_type == "NSO" else vesting_intrinsic * (amt_rate / 100)
+    net_value = intrinsic_value * (1 - federal_tax_rate/100) + (total_shares * strike) if option_type != "ISO" else (vesting_intrinsic - vesting_tax) + (total_shares * strike)
+    if option_type == "ISO":
+        tax_note = f"ISO: Est. AMT on next vesting spread ≈ ${vesting_tax:,.0f}"
+        base_rec = "ISOs offer long-term capital gains potential if held properly."
+    else:
+        tax_note = f"NSO: Est. tax on next vesting spread ≈ ${vesting_tax:,.0f}"
+        base_rec = "NSOs trigger ordinary income tax on the bargain element when exercised."
+
+# Timing calculation
+days_to_vesting = (next_vesting_date - date.today()).days
+months_to_vesting = max(0, days_to_vesting // 30)
+
+if months_to_vesting <= 3:
+    timing_advice = f"With {shares_vesting:,} shares vesting in the next {months_to_vesting} months, plan for the immediate tax impact and consider a post-vesting diversification strategy."
+elif months_to_vesting <= 12:
+    timing_advice = f"{shares_vesting:,} shares vesting in about {months_to_vesting} months gives you time to prepare a tax-efficient sell plan."
+else:
+    timing_advice = "Vesting is further out — good opportunity to model multiple scenarios in advance."
 
 recommendation = f"{base_rec} {timing_advice}"
 
-# Concentration Risk
-position_value = gross_value if option_type == "RSU" else (intrinsic_value + shares * strike)
+# Concentration Risk (using full grant value for overall risk, vesting value for near-term)
+position_value = gross_value if option_type == "RSU" else (intrinsic_value + total_shares * strike)
 concentration_pct = (position_value / net_worth * 100) if net_worth > 0 else 0
 
 if concentration_pct < 10:
@@ -111,20 +121,27 @@ else:
     risk_color = "red"
     risk_text = "High concentration — consider diversifying"
 
+vesting_concentration = (vesting_gross / net_worth * 100) if net_worth > 0 else 0
+
 # ====================== DISPLAY ======================
 st.subheader("📊 Your Results")
-c1, c2, c3 = st.columns(3)
+c1, c2, c3, c4 = st.columns(4)
 c1.metric("Current Share Price", f"${price:,.2f}")
-c2.metric("Gross Position Value", f"${gross_value:,.0f}")
-c3.metric("**Net After-Tax Value**", f"${net_value:,.0f}", delta=f"-{federal_tax_rate}% federal")
+c2.metric("Total Gross Value", f"${gross_value:,.0f}")
+c3.metric("**Net After-Tax Value**", f"${net_value:,.0f}")
+c4.metric("Est. Tax on Next Vesting", f"${vesting_tax:,.0f}")
 
 st.info(f"**Tax Note**: {tax_note}")
 st.info(f"**Recommendation**: {recommendation}")
 
 # Concentration Risk
 st.subheader("⚠️ Concentration Risk")
-st.markdown(f"**This position represents** <span style='color:{risk_color}; font-weight:bold'>{concentration_pct:.1f}%</span> **of your investable assets**", unsafe_allow_html=True)
+st.markdown(f"**Full Position**: <span style='color:{risk_color}; font-weight:bold'>{concentration_pct:.1f}%</span> of your investable assets", unsafe_allow_html=True)
 st.progress(concentration_pct / 100)
+
+if vesting_concentration > 5:
+    st.warning(f"⚠️ Next vesting of {shares_vesting:,} shares could add ~{vesting_concentration:.1f}% concentration impact.")
+
 st.markdown(f"**Risk Level**: <span style='color:{risk_color}'>{risk_text}</span>", unsafe_allow_html=True)
 
 if concentration_pct >= 15:
@@ -138,11 +155,11 @@ future_net_values = []
 for rate in growth_rates:
     future_price = price * (1 + rate)
     if option_type == "RSU":
-        future_gross = future_price * shares
+        future_gross = future_price * total_shares
         future_net = future_gross * (1 - federal_tax_rate/100)
     else:
-        future_intrinsic = max(0, future_price - strike) * shares
-        future_net = future_intrinsic * (1 - federal_tax_rate/100) + (shares * strike)
+        future_intrinsic = max(0, future_price - strike) * total_shares
+        future_net = future_intrinsic * (1 - federal_tax_rate/100) + (total_shares * strike)
     future_net_values.append(future_net)
 
 fig = go.Figure()
