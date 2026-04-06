@@ -30,6 +30,7 @@ with st.sidebar.form("lead_form"):
             msg['To'] = sender_email
             msg['Subject'] = f"New Exec Comp Lead - {name or 'Executive'}"
 
+            # Fixed email body
             body = f"""
 New lead from Exec Comp Optimizer Tool:
 
@@ -44,13 +45,19 @@ Grant Details:
 - Strike Price: ${strike if 'strike' in locals() else 'Not entered'}
 - Next Vesting Date: {next_vesting_date if 'next_vesting_date' in locals() else 'Not entered'}
 - Shares Vesting: {shares_vesting if 'shares_vesting' in locals() else 'Not entered'}
+"""
 
-Concentration Risk: {concentration_pct:.1f}% if 'concentration_pct' in locals() else 'Not calculated'}
+            # Add concentration line safely
+            if 'concentration_pct' in locals():
+                body += f"Concentration Risk: {concentration_pct:.1f}%\n"
+            else:
+                body += "Concentration Risk: Not calculated\n"
 
-They unlocked the deeper analysis section.
-            """
+            body += "\nThey unlocked the deeper analysis section."
+
             msg.attach(MIMEText(body, 'plain'))
 
+            # Send email
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
             server.login(sender_email, sender_password)
@@ -123,82 +130,4 @@ if ticker:
     except:
         price = st.number_input("Manual current fair market value ($)", value=150.0, step=0.01)
 
-if not price:
-    price = 150.0
-
-# Calculations
-gross_value = price * total_shares
-intrinsic_value = max(0, price - strike) * total_shares
-vesting_gross = price * shares_vesting
-vesting_intrinsic = max(0, price - strike) * shares_vesting
-
-if option_type == "RSU":
-    vesting_tax = vesting_gross * (federal_tax_rate / 100)
-    net_value = gross_value * (1 - federal_tax_rate/100)
-    tax_note = f"RSU: Est. tax on next vesting ≈ ${vesting_tax:,.0f}"
-    base_rec = "RSUs are taxed as ordinary income upon vesting."
-else:
-    vesting_tax = vesting_intrinsic * (federal_tax_rate / 100) if option_type == "NSO" else vesting_intrinsic * (amt_rate / 100)
-    net_value = (intrinsic_value * (1 - federal_tax_rate/100)) + (total_shares * strike) if option_type != "ISO" else (vesting_intrinsic - vesting_tax) + (total_shares * strike)
-    tax_note = f"ISO: Est. AMT on next vesting spread ≈ ${vesting_tax:,.0f}" if option_type == "ISO" else f"NSO: Est. tax on next vesting spread ≈ ${vesting_tax:,.0f}"
-    base_rec = "ISOs offer long-term capital gains potential if held properly." if option_type == "ISO" else "NSOs trigger ordinary income tax on the bargain element when exercised."
-
-# Timing
-days_to_vesting = (next_vesting_date - date.today()).days
-months_to_vesting = max(0, days_to_vesting // 30)
-if months_to_vesting <= 3:
-    timing_advice = f"With {shares_vesting:,} shares vesting in the next {months_to_vesting} months, plan for the immediate tax impact."
-elif months_to_vesting <= 12:
-    timing_advice = f"{shares_vesting:,} shares vesting in about {months_to_vesting} months gives you planning time."
-else:
-    timing_advice = "Vesting is further out — good opportunity to model scenarios."
-
-recommendation = f"{base_rec} {timing_advice}"
-
-# Concentration
-position_value = gross_value if option_type == "RSU" else (intrinsic_value + total_shares * strike)
-concentration_pct = (position_value / net_worth * 100) if net_worth > 0 else 0
-
-if concentration_pct < 10:
-    risk_color = "green"; risk_text = "Low"
-elif concentration_pct < 20:
-    risk_color = "orange"; risk_text = "Moderate"
-else:
-    risk_color = "red"; risk_text = "High — consider diversifying"
-
-vesting_concentration = (vesting_gross / net_worth * 100) if net_worth > 0 else 0
-
-# ====================== RESULTS ======================
-st.subheader("📊 Your Results")
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Current Price", f"${price:,.2f}")
-c2.metric("Total Gross Value", f"${gross_value:,.0f}")
-c3.metric("**Net After-Tax Value**", f"${net_value:,.0f}")
-c4.metric("Est. Tax on Next Vesting", f"${vesting_tax:,.0f}")
-
-st.info(f"**Tax Note**: {tax_note}")
-st.info(f"**Recommendation**: {recommendation}")
-
-st.subheader("⚠️ Concentration Risk")
-st.markdown(f"**Full Position**: <span style='color:{risk_color}; font-weight:bold'>{concentration_pct:.1f}%</span> of investable assets", unsafe_allow_html=True)
-st.progress(concentration_pct / 100)
-if vesting_concentration > 5:
-    st.warning(f"⚠️ Next vesting could add ~{vesting_concentration:.1f}% concentration.")
-
-st.markdown(f"**Risk Level**: <span style='color:{risk_color}'>{risk_text}</span>", unsafe_allow_html=True)
-
-# Growth Chart
-st.subheader("What if the stock price grows in the next year?")
-growth_rates = [0.0, 0.05, 0.10, 0.15, 0.20]
-future_net = []
-for rate in growth_rates:
-    fp = price * (1 + rate)
-    if option_type == "RSU":
-        future_net.append(fp * total_shares * (1 - federal_tax_rate/100))
-    else:
-        fi = max(0, fp - strike) * total_shares
-        future_net.append(fi * (1 - federal_tax_rate/100) + total_shares * strike)
-
-fig = go.Figure()
-fig.add_trace(go.Bar(x=[f"{int(r*100)}%" for r in growth_rates], y=future_net, marker_color="#00cc96"))
-fig.update_layout(title="Projected Net After-Tax Value in 1 Year", xaxis_title="Annual Growth Rate", yaxis_title="Net Value
+if not
