@@ -21,12 +21,12 @@ with st.sidebar.form("lead_form"):
     submitted = st.form_submit_button("Unlock Full Personalized Action Plan")
     
     if submitted and email_input:
-        # Send notification email
         try:
-            # These will come from Streamlit Secrets (set up in Step 2)
+            # Load secrets
             sender_email = st.secrets["sender_email"]
             sender_password = st.secrets["sender_password"]
-            
+
+            # Send notification email
             msg = MIMEMultipart()
             msg['From'] = sender_email
             msg['To'] = sender_email
@@ -53,19 +53,18 @@ They unlocked the deeper analysis section.
             """
             msg.attach(MIMEText(body, 'plain'))
 
-            # Send email using Gmail SMTP
+            # Send the email
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
             server.login(sender_email, sender_password)
             server.send_message(msg)
             server.quit()
 
-            st.success(f"✅ Thank you, {name or 'there'}! Deeper analysis unlocked.")
+            st.success(f"✅ Thank you, {name or 'there'}! Deeper analysis unlocked. Notification sent.")
             st.session_state["lead_captured"] = True
             st.session_state["user_name"] = name or "Executive"
 
         except Exception as e:
-            # Fallback if email fails
             st.success(f"✅ Thank you, {name or 'there'}! Deeper analysis unlocked.")
             st.session_state["lead_captured"] = True
             st.session_state["user_name"] = name or "Executive"
@@ -208,7 +207,7 @@ fig.add_trace(go.Bar(x=[f"{int(r*100)}%" for r in growth_rates], y=future_net, m
 fig.update_layout(title="Projected Net After-Tax Value in 1 Year", xaxis_title="Annual Growth Rate", yaxis_title="Net Value ($)", template="plotly_white", height=400)
 st.plotly_chart(fig, use_container_width=True)
 
-# ====================== DEEPER ANALYSIS (Unlocked) ======================
+# ====================== DEEPER ANALYSIS ======================
 if "lead_captured" in st.session_state:
     st.subheader("🔓 Deeper Personalized Analysis")
     st.write(f"**Hi {st.session_state['user_name']},** here’s more detailed guidance based on your situation:")
