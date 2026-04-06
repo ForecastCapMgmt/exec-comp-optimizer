@@ -22,11 +22,9 @@ with st.sidebar.form("lead_form"):
     
     if submitted and email_input:
         try:
-            # Load secrets
             sender_email = st.secrets["sender_email"]
             sender_password = st.secrets["sender_password"]
 
-            # Send notification email
             msg = MIMEMultipart()
             msg['From'] = sender_email
             msg['To'] = sender_email
@@ -53,7 +51,6 @@ They unlocked the deeper analysis section.
             """
             msg.attach(MIMEText(body, 'plain'))
 
-            # Send the email
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
             server.login(sender_email, sender_password)
@@ -204,47 +201,4 @@ for rate in growth_rates:
 
 fig = go.Figure()
 fig.add_trace(go.Bar(x=[f"{int(r*100)}%" for r in growth_rates], y=future_net, marker_color="#00cc96"))
-fig.update_layout(title="Projected Net After-Tax Value in 1 Year", xaxis_title="Annual Growth Rate", yaxis_title="Net Value ($)", template="plotly_white", height=400)
-st.plotly_chart(fig, use_container_width=True)
-
-# ====================== DEEPER ANALYSIS ======================
-if "lead_captured" in st.session_state:
-    st.subheader("🔓 Deeper Personalized Analysis")
-    st.write(f"**Hi {st.session_state['user_name']},** here’s more detailed guidance based on your situation:")
-
-    sell_after_tax = vesting_gross * (1 - federal_tax_rate/100) if option_type == "RSU" else (vesting_intrinsic * (1 - federal_tax_rate/100))
-    hold_value = vesting_gross if option_type == "RSU" else vesting_intrinsic + shares_vesting * strike
-
-    col_a, col_b = st.columns(2)
-    with col_a:
-        st.metric("Sell Immediately After Vesting (est. after tax)", f"${sell_after_tax:,.0f}")
-    with col_b:
-        st.metric("Hold the Vested Shares", f"${hold_value:,.0f}")
-
-    post_vesting_conc = ((position_value + vesting_gross) / net_worth * 100) if net_worth > 0 else 0
-    st.metric("Projected Post-Vesting Concentration", f"{post_vesting_conc:.1f}%")
-
-    st.write("**Recommended Next Steps**")
-    steps = [
-        "Review these numbers with your CPA before the vesting date",
-        "Consider a sell-to-cover strategy to pay taxes without selling all shares",
-        "Evaluate diversification options if concentration exceeds 15%",
-        "Model different scenarios if you have multiple grants"
-    ]
-    for step in steps:
-        st.write(f"• {step}")
-
-    st.markdown("---")
-    st.markdown("### Ready to create your personalized executive compensation strategy?")
-    col_btn1, col_btn2 = st.columns([1, 1])
-    with col_btn1:
-        st.link_button("📅 Book a Strategy Call", "https://www.forecastcapitalmanagement.com/contact", use_container_width=True)
-    with col_btn2:
-        st.link_button("🌐 Visit Our Website", "https://www.forecastcapitalmanagement.com", use_container_width=True)
-
-    st.success("✅ Your deeper analysis is unlocked.")
-
-else:
-    st.info("🔓 Unlock the deeper analysis section by entering your details in the sidebar.")
-
-st.caption("Forecast Capital Management • www.forecastcapitalmanagement.com • Not financial, tax, or investment advice.")
+fig.update_layout(title="Projected Net After-Tax Value in 1 Year", xaxis_title="Annual Growth Rate", yaxis_title="Net Value
