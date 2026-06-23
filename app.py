@@ -350,7 +350,8 @@ if option_type == "ISO":
 st.markdown('<div class="section-label" style="margin-top:1.5rem;">Vesting Information</div>', unsafe_allow_html=True)
 col_v1, col_v2 = st.columns(2)
 with col_v1:
-    next_vesting_date = st.date_input("Next Major Vesting Date", value=date(2026, 6, 1), min_value=date.today())
+    default_vesting = max(date(2026, 6, 1), date.today())
+    next_vesting_date = st.date_input("Next Major Vesting Date", value=default_vesting, min_value=date.today())
 with col_v2:
     shares_vesting = st.number_input("Number of Shares Vesting on That Date", min_value=0, value=1250, step=100)
 
