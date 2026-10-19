@@ -1,0 +1,6 @@
+# SMTP credentials for the Streamlit lead email. Never commit.
+secrets.toml
+.streamlit/secrets.toml
+
+__pycache__/
+*.pyc
