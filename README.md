@@ -30,16 +30,17 @@ Host the file at a URL you control and embed it:
 ></iframe>
 ```
 
-### Connect the optional email form
+### Email me my results
 
-The illustration runs with no signup. Near the bottom, “Email me my results” is a normal HTML form. Nothing is emailed until the placeholder address is replaced.
+The illustration still runs with no signup. The optional form under the figures posts to the firm’s email system:
 
-1. Open `web/exec-comp-optimizer.html`.
-2. Find `FCM_ECO_CONFIG` at the top of the file.
-3. Set `optInFormAction` to the Kit form action or other intake URL. The script assigns that URL to the form on load.
-4. The POST body includes `first_name`, `email_address`, a plain-text `results_summary`, and the individual figures. The field names are listed in the comment above the form. `fcm_eco_hp` is a honeypot; ignore the submission when it is filled in.
+`POST https://go.forecastcapitalmanagement.com/api/subscribe`
 
-Until that URL is changed, submitting the form stays on the page and says that email is not connected. Visitors can print or copy the results instead.
+The JSON body is `{ "email", "name", "source": "exec-comp-optimizer" }`, the same shape the landing page sends. Name is optional. `subscribeUrl` and `subscribeSource` live in `FCM_ECO_CONFIG` at the top of `web/exec-comp-optimizer.html`.
+
+That endpoint does not send CORS headers, and this page is served from `www.forecastcapitalmanagement.com`. A `fetch` with `Content-Type: application/json` would preflight and be blocked. The page instead uses `fetch` with `mode: "no-cors"` and `Content-Type: text/plain;charset=UTF-8`, and the body is the JSON string. That is a simple request, so the browser does not preflight. The response is opaque, so the page does not read it. After the request is handed off it shows “Thanks — check your inbox.”
+
+The form checks the email address, ignores a filled honeypot (`fcm_eco_hp`), and will not send a second request while one is in flight or after one has been accepted. A network failure leaves the button available to try again. The contact line under the form is the only follow-up link.
 
 The Streamlit app sent a lead notice through Gmail SMTP using `st.secrets`. That path is not in the HTML file. `secrets.toml` has been removed from the repository and listed in `.gitignore`. The password should be rotated; older commits may still contain it. This change does not rewrite history.
 
@@ -53,4 +54,6 @@ The Streamlit app fetched a quote with Yahoo Finance. A browser page on Squaresp
 python3 tests/test_parity.py
 ```
 
-Requires Python 3 and Node.js. No extra packages. The test runs the formulas from `app.py` (via `tests/reference_model.py`) and the JavaScript embedded in the HTML on the same inputs, including edge cases, and compares the numbers within rounding. It also checks that displayed dollar amounts use the same half-even rounding as Python.
+That command also runs the opt-in checks. `python3 tests/test_optin.py` runs those on their own. Both use a mock `fetch`. They do not call `go.forecastcapitalmanagement.com`.
+
+Requires Python 3 and Node.js. No extra packages. The parity portion runs the formulas from `app.py` (via `tests/reference_model.py`) and the JavaScript embedded in the HTML on the same inputs, including edge cases, and compares the numbers within rounding. It also checks that displayed dollar amounts use the same half-even rounding as Python.

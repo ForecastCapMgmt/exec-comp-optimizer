@@ -299,8 +299,11 @@ def static_html_checks(failures):
     required = [
         "For educational purposes only; not investment, tax, or legal advice. Forecast Capital Management is a registered investment adviser. Results are hypothetical estimates based on your inputs.",
         "FCM_ECO_CONFIG",
-        "optInFormAction",
-        "REPLACE-WITH-YOUR-FORM-ENDPOINT",
+        "subscribeUrl",
+        "https://go.forecastcapitalmanagement.com/api/subscribe",
+        'mode: "no-cors"',
+        "text/plain;charset=UTF-8",
+        "Thanks — check your inbox.",
         "calculation_completed",
         "dataLayer",
         "https://www.forecastcapitalmanagement.com/contact",
@@ -314,7 +317,7 @@ def static_html_checks(failures):
         if snippet not in html:
             failures.append(f"HTML is missing {snippet!r}")
     lowered = html.lower()
-    for banned in ("smtp.gmail.com", "sender_password", "sender_email", "smtplib"):
+    for banned in ("smtp.gmail.com", "sender_password", "sender_email", "smtplib", "calendly", "replace-with-your-form-endpoint"):
         if banned in lowered:
             failures.append(f"HTML contains {banned}")
     app = (ROOT / "app.py").read_text(encoding="utf-8")
@@ -466,6 +469,10 @@ def main():
                 )
     if format_failures > 8:
         failures.append(f"{format_failures} formatter mismatches (showing the first 8)")
+
+    from test_optin import collect_failures
+
+    failures.extend(collect_failures(HTML_PATH))
 
     print("Exec comp optimizer parity")
     print(f"  cases: {len(named_cases)}")

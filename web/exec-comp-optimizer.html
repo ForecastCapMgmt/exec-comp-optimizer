@@ -14,11 +14,13 @@
 -->
 <script>
 var FCM_ECO_CONFIG = {
-  /* The only URL to change when wiring email.
-     The form POSTs first_name, email_address, and the illustration fields.
-     Leave the placeholder in place until the firm's Kit form or other
-     intake address is ready. Submitting does not leave the page until then. */
-  optInFormAction: "https://REPLACE-WITH-YOUR-FORM-ENDPOINT.example/exec-comp",
+  /* Firm email-system subscribe endpoint (same path the landing page uses).
+     The browser sends JSON as text/plain with fetch mode "no-cors".
+     This endpoint returns no CORS headers, so application/json would
+     preflight and be blocked from the Squarespace site. The response is
+     opaque; the page treats a completed request as sent. */
+  subscribeUrl: "https://go.forecastcapitalmanagement.com/api/subscribe",
+  subscribeSource: "exec-comp-optimizer",
   contactUrl: "https://www.forecastcapitalmanagement.com/contact",
   siteUrl: "https://www.forecastcapitalmanagement.com"
 };
@@ -279,6 +281,15 @@ var FCM_ECO_CONFIG = {
 #fcm-eco button.fcm-eco-btn-solid:hover {
   background: #fff !important;
   color: #222 !important;
+}
+#fcm-eco button.fcm-eco-btn:disabled,
+#fcm-eco button.fcm-eco-btn[disabled] {
+  opacity: 0.45;
+  cursor: default;
+}
+#fcm-eco button.fcm-eco-btn-solid:disabled:hover {
+  background: #222 !important;
+  color: #fff !important;
 }
 #fcm-eco button.fcm-eco-textbtn {
   border: 0 !important;
@@ -790,56 +801,28 @@ var FCM_ECO_CONFIG = {
 
   <section class="fcm-eco-optin fcm-eco-noprint" aria-labelledby="fcm-eco-optin-title">
     <h2 id="fcm-eco-optin-title">Email me my results</h2>
-    <p class="fcm-eco-muted">Get the full breakdown. Optional — the figures above are already on this page. Submitting this form is the only step that sends anything.</p>
+    <p class="fcm-eco-muted">Optional. Your name and email go to Forecast. The figures above stay on this page. This is the only step that sends anything.</p>
     <!--
-      Action is assigned from FCM_ECO_CONFIG.optInFormAction on load.
-      Posted fields: first_name, email_address, source, ticker, option_type,
-      price, total_shares, strike, federal_tax_rate, amt_rate, vesting_date,
-      shares_vesting, investable_assets, as_of, gross_value,
-      net_after_tax_value, est_tax_next_vesting, concentration_pct, risk_band,
-      vesting_concentration_pct, sell_after_tax, hold_value,
-      post_vesting_concentration_pct, future_net, results_summary.
-      fcm_eco_hp is a honeypot and should be ignored when it is filled in.
+      Submitted in script from FCM_ECO_CONFIG.subscribeUrl.
+      JSON body is exactly { email, name, source }.
+      fcm_eco_hp is a honeypot. A filled honeypot is not sent.
     -->
-    <form id="fcm-eco-optin" method="post" action="https://REPLACE-WITH-YOUR-FORM-ENDPOINT.example/exec-comp" accept-charset="UTF-8">
+    <form id="fcm-eco-optin" method="post" action="#" novalidate>
       <div class="fcm-eco-formgrid">
         <div>
-          <label for="fcm-eco-name">First name</label>
-          <input id="fcm-eco-name" name="first_name" type="text" autocomplete="given-name">
+          <label for="fcm-eco-name">Name <span class="fcm-eco-muted">(optional)</span></label>
+          <input id="fcm-eco-name" name="name" type="text" autocomplete="name">
         </div>
         <div>
           <label for="fcm-eco-email">Email</label>
-          <input id="fcm-eco-email" name="email_address" type="email" autocomplete="email" required>
+          <input id="fcm-eco-email" name="email" type="email" autocomplete="email" required aria-describedby="fcm-eco-form-status">
         </div>
       </div>
       <div class="fcm-eco-hp">
         <label for="fcm-eco-hp">Company website</label>
         <input id="fcm-eco-hp" name="fcm_eco_hp" type="text" tabindex="-1" autocomplete="off">
       </div>
-      <input type="hidden" name="source" value="exec-comp-optimizer">
-      <input type="hidden" name="ticker" id="fcm-eco-h-ticker">
-      <input type="hidden" name="option_type" id="fcm-eco-h-type">
-      <input type="hidden" name="price" id="fcm-eco-h-price">
-      <input type="hidden" name="total_shares" id="fcm-eco-h-shares">
-      <input type="hidden" name="strike" id="fcm-eco-h-strike">
-      <input type="hidden" name="federal_tax_rate" id="fcm-eco-h-rate">
-      <input type="hidden" name="amt_rate" id="fcm-eco-h-amt">
-      <input type="hidden" name="vesting_date" id="fcm-eco-h-date">
-      <input type="hidden" name="shares_vesting" id="fcm-eco-h-vshares">
-      <input type="hidden" name="investable_assets" id="fcm-eco-h-nw">
-      <input type="hidden" name="as_of" id="fcm-eco-h-asof">
-      <input type="hidden" name="gross_value" id="fcm-eco-h-gross">
-      <input type="hidden" name="net_after_tax_value" id="fcm-eco-h-net">
-      <input type="hidden" name="est_tax_next_vesting" id="fcm-eco-h-tax">
-      <input type="hidden" name="concentration_pct" id="fcm-eco-h-conc">
-      <input type="hidden" name="risk_band" id="fcm-eco-h-risk">
-      <input type="hidden" name="vesting_concentration_pct" id="fcm-eco-h-vconc">
-      <input type="hidden" name="sell_after_tax" id="fcm-eco-h-sell">
-      <input type="hidden" name="hold_value" id="fcm-eco-h-hold">
-      <input type="hidden" name="post_vesting_concentration_pct" id="fcm-eco-h-post">
-      <input type="hidden" name="future_net" id="fcm-eco-h-future">
-      <input type="hidden" name="results_summary" id="fcm-eco-h-summary">
-      <button type="submit" class="fcm-eco-btn fcm-eco-btn-solid fcm-eco-btn-block">Email me my results</button>
+      <button type="submit" class="fcm-eco-btn fcm-eco-btn-solid fcm-eco-btn-block" id="fcm-eco-optin-submit">Email me my results</button>
       <p id="fcm-eco-form-status" class="fcm-eco-status" role="status"></p>
     </form>
   </section>
@@ -1266,12 +1249,68 @@ var FCM_ECO_CONFIG = {
     };
   }
 
+  function fcmEcoEmailLooksValid(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function fcmEcoCreateOptIn(options) {
+    var pending = false;
+    var sent = false;
+    var settings = options || {};
+    var url = settings.url;
+    var source = settings.source || "exec-comp-optimizer";
+    var fetchImpl = settings.fetchImpl;
+    return {
+      submit: function (fields) {
+        if (pending || sent) {
+          return Promise.resolve({ ok: false, reason: "duplicate", sent: false });
+        }
+        var honeypot = fields && fields.honeypot ? String(fields.honeypot).trim() : "";
+        if (honeypot) {
+          return Promise.resolve({ ok: false, reason: "honeypot", sent: false });
+        }
+        var email = String((fields && fields.email) || "").trim();
+        var name = String((fields && fields.name) || "").trim();
+        if (!fcmEcoEmailLooksValid(email)) {
+          return Promise.resolve({ ok: false, reason: "email", sent: false });
+        }
+        if (!url || typeof fetchImpl !== "function") {
+          return Promise.resolve({ ok: false, reason: "config", sent: false });
+        }
+        var payload = { email: email, name: name, source: source };
+        pending = true;
+        var request;
+        try {
+          request = fetchImpl(url, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=UTF-8" },
+            body: JSON.stringify(payload)
+          });
+        } catch (err) {
+          pending = false;
+          return Promise.resolve({ ok: false, reason: "network", sent: false });
+        }
+        return Promise.resolve(request).then(function () {
+          pending = false;
+          sent = true;
+          return { ok: true, reason: "sent", sent: true };
+        }, function () {
+          pending = false;
+          return { ok: false, reason: "network", sent: false };
+        });
+      }
+    };
+  }
+
   root.fcmEcoFormatFixed = fcmEcoFormatFixed;
   root.fcmEcoFormatMoney = fcmEcoFormatMoney;
   root.fcmEcoFormatLongDate = formatLongDate;
   root.fcmEcoCalculate = fcmEcoCalculate;
   root.fcmEcoValidate = fcmEcoValidate;
   root.fcmEcoNarrative = fcmEcoNarrative;
+  root.fcmEcoEmailLooksValid = fcmEcoEmailLooksValid;
+  root.fcmEcoCreateOptIn = fcmEcoCreateOptIn;
 })(typeof globalThis !== "undefined" ? globalThis : this);
 /* FCM_ECO_LIB_END */
 
@@ -1466,32 +1505,6 @@ var FCM_ECO_CONFIG = {
     );
     return lines.join("\n");
   }
-  function fillForm(input, calc, narrative) {
-    byId("fcm-eco-h-ticker").value = input.ticker;
-    byId("fcm-eco-h-type").value = input.optionType;
-    byId("fcm-eco-h-price").value = String(input.price);
-    byId("fcm-eco-h-shares").value = String(input.totalShares);
-    byId("fcm-eco-h-strike").value = String(input.strike);
-    byId("fcm-eco-h-rate").value = String(input.federalTaxRate);
-    byId("fcm-eco-h-amt").value = String(input.amtRate);
-    byId("fcm-eco-h-date").value = input.nextVestingDate;
-    byId("fcm-eco-h-vshares").value = String(input.sharesVesting);
-    byId("fcm-eco-h-nw").value = String(input.netWorth);
-    byId("fcm-eco-h-asof").value = input.asOf;
-    byId("fcm-eco-h-gross").value = calc.display.grossValue;
-    byId("fcm-eco-h-net").value = calc.display.netValue;
-    byId("fcm-eco-h-tax").value = calc.display.vestingTax;
-    byId("fcm-eco-h-conc").value = calc.display.concentrationPct;
-    byId("fcm-eco-h-risk").value = calc.riskBand;
-    byId("fcm-eco-h-vconc").value = calc.display.vestingConcentration;
-    byId("fcm-eco-h-sell").value = calc.display.sellAfterTax;
-    byId("fcm-eco-h-hold").value = calc.display.holdValue;
-    byId("fcm-eco-h-post").value = calc.display.postVestingConc;
-    byId("fcm-eco-h-future").value = calc.growthLabels.map(function (label, index) {
-      return label + " " + calc.display.futureNet[index];
-    }).join("; ");
-    byId("fcm-eco-h-summary").value = narrative.summary;
-  }
   function queueEvent(input) {
     window.clearTimeout(eventTimer);
     eventTimer = window.setTimeout(function () {
@@ -1577,7 +1590,6 @@ var FCM_ECO_CONFIG = {
       math.appendChild(el("p", "", line));
     });
     byId("fcm-eco-amt-wrap").hidden = input.optionType !== "ISO";
-    fillForm(input, calc, narrative);
     queueEvent(input);
   }
   function render() {
@@ -1669,7 +1681,12 @@ var FCM_ECO_CONFIG = {
   }
 
   var form = byId("fcm-eco-optin");
-  form.action = FCM_ECO_CONFIG.optInFormAction;
+  var optInSubmitButton = byId("fcm-eco-optin-submit");
+  var optIn = globalThis.fcmEcoCreateOptIn({
+    url: FCM_ECO_CONFIG.subscribeUrl,
+    source: FCM_ECO_CONFIG.subscribeSource,
+    fetchImpl: function (url, init) { return window.fetch(url, init); }
+  });
   byId("fcm-eco-contact").href = FCM_ECO_CONFIG.contactUrl;
   byId("fcm-eco-contact").textContent = FCM_ECO_CONFIG.contactUrl;
 
@@ -1750,22 +1767,33 @@ var FCM_ECO_CONFIG = {
     });
   });
   form.addEventListener("submit", function (event) {
-    if (byId("fcm-eco-hp").value) {
-      event.preventDefault();
-      return;
-    }
-    if (!lastCalc) {
-      event.preventDefault();
-      byId("fcm-eco-form-status").textContent = "The illustration needs a complete set of assumptions before it can be sent.";
-      return;
-    }
-    fillForm(lastInput, lastCalc, lastNarrative);
-    var action = FCM_ECO_CONFIG.optInFormAction || "";
-    form.action = action;
-    if (action.indexOf("REPLACE-WITH-YOUR-FORM-ENDPOINT") !== -1) {
-      event.preventDefault();
-      byId("fcm-eco-form-status").textContent = "Email is not connected on this page yet. The illustration is still here to print or copy. The firm can attach this form to its email system later.";
-    }
+    event.preventDefault();
+    var status = byId("fcm-eco-form-status");
+    optInSubmitButton.disabled = true;
+    optIn.submit({
+      email: byId("fcm-eco-email").value,
+      name: byId("fcm-eco-name").value,
+      honeypot: byId("fcm-eco-hp").value
+    }).then(function (result) {
+      if (result.reason === "email") {
+        optInSubmitButton.disabled = false;
+        byId("fcm-eco-email").setAttribute("aria-invalid", "true");
+        status.textContent = "Enter an email address like name@firm.com.";
+        return;
+      }
+      byId("fcm-eco-email").removeAttribute("aria-invalid");
+      if (result.reason === "honeypot") {
+        optInSubmitButton.disabled = false;
+        return;
+      }
+      if (result.reason === "network" || result.reason === "config") {
+        optInSubmitButton.disabled = false;
+        status.textContent = "That did not send. You can try again.";
+        return;
+      }
+      if (result.reason === "duplicate") return;
+      status.textContent = "Thanks — check your inbox.";
+    });
   });
   window.addEventListener("hashchange", function () {
     if (loadHash()) render();
