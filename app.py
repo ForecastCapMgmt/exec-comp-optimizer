@@ -6,6 +6,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+from calc import compute_exec_comp
+
 st.set_page_config(
     page_title="Exec Comp Optimizer | Forecast Capital Management",
     layout="centered",
@@ -381,46 +383,36 @@ if not price:
     price = 150.0
 
 # ====================== CALCULATIONS ======================
-gross_value = price * total_shares
-intrinsic_value = max(0, price - strike) * total_shares
-vesting_gross = price * shares_vesting
-vesting_intrinsic = max(0, price - strike) * shares_vesting
-
-if option_type == "RSU":
-    vesting_tax = vesting_gross * (federal_tax_rate / 100)
-    net_value = gross_value * (1 - federal_tax_rate / 100)
-    tax_note = f"RSU: Est. tax on next vesting ≈ ${vesting_tax:,.0f}"
-    base_rec = "RSUs are taxed as ordinary income upon vesting."
-else:
-    vesting_tax = vesting_intrinsic * (federal_tax_rate / 100) if option_type == "NSO" else vesting_intrinsic * (amt_rate / 100)
-    net_value = (intrinsic_value * (1 - federal_tax_rate / 100)) + (total_shares * strike) if option_type != "ISO" else (vesting_intrinsic - vesting_tax) + (total_shares * strike)
-    tax_note = f"ISO: Est. AMT on next vesting spread ≈ ${vesting_tax:,.0f}" if option_type == "ISO" else f"NSO: Est. tax on next vesting spread ≈ ${vesting_tax:,.0f}"
-    base_rec = "ISOs offer long-term capital gains potential if held properly." if option_type == "ISO" else "NSOs trigger ordinary income tax on the bargain element when exercised."
-
-days_to_vesting = (next_vesting_date - date.today()).days
-months_to_vesting = max(0, days_to_vesting // 30)
-if months_to_vesting <= 3:
-    timing_advice = f"With {shares_vesting:,} shares vesting in the next {months_to_vesting} months, plan for the immediate tax impact."
-elif months_to_vesting <= 12:
-    timing_advice = f"{shares_vesting:,} shares vesting in about {months_to_vesting} months gives you planning time."
-else:
-    timing_advice = "Vesting is further out — good opportunity to model scenarios."
-
-recommendation = f"{base_rec} {timing_advice}"
-
-position_value = gross_value if option_type == "RSU" else (intrinsic_value + total_shares * strike)
-concentration_pct = (position_value / net_worth * 100) if net_worth > 0 else 0
-vesting_concentration = (vesting_gross / net_worth * 100) if net_worth > 0 else 0
-
-if concentration_pct < 10:
-    risk_color = "#4caf7d"
-    risk_text = "Low"
-elif concentration_pct < 20:
-    risk_color = "#f0b429"
-    risk_text = "Moderate"
-else:
-    risk_color = "#e05c5c"
-    risk_text = "High — consider diversifying"
+# Same formulas as the client-side page. See calc.py.
+result = compute_exec_comp(
+    price=price,
+    total_shares=total_shares,
+    option_type=option_type,
+    strike=strike,
+    federal_tax_rate=federal_tax_rate,
+    amt_rate=amt_rate,
+    shares_vesting=shares_vesting,
+    next_vesting_date=next_vesting_date,
+    net_worth=net_worth,
+)
+price = result["price"]
+gross_value = result["gross_value"]
+intrinsic_value = result["intrinsic_value"]
+vesting_gross = result["vesting_gross"]
+vesting_intrinsic = result["vesting_intrinsic"]
+vesting_tax = result["vesting_tax"]
+net_value = result["net_value"]
+tax_note = result["tax_note"]
+base_rec = result["base_rec"]
+days_to_vesting = result["days_to_vesting"]
+months_to_vesting = result["months_to_vesting"]
+timing_advice = result["timing_advice"]
+recommendation = result["recommendation"]
+position_value = result["position_value"]
+concentration_pct = result["concentration_pct"]
+vesting_concentration = result["vesting_concentration"]
+risk_color = result["risk_color"]
+risk_text = result["risk_text"]
 
 # ====================== RESULTS ======================
 st.markdown('<div class="section-label" style="margin-top:2rem;">Your Results</div>', unsafe_allow_html=True)
@@ -475,15 +467,8 @@ st.markdown(f"""
 # ====================== GROWTH CHART ======================
 st.markdown('<div class="section-label" style="margin-top:2rem;">What if the stock price grows in the next year?</div>', unsafe_allow_html=True)
 
-growth_rates = [0.0, 0.05, 0.10, 0.15, 0.20]
-future_net = []
-for rate in growth_rates:
-    fp = price * (1 + rate)
-    if option_type == "RSU":
-        future_net.append(fp * total_shares * (1 - federal_tax_rate / 100))
-    else:
-        fi = max(0, fp - strike) * total_shares
-        future_net.append(fi * (1 - federal_tax_rate / 100) + total_shares * strike)
+growth_rates = result["growth_rates"]
+future_net = result["future_net"]
 
 fig = go.Figure()
 fig.add_trace(go.Bar(
@@ -516,8 +501,8 @@ if "lead_captured" in st.session_state:
     </p>
     """, unsafe_allow_html=True)
 
-    sell_after_tax = vesting_gross * (1 - federal_tax_rate / 100) if option_type == "RSU" else (vesting_intrinsic * (1 - federal_tax_rate / 100))
-    hold_value = vesting_gross if option_type == "RSU" else vesting_intrinsic + shares_vesting * strike
+    sell_after_tax = result["sell_after_tax"]
+    hold_value = result["hold_value"]
 
     col_a, col_b = st.columns(2)
     with col_a:
@@ -525,7 +510,7 @@ if "lead_captured" in st.session_state:
     with col_b:
         st.metric("Hold the Vested Shares", f"${hold_value:,.0f}")
 
-    post_vesting_conc = ((position_value + vesting_gross) / net_worth * 100) if net_worth > 0 else 0
+    post_vesting_conc = result["post_vesting_conc"]
     st.metric("Projected Post-Vesting Concentration", f"{post_vesting_conc:.1f}%")
 
     st.markdown("""

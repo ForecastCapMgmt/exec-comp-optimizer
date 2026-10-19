@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en" class="fcm-standalone">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exec Comp Optimizer | Forecast Capital Management</title>
+<style id="fcm-standalone-chrome">
+  /* Standalone page only. The selector needs class fcm-standalone on <html>,
+     which a Squarespace Code Block paste does not keep. */
+  html.fcm-standalone,
+  html.fcm-standalone body {
+    margin: 0;
+    background: #f3f0ea;
+  }
+</style>
+</head>
+<body>
+<!-- BEGIN SQUARESPACE: paste from this line through END SQUARESPACE into a Code Block. -->
+<script>
+/**
+ * CONFIG — where the optional "Email me my results" form is posted.
+ * Replace the placeholder with a Kit form action or the firm's email endpoint.
+ * Do not put mailbox passwords or other credentials in this file.
+ */
+var FCM_RESULTS_FORM_ACTION = "https://example.com/replace-with-kit-or-email-form-action";
+</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap");
+
+#fcm-exec-comp.fcm-root {
+  --fcm-ink: #222222;
+  --fcm-muted: #5c574f;
+  --fcm-line: #e4ddd2;
+  --fcm-gold: #a68446;
+  --fcm-gold-deep: #7d6230;
+  --fcm-wash: #f7f4ee;
+  --fcm-paper: #ffffff;
+  display: block !important;
+  box-sizing: border-box !important;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.4rem 2rem 1.75rem;
+  background: var(--fcm-paper) !important;
+  color: var(--fcm-ink) !important;
+  border: 1px solid var(--fcm-line);
+  font-family: "Lora", Georgia, "Times New Roman", serif !important;
+  font-size: 16.5px;
+  line-height: 1.55;
+  text-align: left;
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+}
+#fcm-exec-comp.fcm-root,
+#fcm-exec-comp.fcm-root * {
+  box-sizing: border-box !important;
+}
+#fcm-exec-comp.fcm-root h1,
+#fcm-exec-comp.fcm-root h2,
+#fcm-exec-comp.fcm-root h3,
+#fcm-exec-comp.fcm-root p,
+#fcm-exec-comp.fcm-root ul,
+#fcm-exec-comp.fcm-root ol,
+#fcm-exec-comp.fcm-root li,
+#fcm-exec-comp.fcm-root label,
+#fcm-exec-comp.fcm-root table,
+#fcm-exec-comp.fcm-root caption {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  color: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+#fcm-exec-comp .fcm-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--fcm-gold);
+}
+#fcm-exec-comp .fcm-brand {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--fcm-ink) !important;
+}
+#fcm-exec-comp .fcm-brand-sub,
+#fcm-exec-comp .fcm-pill,
+#fcm-exec-comp .fcm-eyebrow,
+#fcm-exec-comp .fcm-label,
+#fcm-exec-comp .fcm-section {
+  font-family: "Lora", Georgia, serif !important;
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+  font-weight: 500;
+}
+#fcm-exec-comp .fcm-brand-sub {
+  margin-top: 0.2rem;
+  color: var(--fcm-muted) !important;
+  font-size: 0.78rem;
+}
+#fcm-exec-comp .fcm-pill {
+  color: var(--fcm-gold-deep) !important;
+  font-size: 0.72rem;
+  border: 1px solid var(--fcm-gold);
+  padding: 0.35rem 0.55rem 0.28rem;
+  white-space: nowrap;
+}
+#fcm-exec-comp .fcm-hero {
+  padding: 1.7rem 0 1.15rem;
+}
+#fcm-exec-comp .fcm-eyebrow {
+  color: var(--fcm-gold-deep) !important;
+  font-size: 0.78rem;
+  margin-bottom: 0.7rem;
+}
+#fcm-exec-comp .fcm-title {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 500 !important;
+  font-size: clamp(2rem, 5vw, 2.85rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--fcm-ink) !important;
+}
+#fcm-exec-comp .fcm-title em {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--fcm-gold-deep) !important;
+}
+#fcm-exec-comp .fcm-lede {
+  margin-top: 0.9rem !important;
+  max-width: 38rem;
+  color: var(--fcm-muted) !important;
+  font-size: 1.02rem;
+  font-style: italic;
+}
+#fcm-exec-comp .fcm-note,
+#fcm-exec-comp .fcm-warning {
+  background: var(--fcm-wash);
+  border-left: 2px solid var(--fcm-gold);
+  padding: 0.75rem 0.9rem;
+  color: var(--fcm-muted) !important;
+  font-size: 0.92rem;
+}
+#fcm-exec-comp .fcm-note strong,
+#fcm-exec-comp .fcm-callout strong {
+  font-weight: 600;
+  font-style: normal;
+  color: var(--fcm-ink) !important;
+  font-variant: small-caps;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+}
+#fcm-exec-comp .fcm-section {
+  margin: 1.7rem 0 0.85rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--fcm-line);
+  color: var(--fcm-gold-deep) !important;
+  font-size: 0.8rem;
+}
+#fcm-exec-comp .fcm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.95rem 1.25rem;
+}
+#fcm-exec-comp .fcm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  min-width: 0;
+}
+#fcm-exec-comp .fcm-span {
+  grid-column: 1 / -1;
+}
+#fcm-exec-comp .fcm-label {
+  color: var(--fcm-muted) !important;
+  font-size: 0.75rem;
+}
+#fcm-exec-comp .fcm-hint {
+  color: var(--fcm-muted) !important;
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+#fcm-exec-comp input[type="hidden"] {
+  display: none !important;
+}
+#fcm-exec-comp input[type="text"],
+#fcm-exec-comp input[type="number"],
+#fcm-exec-comp input[type="email"],
+#fcm-exec-comp input[type="date"],
+#fcm-exec-comp select {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0.45rem 0 !important;
+  border: none !important;
+  border-bottom: 1px solid #cfc6b6 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--fcm-ink) !important;
+  font-family: "Lora", Georgia, serif !important;
+  font-size: 1rem !important;
+  line-height: 1.4 !important;
+  appearance: none;
+  -webkit-appearance: none;
+}
+#fcm-exec-comp input:focus,
+#fcm-exec-comp select:focus {
+  outline: none !important;
+  border-bottom-color: var(--fcm-gold) !important;
+}
+#fcm-exec-comp input[type="text"] {
+  text-transform: uppercase;
+}
+#fcm-exec-comp .fcm-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+#fcm-exec-comp .fcm-slider-value {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: 1.35rem;
+  min-width: 3.2rem;
+  text-align: right;
+  color: var(--fcm-ink) !important;
+}
+#fcm-exec-comp input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100% !important;
+  height: 18px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+#fcm-exec-comp input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: #cfc6b6;
+}
+#fcm-exec-comp input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -7px;
+  background: #222;
+  border: 1px solid var(--fcm-gold);
+  border-radius: 50%;
+  cursor: pointer;
+}
+#fcm-exec-comp input[type="range"]::-moz-range-track {
+  height: 1px;
+  background: #cfc6b6;
+  border: none;
+}
+#fcm-exec-comp input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #222;
+  border: 1px solid var(--fcm-gold);
+  border-radius: 50%;
+  cursor: pointer;
+}
+#fcm-exec-comp .fcm-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1rem;
+}
+#fcm-exec-comp .fcm-button,
+#fcm-exec-comp .fcm-link-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.55rem 1.1rem !important;
+  background: #222 !important;
+  color: #fff !important;
+  border: 1px solid #222 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-family: "Lora", Georgia, serif !important;
+  font-size: 0.78rem !important;
+  font-variant: small-caps;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  text-decoration: none !important;
+  cursor: pointer;
+  line-height: 1.2 !important;
+}
+#fcm-exec-comp .fcm-button-ghost,
+#fcm-exec-comp .fcm-link-button.fcm-button-ghost {
+  background: transparent !important;
+  color: #222 !important;
+}
+#fcm-exec-comp .fcm-button:hover,
+#fcm-exec-comp .fcm-link-button:hover {
+  background: var(--fcm-gold-deep) !important;
+  border-color: var(--fcm-gold-deep) !important;
+  color: #fff !important;
+}
+#fcm-exec-comp .fcm-quiet {
+  color: var(--fcm-muted) !important;
+  font-size: 0.82rem;
+  font-style: italic;
+}
+#fcm-exec-comp .fcm-is-hidden {
+  display: none !important;
+}
+#fcm-exec-comp .fcm-results {
+  margin-top: 1.8rem;
+  padding-top: 0.2rem;
+}
+#fcm-exec-comp .fcm-price-line {
+  font-style: italic;
+  color: var(--fcm-muted) !important;
+  margin-bottom: 0.9rem !important;
+}
+#fcm-exec-comp .fcm-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--fcm-line);
+  border-bottom: 1px solid var(--fcm-line);
+}
+#fcm-exec-comp .fcm-metric {
+  padding: 0.75rem 0.7rem 0.8rem 0;
+  min-width: 0;
+}
+#fcm-exec-comp .fcm-metric + .fcm-metric {
+  padding-left: 0.7rem;
+  border-left: 1px solid var(--fcm-line);
+}
+#fcm-exec-comp .fcm-metric-label {
+  display: block;
+  color: var(--fcm-muted) !important;
+  font-size: 0.68rem;
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+#fcm-exec-comp .fcm-metric-value {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fcm-ink) !important;
+  line-height: 1.1;
+  word-break: break-word;
+}
+#fcm-exec-comp .fcm-callout {
+  margin-top: 0.85rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--fcm-line);
+  color: var(--fcm-muted) !important;
+  font-size: 0.95rem;
+}
+#fcm-exec-comp .fcm-callout p + p,
+#fcm-exec-comp .fcm-callout .fcm-rec {
+  margin-top: 0.35rem !important;
+}
+#fcm-exec-comp .fcm-conc-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  margin-bottom: 0.45rem;
+}
+#fcm-exec-comp .fcm-conc-figure {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1;
+}
+#fcm-exec-comp .fcm-risk-low { color: #1e6b45 !important; }
+#fcm-exec-comp .fcm-risk-mid { color: #8a5b00 !important; }
+#fcm-exec-comp .fcm-risk-high { color: #9d2c2c !important; }
+#fcm-exec-comp .fcm-bar {
+  height: 3px;
+  background: #ece7df;
+  margin: 0.35rem 0 0.7rem;
+}
+#fcm-exec-comp .fcm-bar-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--fcm-gold);
+}
+#fcm-exec-comp .fcm-bar-fill.fcm-risk-low { background: #1e6b45; }
+#fcm-exec-comp .fcm-bar-fill.fcm-risk-mid { background: #8a5b00; }
+#fcm-exec-comp .fcm-bar-fill.fcm-risk-high { background: #9d2c2c; }
+#fcm-exec-comp .fcm-warning {
+  margin-top: 0.7rem;
+  color: var(--fcm-ink) !important;
+}
+#fcm-exec-comp .fcm-chart {
+  margin-top: 0.4rem;
+}
+#fcm-exec-comp .fcm-chart svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+#fcm-exec-comp .fcm-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.35rem;
+  font-size: 0.92rem;
+}
+#fcm-exec-comp .fcm-table caption {
+  caption-side: bottom;
+  text-align: left;
+  padding-top: 0.45rem;
+  color: var(--fcm-muted) !important;
+  font-size: 0.78rem;
+  font-style: italic;
+}
+#fcm-exec-comp .fcm-table th,
+#fcm-exec-comp .fcm-table td {
+  text-align: left;
+  padding: 0.4rem 0.4rem 0.4rem 0;
+  border-bottom: 1px solid var(--fcm-line);
+  font-weight: 400;
+  color: var(--fcm-ink) !important;
+}
+#fcm-exec-comp .fcm-table th {
+  color: var(--fcm-muted) !important;
+  font-size: 0.72rem;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+#fcm-exec-comp .fcm-table td:last-child,
+#fcm-exec-comp .fcm-table th:last-child {
+  text-align: right;
+  padding-right: 0;
+}
+#fcm-exec-comp .fcm-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+#fcm-exec-comp .fcm-scenario {
+  border-top: 1px solid var(--fcm-gold);
+  padding-top: 0.55rem;
+}
+#fcm-exec-comp .fcm-steps {
+  list-style: none;
+  margin-top: 0.3rem;
+}
+#fcm-exec-comp .fcm-steps li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--fcm-line);
+  color: var(--fcm-muted) !important;
+  font-size: 0.95rem;
+}
+#fcm-exec-comp .fcm-steps li span {
+  color: var(--fcm-gold-deep) !important;
+  margin-right: 0.45rem;
+}
+#fcm-exec-comp .fcm-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+#fcm-exec-comp .fcm-optin {
+  margin-top: 1.5rem;
+  padding: 1rem 1rem 1.05rem;
+  background: var(--fcm-wash);
+  border: 1px solid var(--fcm-line);
+}
+#fcm-exec-comp .fcm-optin h3 {
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: 1.55rem;
+  font-weight: 500;
+  color: var(--fcm-ink) !important;
+}
+#fcm-exec-comp .fcm-optin-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+  align-items: end;
+  margin-top: 0.8rem;
+}
+#fcm-exec-comp .fcm-optin-form .fcm-button {
+  justify-self: start;
+}
+#fcm-exec-comp .fcm-soft {
+  margin-top: 0.9rem !important;
+  font-style: italic;
+  color: var(--fcm-muted) !important;
+}
+#fcm-exec-comp .fcm-soft a,
+#fcm-exec-comp .fcm-disclaimer a {
+  color: var(--fcm-gold-deep) !important;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  overflow-wrap: anywhere;
+}
+#fcm-exec-comp .fcm-disclaimer {
+  margin-top: 1.8rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--fcm-gold);
+  color: var(--fcm-muted) !important;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+#fcm-exec-comp .fcm-firm {
+  margin-top: 0.45rem !important;
+  font-variant: small-caps;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--fcm-ink) !important;
+}
+@media (max-width: 700px) {
+  #fcm-exec-comp.fcm-root {
+    padding: 1.35rem 1rem 1.2rem;
+    border-left: none;
+    border-right: none;
+  }
+  #fcm-exec-comp .fcm-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #fcm-exec-comp .fcm-grid,
+  #fcm-exec-comp .fcm-pair,
+  #fcm-exec-comp .fcm-optin-form,
+  #fcm-exec-comp .fcm-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  #fcm-exec-comp .fcm-grid,
+  #fcm-exec-comp .fcm-optin-form {
+    grid-template-columns: 1fr;
+  }
+  #fcm-exec-comp .fcm-metric:nth-child(odd) {
+    padding-left: 0;
+    border-left: none;
+  }
+  #fcm-exec-comp .fcm-metric:nth-child(3),
+  #fcm-exec-comp .fcm-metric:nth-child(4) {
+    border-top: 1px solid var(--fcm-line);
+  }
+  #fcm-exec-comp .fcm-metric:nth-child(even) {
+    padding-left: 0.7rem;
+  }
+  #fcm-exec-comp .fcm-title {
+    font-size: 2.05rem;
+  }
+}
+</style>
+
+<div id="fcm-exec-comp" class="fcm-root">
+  <header class="fcm-header">
+    <div>
+      <div class="fcm-brand">Forecast Capital Management</div>
+      <div class="fcm-brand-sub">Executive financial planning</div>
+    </div>
+    <div class="fcm-pill">Exec Comp Optimizer</div>
+  </header>
+
+  <section class="fcm-hero">
+    <p class="fcm-eyebrow">Compensation planning · Equity</p>
+    <h1 class="fcm-title">You know what your equity is worth.<br><em>Do you know what you'll actually keep?</em></h1>
+    <p class="fcm-lede">Model your RSUs or stock options in 60 seconds — net after-tax value, concentration risk, and the real cost of your next vesting event.</p>
+  </section>
+
+  <p class="fcm-note"><strong>Note</strong><br>Illustrative calculations only. State taxes may apply. Always consult your CPA or financial advisor.</p>
+
+  <div id="fcm-inputs">
+    <h2 class="fcm-section">Grant details</h2>
+    <div class="fcm-grid">
+      <label class="fcm-field">
+        <span class="fcm-label">Stock ticker symbol (e.g. AAPL)</span>
+        <input id="fcm-ticker" type="text" value="AAPL" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12">
+      </label>
+      <label class="fcm-field">
+        <span class="fcm-label">Type of compensation</span>
+        <select id="fcm-type">
+          <option value="RSU" selected>RSU</option>
+          <option value="NSO">NSO</option>
+          <option value="ISO">ISO</option>
+        </select>
+      </label>
+      <label class="fcm-field">
+        <span class="fcm-label">Total shares / options in grant</span>
+        <input id="fcm-shares" type="number" min="100" step="100" value="5000" inputmode="numeric">
+      </label>
+      <label class="fcm-field">
+        <span class="fcm-label">Strike price per share ($)</span>
+        <input id="fcm-strike" type="number" min="0" step="0.01" value="45" inputmode="decimal">
+      </label>
+      <label class="fcm-field fcm-span">
+        <span class="fcm-label">Current price per share ($)</span>
+        <input id="fcm-price" type="number" step="0.01" value="150" inputmode="decimal">
+        <span class="fcm-hint">Enter the latest market price. Blank or zero uses $150, the same fallback the original tool used when a live quote was unavailable.</span>
+      </label>
+      <div class="fcm-field fcm-span">
+        <div class="fcm-slider-row">
+          <label class="fcm-label" for="fcm-tax" style="flex:1">Estimated marginal federal tax rate (%)</label>
+          <span class="fcm-slider-value" id="fcm-tax-out">32%</span>
+        </div>
+        <input id="fcm-tax" type="range" min="22" max="37" step="1" value="32">
+      </div>
+      <div class="fcm-field fcm-span fcm-is-hidden" id="fcm-amt-wrap">
+        <div class="fcm-slider-row">
+          <label class="fcm-label" for="fcm-amt" style="flex:1">Estimated AMT rate (%)</label>
+          <span class="fcm-slider-value" id="fcm-amt-out">26%</span>
+        </div>
+        <input id="fcm-amt" type="range" min="0" max="28" step="1" value="26">
+      </div>
+    </div>
+
+    <h2 class="fcm-section">Vesting information</h2>
+    <div class="fcm-grid">
+      <label class="fcm-field">
+        <span class="fcm-label">Next major vesting date</span>
+        <input id="fcm-vest-date" type="date" value="2026-06-01">
+      </label>
+      <label class="fcm-field">
+        <span class="fcm-label">Number of shares vesting on that date</span>
+        <input id="fcm-vest-shares" type="number" min="0" step="100" value="1250" inputmode="numeric">
+      </label>
+    </div>
+
+    <h2 class="fcm-section">Concentration risk assessment</h2>
+    <label class="fcm-field">
+      <span class="fcm-label">Rough estimate of your total investable assets (excluding primary home) ($)</span>
+      <input id="fcm-net-worth" type="number" min="100000" step="100000" value="2000000" inputmode="numeric">
+    </label>
+
+    <div class="fcm-actions">
+      <button type="button" class="fcm-button" id="fcm-calc-btn">Calculate what you keep</button>
+      <span class="fcm-quiet">Nothing is saved. The math runs in your browser.</span>
+    </div>
+  </div>
+
+  <section id="fcm-results" class="fcm-results fcm-is-hidden" aria-live="polite">
+    <h2 class="fcm-section">Your results</h2>
+    <p class="fcm-price-line" id="fcm-price-line"></p>
+    <div class="fcm-metrics">
+      <div class="fcm-metric">
+        <span class="fcm-metric-label">Current Price</span>
+        <span class="fcm-metric-value" id="fcm-out-price" data-fcm-field="price_display"></span>
+      </div>
+      <div class="fcm-metric">
+        <span class="fcm-metric-label">Total Gross Value</span>
+        <span class="fcm-metric-value" id="fcm-out-gross" data-fcm-field="gross_display"></span>
+      </div>
+      <div class="fcm-metric">
+        <span class="fcm-metric-label">Net After-Tax Value</span>
+        <span class="fcm-metric-value" id="fcm-out-net" data-fcm-field="net_display"></span>
+      </div>
+      <div class="fcm-metric">
+        <span class="fcm-metric-label">Est. Tax on Next Vesting</span>
+        <span class="fcm-metric-value" id="fcm-out-tax" data-fcm-field="vesting_tax_display"></span>
+      </div>
+    </div>
+    <div class="fcm-callout">
+      <p><strong>Tax note</strong></p>
+      <p id="fcm-out-tax-note" data-fcm-field="tax_note"></p>
+      <p><strong>Recommendation</strong></p>
+      <p class="fcm-rec" id="fcm-out-rec" data-fcm-field="recommendation"></p>
+    </div>
+
+    <h2 class="fcm-section">Concentration risk</h2>
+    <div class="fcm-conc-row">
+      <div>
+        <span class="fcm-metric-label">Full position</span>
+        <div class="fcm-conc-figure" id="fcm-out-conc" data-fcm-field="concentration_display"></div>
+        <span class="fcm-quiet">of investable assets</span>
+      </div>
+      <div style="text-align:right">
+        <span class="fcm-metric-label">Risk level</span>
+        <div class="fcm-conc-figure fcm-risk" id="fcm-out-risk" data-fcm-field="risk_text"></div>
+      </div>
+    </div>
+    <div class="fcm-bar" id="fcm-meter" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Position as a share of investable assets">
+      <span class="fcm-bar-fill" id="fcm-meter-fill"></span>
+    </div>
+    <p class="fcm-warning fcm-is-hidden" id="fcm-out-warning" data-fcm-field="warning_text"></p>
+
+    <h2 class="fcm-section">What if the stock price grows in the next year?</h2>
+    <div class="fcm-chart" id="fcm-chart" role="img" aria-label="Bar chart of net after-tax value at 0, 5, 10, 15, and 20 percent annual growth"></div>
+    <table class="fcm-table">
+      <caption>Net after-tax value ($) by annual growth rate. Same figures as the chart.</caption>
+      <thead>
+        <tr>
+          <th scope="col">Annual growth rate</th>
+          <th scope="col">Net after-tax value ($)</th>
+        </tr>
+      </thead>
+      <tbody id="fcm-chart-rows"></tbody>
+    </table>
+
+    <h2 class="fcm-section">Deeper personalized analysis</h2>
+    <p class="fcm-lede" style="margin-top:0">Here is more detailed guidance based on your inputs.</p>
+    <div class="fcm-pair" style="margin-top:0.9rem">
+      <div class="fcm-scenario">
+        <span class="fcm-metric-label">Sell immediately after vesting (est. after tax)</span>
+        <span class="fcm-metric-value" id="fcm-out-sell" data-fcm-field="sell_display"></span>
+      </div>
+      <div class="fcm-scenario">
+        <span class="fcm-metric-label">Hold the vested shares</span>
+        <span class="fcm-metric-value" id="fcm-out-hold" data-fcm-field="hold_display"></span>
+      </div>
+    </div>
+    <div class="fcm-scenario" style="margin-top:0.9rem">
+      <span class="fcm-metric-label">Projected post-vesting concentration</span>
+      <span class="fcm-metric-value" id="fcm-out-post" data-fcm-field="post_vesting_display"></span>
+    </div>
+
+    <h3 class="fcm-section">Recommended next steps</h3>
+    <ol class="fcm-steps">
+      <li><span>→</span>Review these numbers with your CPA before the vesting date</li>
+      <li><span>→</span>Consider a sell-to-cover strategy to pay taxes without selling all shares</li>
+      <li><span>→</span>Evaluate diversification options if concentration exceeds 15%</li>
+      <li><span>→</span>Model different scenarios if you have multiple grants</li>
+    </ol>
+    <div class="fcm-link-row">
+      <a class="fcm-link-button" href="https://www.forecastcapitalmanagement.com/contact">Book a strategy call</a>
+      <a class="fcm-link-button fcm-button-ghost" href="https://www.forecastcapitalmanagement.com">Visit our website</a>
+    </div>
+
+    <div class="fcm-optin">
+      <h3>Email me my results</h3>
+      <p class="fcm-hint" style="margin-top:0.35rem">Get the full breakdown. Optional — the calculator does not require an email.</p>
+      <form id="fcm-email-form" class="fcm-optin-form" method="post" action="">
+        <label class="fcm-field">
+          <span class="fcm-label">First name</span>
+          <input id="fcm-lead-name" name="first_name" type="text" autocomplete="given-name" placeholder="Jane">
+        </label>
+        <label class="fcm-field">
+          <span class="fcm-label">Email</span>
+          <input id="fcm-lead-email" name="email_address" type="email" autocomplete="email" placeholder="jane@yourcompany.com" required>
+        </label>
+        <button class="fcm-button" type="submit">Email me my results</button>
+        <input type="hidden" name="results_summary" id="fcm-results-summary" value="">
+        <input type="hidden" name="ticker" id="fcm-hidden-ticker" value="">
+        <input type="hidden" name="compensation_type" id="fcm-hidden-type" value="">
+      </form>
+      <p class="fcm-soft">Want a second set of eyes? <a href="https://www.forecastcapitalmanagement.com/contact">https://www.forecastcapitalmanagement.com/contact</a></p>
+    </div>
+  </section>
+
+  <footer class="fcm-disclaimer">
+    <p>For educational purposes only; not investment, tax, or legal advice. Forecast Capital Management is a registered investment adviser. Results are hypothetical estimates based on your inputs.</p>
+    <p class="fcm-firm">Forecast Capital Management · forecastcapitalmanagement.com</p>
+  </footer>
+  <noscript><p class="fcm-note" style="margin-top:1rem">This calculator needs JavaScript. It runs entirely in your browser.</p></noscript>
+</div>
+
+<script id="fcm-logic">
+(function (root) {
+  "use strict";
+
+  function groupDigits(whole) {
+    return whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  // Python's format specifier (round half to even on the exact float64 value).
+  function formatHalfEven(n, decimals, grouping) {
+    if (!Number.isFinite(n)) return String(n);
+    var sign = (n < 0 || Object.is(n, -0)) ? "-" : "";
+    var abs = Math.abs(n);
+    if (abs === 0) {
+      return sign + "0" + (decimals > 0 ? "." + "0".repeat(decimals) : "");
+    }
+    var buf = new ArrayBuffer(8);
+    var view = new DataView(buf);
+    view.setFloat64(0, abs, false);
+    var bits = view.getBigUint64(0, false);
+    var expField = Number((bits >> 52n) & 0x7ffn);
+    var frac = bits & ((1n << 52n) - 1n);
+    var mantissa;
+    var exp2;
+    if (expField === 0) {
+      mantissa = frac;
+      exp2 = -1022 - 52;
+    } else {
+      mantissa = frac | (1n << 52n);
+      exp2 = expField - 1023 - 52;
+    }
+    var num = mantissa * (10n ** BigInt(decimals));
+    var den = 1n;
+    if (exp2 >= 0) num <<= BigInt(exp2);
+    else den = 1n << BigInt(-exp2);
+    var quot = num / den;
+    var rem = num % den;
+    var twice = rem * 2n;
+    var rounded = quot;
+    if (twice > den || (twice === den && (quot % 2n === 1n))) rounded += 1n;
+    var digits = rounded.toString();
+    if (decimals > 0) {
+      if (digits.length <= decimals) digits = digits.padStart(decimals + 1, "0");
+      var whole = digits.slice(0, -decimals);
+      var fracS = digits.slice(-decimals);
+      return sign + (grouping ? groupDigits(whole) : whole) + "." + fracS;
+    }
+    return sign + (grouping ? groupDigits(digits) : digits);
+  }
+
+  function money(n, decimals) {
+    return "$" + formatHalfEven(n, decimals, true);
+  }
+
+  function formatShares(n) {
+    if (Number.isInteger(n)) return formatHalfEven(n, 0, true);
+    return String(n);
+  }
+
+  function parseISO(value) {
+    var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value));
+    if (!match) throw new Error("Invalid date");
+    return Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  }
+
+  function daysBetween(today, vesting) {
+    return Math.round((parseISO(vesting) - parseISO(today)) / 86400000);
+  }
+
+  function coercePrice(price) {
+    if (price === null || price === undefined || price === "" || price === false || price === 0) {
+      return 150;
+    }
+    return Number(price);
+  }
+
+  /**
+   * Mirrors calc.py / the Streamlit app. ISO headline net value uses the
+   * vesting tranche after AMT; the growth chart uses the federal rate on
+   * the whole grant for both NSO and ISO.
+   */
+  function computeExecComp(input) {
+    var optionType = input.option_type;
+    var price = coercePrice(input.price);
+    var totalShares = Number(input.total_shares);
+    var strike = Number(input.strike);
+    var federal = Number(input.federal_tax_rate);
+    var amt = Number(input.amt_rate);
+    var sharesVesting = Number(input.shares_vesting);
+    var netWorth = Number(input.net_worth);
+    var gross = price * totalShares;
+    var intrinsic = Math.max(0, price - strike) * totalShares;
+    var vestingGross = price * sharesVesting;
+    var vestingIntrinsic = Math.max(0, price - strike) * sharesVesting;
+    var vestingTax;
+    var netValue;
+    var taxNote;
+    var baseRec;
+    if (optionType === "RSU") {
+      vestingTax = vestingGross * (federal / 100);
+      netValue = gross * (1 - federal / 100);
+      taxNote = "RSU: Est. tax on next vesting ≈ $" + formatHalfEven(vestingTax, 0, true);
+      baseRec = "RSUs are taxed as ordinary income upon vesting.";
+    } else {
+      vestingTax = optionType === "NSO"
+        ? vestingIntrinsic * (federal / 100)
+        : vestingIntrinsic * (amt / 100);
+      netValue = optionType !== "ISO"
+        ? (intrinsic * (1 - federal / 100)) + (totalShares * strike)
+        : (vestingIntrinsic - vestingTax) + (totalShares * strike);
+      taxNote = optionType === "ISO"
+        ? "ISO: Est. AMT on next vesting spread ≈ $" + formatHalfEven(vestingTax, 0, true)
+        : "NSO: Est. tax on next vesting spread ≈ $" + formatHalfEven(vestingTax, 0, true);
+      baseRec = optionType === "ISO"
+        ? "ISOs offer long-term capital gains potential if held properly."
+        : "NSOs trigger ordinary income tax on the bargain element when exercised.";
+    }
+    var days = daysBetween(input.today, input.next_vesting_date);
+    var months = Math.max(0, Math.floor(days / 30));
+    var sharesFmt = formatShares(sharesVesting);
+    var timing;
+    if (months <= 3) {
+      timing = "With " + sharesFmt + " shares vesting in the next " + months + " months, plan for the immediate tax impact.";
+    } else if (months <= 12) {
+      timing = sharesFmt + " shares vesting in about " + months + " months gives you planning time.";
+    } else {
+      timing = "Vesting is further out — good opportunity to model scenarios.";
+    }
+    var position = optionType === "RSU" ? gross : (intrinsic + totalShares * strike);
+    var concentration = netWorth > 0 ? (position / netWorth) * 100 : 0;
+    var vestingConc = netWorth > 0 ? (vestingGross / netWorth) * 100 : 0;
+    var riskColor;
+    var riskText;
+    if (concentration < 10) {
+      riskColor = "#4caf7d";
+      riskText = "Low";
+    } else if (concentration < 20) {
+      riskColor = "#f0b429";
+      riskText = "Moderate";
+    } else {
+      riskColor = "#e05c5c";
+      riskText = "High — consider diversifying";
+    }
+    var showWarning = vestingConc > 5;
+    var rates = [0, 0.05, 0.1, 0.15, 0.2];
+    var future = rates.map(function (rate) {
+      var futurePrice = price * (1 + rate);
+      if (optionType === "RSU") {
+        return futurePrice * totalShares * (1 - federal / 100);
+      }
+      var futureIntrinsic = Math.max(0, futurePrice - strike) * totalShares;
+      return futureIntrinsic * (1 - federal / 100) + totalShares * strike;
+    });
+    var sell = optionType === "RSU"
+      ? vestingGross * (1 - federal / 100)
+      : vestingIntrinsic * (1 - federal / 100);
+    var hold = optionType === "RSU"
+      ? vestingGross
+      : vestingIntrinsic + sharesVesting * strike;
+    var post = netWorth > 0 ? ((position + vestingGross) / netWorth) * 100 : 0;
+    return {
+      price: price,
+      gross_value: gross,
+      intrinsic_value: intrinsic,
+      vesting_gross: vestingGross,
+      vesting_intrinsic: vestingIntrinsic,
+      vesting_tax: vestingTax,
+      net_value: netValue,
+      tax_note: taxNote,
+      base_rec: baseRec,
+      days_to_vesting: days,
+      months_to_vesting: months,
+      timing_advice: timing,
+      recommendation: baseRec + " " + timing,
+      position_value: position,
+      concentration_pct: concentration,
+      vesting_concentration: vestingConc,
+      risk_color: riskColor,
+      risk_text: riskText,
+      show_vesting_warning: showWarning,
+      warning_text: showWarning
+        ? "Next vesting could add ~" + formatHalfEven(vestingConc, 1, false) + "% concentration."
+        : "",
+      growth_rates: rates,
+      growth_labels: ["0%", "5%", "10%", "15%", "20%"],
+      future_net: future,
+      future_net_display: future.map(function (value) { return money(value, 0); }),
+      sell_after_tax: sell,
+      hold_value: hold,
+      post_vesting_conc: post,
+      price_display: money(price, 2),
+      gross_display: money(gross, 0),
+      net_display: money(netValue, 0),
+      vesting_tax_display: money(vestingTax, 0),
+      concentration_display: formatHalfEven(concentration, 1, false) + "%",
+      vesting_concentration_display: formatHalfEven(vestingConc, 1, false) + "%",
+      sell_display: money(sell, 0),
+      hold_display: money(hold, 0),
+      post_vesting_display: formatHalfEven(post, 1, false) + "%"
+    };
+  }
+
+  root.fcmComputeExecComp = computeExecComp;
+  root.fcmFormatNumber = formatHalfEven;
+
+  if (typeof document === "undefined") return;
+
+  var widget = document.getElementById("fcm-exec-comp");
+  if (!widget) return;
+
+  var els = {
+    ticker: document.getElementById("fcm-ticker"),
+    type: document.getElementById("fcm-type"),
+    shares: document.getElementById("fcm-shares"),
+    strike: document.getElementById("fcm-strike"),
+    price: document.getElementById("fcm-price"),
+    tax: document.getElementById("fcm-tax"),
+    taxOut: document.getElementById("fcm-tax-out"),
+    amtWrap: document.getElementById("fcm-amt-wrap"),
+    amt: document.getElementById("fcm-amt"),
+    amtOut: document.getElementById("fcm-amt-out"),
+    vestDate: document.getElementById("fcm-vest-date"),
+    vestShares: document.getElementById("fcm-vest-shares"),
+    netWorth: document.getElementById("fcm-net-worth"),
+    calcBtn: document.getElementById("fcm-calc-btn"),
+    results: document.getElementById("fcm-results"),
+    priceLine: document.getElementById("fcm-price-line"),
+    warning: document.getElementById("fcm-out-warning"),
+    risk: document.getElementById("fcm-out-risk"),
+    meter: document.getElementById("fcm-meter"),
+    meterFill: document.getElementById("fcm-meter-fill"),
+    chart: document.getElementById("fcm-chart"),
+    chartRows: document.getElementById("fcm-chart-rows"),
+    emailForm: document.getElementById("fcm-email-form"),
+    summary: document.getElementById("fcm-results-summary"),
+    hiddenTicker: document.getElementById("fcm-hidden-ticker"),
+    hiddenType: document.getElementById("fcm-hidden-type")
+  };
+
+  var shown = false;
+  var lastResult = null;
+  var lastTicker = "";
+  var lastType = "";
+
+  function todayISO(date) {
+    var d = date || new Date();
+    var m = String(d.getMonth() + 1).padStart(2, "0");
+    var day = String(d.getDate()).padStart(2, "0");
+    return d.getFullYear() + "-" + m + "-" + day;
+  }
+
+  function defaultVesting(today) {
+    return today > "2026-06-01" ? today : "2026-06-01";
+  }
+
+  function readNumber(el, fallback) {
+    var raw = String(el.value).trim();
+    if (raw === "") return fallback;
+    var n = Number(raw);
+    return Number.isFinite(n) ? n : fallback;
+  }
+
+  function clampField(el, min, max) {
+    var n = readNumber(el, min);
+    if (n < min) n = min;
+    if (max !== undefined && n > max) n = max;
+    return n;
+  }
+
+  function readInputs() {
+    var today = todayISO();
+    var optionType = els.type.value;
+    var priceRaw = String(els.price.value).trim();
+    var price = priceRaw === "" ? 0 : Number(priceRaw);
+    if (!Number.isFinite(price)) price = 0;
+    var vest = els.vestDate.value || defaultVesting(today);
+    if (vest < today) vest = today;
+    return {
+      ticker: els.ticker.value.trim().toUpperCase(),
+      price: price,
+      total_shares: Math.max(100, readNumber(els.shares, 5000)),
+      option_type: optionType,
+      strike: Math.max(0, readNumber(els.strike, 45)),
+      federal_tax_rate: clampField(els.tax, 22, 37),
+      amt_rate: optionType === "ISO" ? clampField(els.amt, 0, 28) : 0,
+      shares_vesting: Math.max(0, readNumber(els.vestShares, 1250)),
+      next_vesting_date: vest,
+      net_worth: Math.max(100000, readNumber(els.netWorth, 2000000)),
+      today: today
+    };
+  }
+
+  function riskClass(text) {
+    if (text === "Low") return "fcm-risk-low";
+    if (text === "Moderate") return "fcm-risk-mid";
+    return "fcm-risk-high";
+  }
+
+  function setText(id, value) {
+    var node = document.getElementById(id);
+    if (node) node.textContent = value;
+  }
+
+  function renderChart(result) {
+    var values = result.future_net;
+    var labels = result.growth_labels;
+    var displays = result.future_net_display;
+    var width = 640;
+    var height = 280;
+    var padL = 16;
+    var padR = 16;
+    var padT = 36;
+    var padB = 36;
+    var innerW = width - padL - padR;
+    var innerH = height - padT - padB;
+    var max = 0;
+    values.forEach(function (v) { if (v > max) max = v; });
+    var gap = 22;
+    var barW = (innerW - gap * (values.length - 1)) / values.length;
+    var ns = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+    svg.setAttribute("role", "presentation");
+    var baseline = document.createElementNS(ns, "line");
+    baseline.setAttribute("x1", String(padL));
+    baseline.setAttribute("x2", String(width - padR));
+    baseline.setAttribute("y1", String(padT + innerH));
+    baseline.setAttribute("y2", String(padT + innerH));
+    baseline.setAttribute("stroke", "#a68446");
+    baseline.setAttribute("stroke-width", "1");
+    svg.appendChild(baseline);
+    values.forEach(function (value, i) {
+      var bh = max > 0 ? (Math.max(value, 0) / max) * innerH : 0;
+      var x = padL + i * (barW + gap);
+      var y = padT + innerH - bh;
+      var rect = document.createElementNS(ns, "rect");
+      rect.setAttribute("x", String(x));
+      rect.setAttribute("y", String(y));
+      rect.setAttribute("width", String(barW));
+      rect.setAttribute("height", String(Math.max(bh, 0)));
+      rect.setAttribute("fill", "#222222");
+      svg.appendChild(rect);
+      if (bh > 0) {
+        var cap = document.createElementNS(ns, "line");
+        cap.setAttribute("x1", String(x));
+        cap.setAttribute("x2", String(x + barW));
+        cap.setAttribute("y1", String(y));
+        cap.setAttribute("y2", String(y));
+        cap.setAttribute("stroke", "#a68446");
+        cap.setAttribute("stroke-width", "2");
+        svg.appendChild(cap);
+      }
+      if (widget.getBoundingClientRect().width >= 700) {
+        var valueText = document.createElementNS(ns, "text");
+        valueText.setAttribute("x", String(x + barW / 2));
+        valueText.setAttribute("y", String(Math.max(y - 8, 14)));
+        valueText.setAttribute("text-anchor", "middle");
+        valueText.setAttribute("fill", "#222222");
+        valueText.setAttribute("font-family", "Lora, Georgia, serif");
+        valueText.setAttribute("font-size", "12");
+        valueText.textContent = displays[i];
+        svg.appendChild(valueText);
+      }
+      var label = document.createElementNS(ns, "text");
+      label.setAttribute("x", String(x + barW / 2));
+      label.setAttribute("y", String(height - 12));
+      label.setAttribute("text-anchor", "middle");
+      label.setAttribute("fill", "#5c574f");
+      label.setAttribute("font-family", "Lora, Georgia, serif");
+      label.setAttribute("font-size", "13");
+      label.textContent = labels[i];
+      svg.appendChild(label);
+    });
+    els.chart.textContent = "";
+    els.chart.appendChild(svg);
+    els.chartRows.textContent = "";
+    labels.forEach(function (label, i) {
+      var tr = document.createElement("tr");
+      var th = document.createElement("th");
+      th.scope = "row";
+      th.textContent = label;
+      var td = document.createElement("td");
+      td.textContent = displays[i];
+      td.setAttribute("data-fcm-future", String(i));
+      tr.appendChild(th);
+      tr.appendChild(td);
+      els.chartRows.appendChild(tr);
+    });
+  }
+
+  function fillEmail(result, ticker, optionType) {
+    var lines = [
+      "Exec Comp Optimizer — educational estimate",
+      "Forecast Capital Management",
+      "",
+      "Ticker: " + (ticker || "(none)"),
+      "Type: " + optionType,
+      "Current price: " + result.price_display,
+      "Total gross value: " + result.gross_display,
+      "Net after-tax value: " + result.net_display,
+      "Est. tax on next vesting: " + result.vesting_tax_display,
+      result.tax_note,
+      result.recommendation,
+      "Full position: " + result.concentration_display + " of investable assets",
+      "Risk: " + result.risk_text,
+      result.warning_text,
+      "Sell immediately after vesting (est. after tax): " + result.sell_display,
+      "Hold the vested shares: " + result.hold_display,
+      "Projected post-vesting concentration: " + result.post_vesting_display,
+      "Growth chart (net after-tax): " + result.growth_labels.map(function (label, i) {
+        return label + " " + result.future_net_display[i];
+      }).join("; "),
+      "",
+      "For educational purposes only; not investment, tax, or legal advice. Forecast Capital Management is a registered investment adviser. Results are hypothetical estimates based on your inputs."
+    ];
+    els.summary.value = lines.filter(function (line) { return line !== ""; }).join("\n");
+    els.hiddenTicker.value = ticker;
+    els.hiddenType.value = optionType;
+  }
+
+  function render(result, ticker, optionType) {
+    lastResult = result;
+    lastTicker = ticker;
+    lastType = optionType;
+    var symbol = ticker || "the shares";
+    els.priceLine.textContent = "Price used for " + symbol + ": " + result.price_display;
+    setText("fcm-out-price", result.price_display);
+    setText("fcm-out-gross", result.gross_display);
+    setText("fcm-out-net", result.net_display);
+    setText("fcm-out-tax", result.vesting_tax_display);
+    setText("fcm-out-tax-note", result.tax_note);
+    setText("fcm-out-rec", result.recommendation);
+    setText("fcm-out-conc", result.concentration_display);
+    els.risk.textContent = result.risk_text;
+    els.risk.className = "fcm-conc-figure fcm-risk " + riskClass(result.risk_text);
+    var capped = Math.max(0, Math.min(result.concentration_pct, 100));
+    els.meterFill.style.width = capped + "%";
+    els.meterFill.className = "fcm-bar-fill " + riskClass(result.risk_text);
+    els.meter.setAttribute("aria-valuenow", String(Math.round(capped)));
+    if (result.show_vesting_warning) {
+      els.warning.textContent = result.warning_text;
+      els.warning.classList.remove("fcm-is-hidden");
+    } else {
+      els.warning.textContent = "";
+      els.warning.classList.add("fcm-is-hidden");
+    }
+    renderChart(result);
+    setText("fcm-out-sell", result.sell_display);
+    setText("fcm-out-hold", result.hold_display);
+    setText("fcm-out-post", result.post_vesting_display);
+    fillEmail(result, ticker, optionType);
+  }
+
+  function track(result) {
+    var payload = {
+      event: "calculation completed",
+      tool: "exec_comp_optimizer",
+      compensation_type: document.getElementById("fcm-type").value
+    };
+    root.dataLayer = root.dataLayer || [];
+    root.dataLayer.push(payload);
+    root.dispatchEvent(new CustomEvent("calculation completed", { detail: payload }));
+  }
+
+  function calculate(shouldTrack) {
+    var input = readInputs();
+    var result = computeExecComp(input);
+    render(result, input.ticker, input.option_type);
+    els.results.classList.remove("fcm-is-hidden");
+    shown = true;
+    if (shouldTrack) {
+      track(result);
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      els.results.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    }
+  }
+
+  function syncSliders() {
+    els.taxOut.textContent = els.tax.value + "%";
+    els.amtOut.textContent = els.amt.value + "%";
+    var iso = els.type.value === "ISO";
+    els.amtWrap.classList.toggle("fcm-is-hidden", !iso);
+  }
+
+  var today = todayISO();
+  els.vestDate.min = today;
+  els.vestDate.value = defaultVesting(today);
+  syncSliders();
+
+  var action = (typeof root.FCM_RESULTS_FORM_ACTION === "string" && root.FCM_RESULTS_FORM_ACTION)
+    || (typeof FCM_RESULTS_FORM_ACTION === "string" && FCM_RESULTS_FORM_ACTION)
+    || "https://example.com/replace-with-kit-or-email-form-action";
+  els.emailForm.action = action;
+
+  els.calcBtn.addEventListener("click", function () { calculate(true); });
+  document.getElementById("fcm-inputs").addEventListener("input", function () {
+    syncSliders();
+    if (shown) calculate(false);
+  });
+  document.getElementById("fcm-inputs").addEventListener("change", function () {
+    syncSliders();
+    if (shown) calculate(false);
+  });
+  els.emailForm.addEventListener("submit", function () {
+    if (!shown) calculate(false);
+    else if (lastResult) fillEmail(lastResult, lastTicker, lastType);
+  });
+  window.addEventListener("resize", function () {
+    if (lastResult) renderChart(lastResult);
+  });
+})(typeof globalThis !== "undefined" ? globalThis : this);
+</script>
+<!-- END SQUARESPACE -->
+</body>
+</html>
