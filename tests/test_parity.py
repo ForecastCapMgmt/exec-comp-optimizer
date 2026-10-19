@@ -303,7 +303,7 @@ def static_html_checks(failures):
         "https://go.forecastcapitalmanagement.com/api/subscribe",
         'mode: "no-cors"',
         "text/plain;charset=UTF-8",
-        "Thanks — check your inbox.",
+        "You're on the list. Check your inbox for the Forecast Report.",
         "calculation_completed",
         "dataLayer",
         "https://www.forecastcapitalmanagement.com/contact",
@@ -311,13 +311,26 @@ def static_html_checks(failures):
         "Cormorant Garamond",
         "Lora",
         'id="fcm-eco"',
-        "Email me my results",
+        "Get The Friday 5",
+        "Send me The Friday 5",
+        "One short email every Friday: what moved markets in plain English, plus a podcast, a read, a live-well tip, and a quote worth thinking about. Five minutes. As a bonus, we'll send you the most recent Forecast Report.",
+        "By joining, you agree to receive occasional emails from Forecast Capital Management. Unsubscribe anytime.",
+        "Want a copy? Print or save this illustration as a PDF.",
     ]
     for snippet in required:
         if snippet not in html:
             failures.append(f"HTML is missing {snippet!r}")
     lowered = html.lower()
-    for banned in ("smtp.gmail.com", "sender_password", "sender_email", "smtplib", "calendly", "replace-with-your-form-endpoint"):
+    for banned in (
+        "smtp.gmail.com",
+        "sender_password",
+        "sender_email",
+        "smtplib",
+        "calendly",
+        "replace-with-your-form-endpoint",
+        "email me my results",
+        "thanks — check your inbox.",
+    ):
         if banned in lowered:
             failures.append(f"HTML contains {banned}")
     app = (ROOT / "app.py").read_text(encoding="utf-8")

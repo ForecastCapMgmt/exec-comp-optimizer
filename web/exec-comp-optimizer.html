@@ -463,6 +463,12 @@ var FCM_ECO_CONFIG = {
   padding-top: 22px;
   border-top: 1px solid #9a7b4f;
 }
+#fcm-eco .fcm-eco-fine {
+  margin: 10px 0 0 !important;
+  font-size: 0.82rem !important;
+  line-height: 1.45 !important;
+  color: #5c5854 !important;
+}
 #fcm-eco .fcm-eco-formgrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -549,7 +555,7 @@ var FCM_ECO_CONFIG = {
           <label for="fcm-eco-ticker">Ticker symbol</label>
           <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-ticker">Explain</button>
         </div>
-        <p id="fcm-eco-tip-ticker" class="fcm-eco-tip" hidden>A label in the summary and in the optional email. This page does not look up a market price.</p>
+        <p id="fcm-eco-tip-ticker" class="fcm-eco-tip" hidden>A label in the summary. This page does not look up a market price.</p>
         <p class="fcm-eco-help">Label only.</p>
         <input id="fcm-eco-ticker" type="text" value="AAPL" maxlength="12" spellcheck="false" autocapitalize="characters" autocomplete="off">
         <p id="fcm-eco-err-ticker" class="fcm-eco-warn" hidden></p>
@@ -677,8 +683,9 @@ var FCM_ECO_CONFIG = {
     <p id="fcm-eco-asof" class="fcm-eco-muted"></p>
     <p id="fcm-eco-example" class="fcm-eco-example">Showing the prefilled example. Change any assumption to illustrate a different grant.</p>
     <p id="fcm-eco-stale" class="fcm-eco-stale" hidden>The figures below have not been updated. Adjust the highlighted assumptions and the illustration will run again.</p>
+    <p class="fcm-eco-muted fcm-eco-noprint">Want a copy? Print or save this illustration as a PDF.</p>
     <div class="fcm-eco-actions fcm-eco-noprint">
-      <button type="button" class="fcm-eco-btn" id="fcm-eco-print">Print</button>
+      <button type="button" class="fcm-eco-btn" id="fcm-eco-print">Print / save PDF</button>
       <button type="button" class="fcm-eco-btn" id="fcm-eco-copy">Copy summary</button>
       <button type="button" class="fcm-eco-btn" id="fcm-eco-link">Copy link</button>
     </div>
@@ -800,12 +807,13 @@ var FCM_ECO_CONFIG = {
   </section>
 
   <section class="fcm-eco-optin fcm-eco-noprint" aria-labelledby="fcm-eco-optin-title">
-    <h2 id="fcm-eco-optin-title">Email me my results</h2>
-    <p class="fcm-eco-muted">Optional. Your name and email go to Forecast. The figures above stay on this page. This is the only step that sends anything.</p>
+    <h2 id="fcm-eco-optin-title">Get The Friday 5</h2>
+    <p>One short email every Friday: what moved markets in plain English, plus a podcast, a read, a live-well tip, and a quote worth thinking about. Five minutes. As a bonus, we'll send you the most recent Forecast Report.</p>
     <!--
       Submitted in script from FCM_ECO_CONFIG.subscribeUrl.
       JSON body is exactly { email, name, source }.
       fcm_eco_hp is a honeypot. A filled honeypot is not sent.
+      This list does not receive the illustration. Print or save a PDF for a copy.
     -->
     <form id="fcm-eco-optin" method="post" action="#" novalidate>
       <div class="fcm-eco-formgrid">
@@ -815,15 +823,16 @@ var FCM_ECO_CONFIG = {
         </div>
         <div>
           <label for="fcm-eco-email">Email</label>
-          <input id="fcm-eco-email" name="email" type="email" autocomplete="email" required aria-describedby="fcm-eco-form-status">
+          <input id="fcm-eco-email" name="email" type="email" autocomplete="email" required aria-describedby="fcm-eco-form-status fcm-eco-fine">
         </div>
       </div>
       <div class="fcm-eco-hp">
         <label for="fcm-eco-hp">Company website</label>
         <input id="fcm-eco-hp" name="fcm_eco_hp" type="text" tabindex="-1" autocomplete="off">
       </div>
-      <button type="submit" class="fcm-eco-btn fcm-eco-btn-solid fcm-eco-btn-block" id="fcm-eco-optin-submit">Email me my results</button>
+      <button type="submit" class="fcm-eco-btn fcm-eco-btn-solid fcm-eco-btn-block" id="fcm-eco-optin-submit">Send me The Friday 5</button>
       <p id="fcm-eco-form-status" class="fcm-eco-status" role="status"></p>
+      <p id="fcm-eco-fine" class="fcm-eco-fine">By joining, you agree to receive occasional emails from Forecast Capital Management. Unsubscribe anytime.</p>
     </form>
   </section>
 
@@ -1792,7 +1801,7 @@ var FCM_ECO_CONFIG = {
         return;
       }
       if (result.reason === "duplicate") return;
-      status.textContent = "Thanks — check your inbox.";
+      status.textContent = "You're on the list. Check your inbox for the Forecast Report.";
     });
   });
   window.addEventListener("hashchange", function () {

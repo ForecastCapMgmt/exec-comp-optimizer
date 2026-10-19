@@ -30,15 +30,17 @@ Host the file at a URL you control and embed it:
 ></iframe>
 ```
 
-### Email me my results
+### Get The Friday 5
 
-The illustration still runs with no signup. The optional form under the figures posts to the firm’s email system:
+The illustration still runs with no signup. Under the figures, an optional form offers The Friday 5: one short Friday email, plus the most recent Forecast Report. It does not email the illustration. To keep the figures, use Print / save PDF on the results.
+
+The form posts to the firm’s email system:
 
 `POST https://go.forecastcapitalmanagement.com/api/subscribe`
 
 The JSON body is `{ "email", "name", "source": "exec-comp-optimizer" }`, the same shape the landing page sends. Name is optional. `subscribeUrl` and `subscribeSource` live in `FCM_ECO_CONFIG` at the top of `web/exec-comp-optimizer.html`.
 
-That endpoint does not send CORS headers, and this page is served from `www.forecastcapitalmanagement.com`. A `fetch` with `Content-Type: application/json` would preflight and be blocked. The page instead uses `fetch` with `mode: "no-cors"` and `Content-Type: text/plain;charset=UTF-8`, and the body is the JSON string. That is a simple request, so the browser does not preflight. The response is opaque, so the page does not read it. After the request is handed off it shows “Thanks — check your inbox.”
+That endpoint does not send CORS headers, and this page is served from `www.forecastcapitalmanagement.com`. A `fetch` with `Content-Type: application/json` would preflight and be blocked. The page instead uses `fetch` with `mode: "no-cors"` and `Content-Type: text/plain;charset=UTF-8`, and the body is the JSON string. That is a simple request, so the browser does not preflight. The response is opaque, so the page does not read it. After the request is handed off it shows “You're on the list. Check your inbox for the Forecast Report.”
 
 The form checks the email address, ignores a filled honeypot (`fcm_eco_hp`), and will not send a second request while one is in flight or after one has been accepted. A network failure leaves the button available to try again. The contact line under the form is the only follow-up link.
 
