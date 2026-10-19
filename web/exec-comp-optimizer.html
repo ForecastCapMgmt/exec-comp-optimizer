@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exec Comp Optimizer | Forecast Capital Management</title>
+  <meta name="description" content="Educational illustration of RSU, NSO, and ISO grants. Hypothetical estimates from your inputs. Forecast Capital Management.">
+</head>
+<body>
+<!-- FCM-ECO-EMBED-START
+  Squarespace: add a Code block and paste this entire file, or paste from
+  FCM-ECO-EMBED-START through FCM-ECO-EMBED-END. Standalone: open the file.
+  Change the email form in FCM_ECO_CONFIG only.
+-->
+<script>
+var FCM_ECO_CONFIG = {
+  /* The only URL to change when wiring email.
+     The form POSTs first_name, email_address, and the illustration fields.
+     Leave the placeholder in place until the firm's Kit form or other
+     intake address is ready. Submitting does not leave the page until then. */
+  optInFormAction: "https://REPLACE-WITH-YOUR-FORM-ENDPOINT.example/exec-comp",
+  contactUrl: "https://www.forecastcapitalmanagement.com/contact",
+  siteUrl: "https://www.forecastcapitalmanagement.com"
+};
+</script>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap");
+
+#fcm-eco {
+  all: initial;
+  --fcm-ink: #222;
+  --fcm-muted: #5c5854;
+  --fcm-line: #e6e2dc;
+  --fcm-gold: #9a7b4f;
+  --fcm-paper: #fafafa;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+  background: #fff;
+  color: #222;
+  font-family: "Lora", Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+  text-align: left;
+  color-scheme: light;
+}
+#fcm-eco, #fcm-eco * { box-sizing: border-box; }
+#fcm-eco p,
+#fcm-eco li,
+#fcm-eco label,
+#fcm-eco legend,
+#fcm-eco input,
+#fcm-eco button,
+#fcm-eco td,
+#fcm-eco th,
+#fcm-eco summary,
+#fcm-eco span,
+#fcm-eco div,
+#fcm-eco a {
+  font-family: "Lora", Georgia, "Times New Roman", serif !important;
+}
+#fcm-eco h1,
+#fcm-eco h2,
+#fcm-eco h3,
+#fcm-eco .fcm-eco-metric-value {
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif !important;
+  color: #222 !important;
+  font-weight: 500 !important;
+}
+#fcm-eco h1 {
+  font-size: clamp(2.05rem, 5vw, 3.2rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.015em !important;
+  margin: 0 0 14px !important;
+}
+#fcm-eco h1 em { font-style: italic; font-weight: 500; }
+#fcm-eco h2 {
+  font-size: 1.9rem !important;
+  line-height: 1.15 !important;
+  margin: 0 0 10px !important;
+}
+#fcm-eco h3 {
+  font-size: 1.45rem !important;
+  line-height: 1.2 !important;
+  margin: 0 0 8px !important;
+}
+#fcm-eco p { margin: 0 0 12px; color: #222; }
+#fcm-eco p.fcm-eco-lede,
+#fcm-eco p.fcm-eco-muted,
+#fcm-eco .fcm-eco-muted { color: #5c5854 !important; }
+#fcm-eco a {
+  color: #222 !important;
+  text-decoration: underline;
+  text-decoration-color: #9a7b4f;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+#fcm-eco [hidden] { display: none !important; }
+#fcm-eco .fcm-eco-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #9a7b4f;
+  margin-bottom: 28px;
+}
+#fcm-eco .fcm-eco-brand {
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif !important;
+  font-size: 1.35rem !important;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: #222 !important;
+}
+#fcm-eco .fcm-eco-brand span {
+  display: block;
+  margin-top: 4px;
+  font-family: "Lora", Georgia, serif !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5c5854 !important;
+}
+#fcm-eco .fcm-eco-pill {
+  font-size: 0.72rem !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5c5854 !important;
+  white-space: nowrap;
+}
+#fcm-eco .fcm-eco-kicker {
+  margin: 0 0 10px !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase;
+  color: #5c5854 !important;
+}
+#fcm-eco p.fcm-eco-kicker.fcm-eco-glance { margin-top: 26px !important; }
+#fcm-eco .fcm-eco-lede { max-width: 40rem; font-size: 1.02rem !important; }
+#fcm-eco .fcm-eco-callout {
+  border-left: 1px solid #9a7b4f;
+  padding: 2px 0 2px 14px;
+  margin: 22px 0 8px;
+}
+#fcm-eco .fcm-eco-snapshot {
+  margin: 0 0 8px !important;
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif !important;
+  font-size: 1.55rem !important;
+  line-height: 1.25 !important;
+  color: #222 !important;
+}
+#fcm-eco .fcm-eco-section { margin-top: 36px; }
+#fcm-eco .fcm-eco-rule {
+  border: 0;
+  border-top: 1px solid #e6e2dc;
+  margin: 28px 0;
+}
+#fcm-eco .fcm-eco-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 22px;
+}
+#fcm-eco .fcm-eco-span { grid-column: 1 / -1; }
+#fcm-eco .fcm-eco-labelrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+#fcm-eco label,
+#fcm-eco legend {
+  display: block;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  color: #5c5854 !important;
+}
+#fcm-eco .fcm-eco-help {
+  margin: 0 0 8px !important;
+  font-size: 0.92rem !important;
+  font-style: italic;
+  color: #5c5854 !important;
+}
+#fcm-eco .fcm-eco-tip {
+  margin: 0 0 8px !important;
+  font-size: 0.95rem !important;
+  color: #222 !important;
+}
+#fcm-eco input[type="text"],
+#fcm-eco input[type="email"],
+#fcm-eco input[type="date"] {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  margin: 0;
+  padding: 10px 12px !important;
+  border: 1px solid #d9d4cc !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  color: #222 !important;
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  box-shadow: none !important;
+  appearance: none;
+}
+#fcm-eco input:focus-visible,
+#fcm-eco button:focus-visible,
+#fcm-eco summary:focus-visible {
+  outline: 1px solid #9a7b4f;
+  outline-offset: 2px;
+}
+#fcm-eco input[aria-invalid="true"] { border-color: #7a2424 !important; }
+#fcm-eco input[type="range"] {
+  width: 100%;
+  margin: 8px 0 0;
+  accent-color: #222;
+}
+#fcm-eco .fcm-eco-rate {
+  display: grid;
+  grid-template-columns: 1fr 4.5rem;
+  gap: 10px;
+  align-items: center;
+}
+#fcm-eco .fcm-eco-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+}
+#fcm-eco .fcm-eco-choices label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: none;
+  letter-spacing: 0 !important;
+  font-size: 1rem !important;
+  color: #222 !important;
+}
+#fcm-eco .fcm-eco-choices input {
+  accent-color: #222;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+}
+#fcm-eco .fcm-eco-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+#fcm-eco button.fcm-eco-btn,
+#fcm-eco button.fcm-eco-textbtn {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: "Lora", Georgia, serif !important;
+}
+#fcm-eco button.fcm-eco-btn {
+  display: inline-block;
+  border: 1px solid #222 !important;
+  background: transparent !important;
+  color: #222 !important;
+  padding: 10px 14px !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  line-height: 1.3 !important;
+  text-align: center;
+}
+#fcm-eco button.fcm-eco-btn:hover,
+#fcm-eco button.fcm-eco-btn[aria-pressed="true"] {
+  background: #222 !important;
+  color: #fff !important;
+}
+#fcm-eco button.fcm-eco-btn-solid {
+  background: #222 !important;
+  color: #fff !important;
+}
+#fcm-eco button.fcm-eco-btn-solid:hover {
+  background: #fff !important;
+  color: #222 !important;
+}
+#fcm-eco button.fcm-eco-textbtn {
+  border: 0 !important;
+  background: transparent !important;
+  color: #5c5854 !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-color: #9a7b4f;
+  text-underline-offset: 3px;
+  padding: 0 !important;
+}
+#fcm-eco .fcm-eco-error,
+#fcm-eco .fcm-eco-warn {
+  margin: 6px 0 0 !important;
+  font-size: 0.92rem !important;
+  font-style: italic;
+}
+#fcm-eco .fcm-eco-error { color: #7a2424 !important; }
+#fcm-eco .fcm-eco-warn { color: #6e4a10 !important; }
+#fcm-eco .fcm-eco-example,
+#fcm-eco .fcm-eco-stale {
+  border-left: 1px solid #9a7b4f;
+  padding-left: 14px;
+  margin: 0 0 16px !important;
+  font-style: italic;
+}
+#fcm-eco .fcm-eco-stale { border-left-color: #7a2424; color: #7a2424 !important; }
+#fcm-eco .fcm-eco-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 18px; }
+#fcm-eco .fcm-eco-status { min-height: 1.2em; font-style: italic; color: #5c5854 !important; }
+#fcm-eco .fcm-eco-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px 16px;
+  margin: 8px 0 16px;
+}
+#fcm-eco .fcm-eco-metric {
+  border-top: 1px solid #222;
+  padding-top: 8px;
+  background: #fff;
+}
+#fcm-eco .fcm-eco-metric-label {
+  display: block;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5c5854 !important;
+}
+#fcm-eco .fcm-eco-metric-value {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.85rem !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+#fcm-eco .fcm-eco-track {
+  height: 2px;
+  background: #e6e2dc;
+  margin: 10px 0 8px;
+}
+#fcm-eco .fcm-eco-fill { height: 2px; background: #222; width: 0; }
+#fcm-eco .fcm-eco-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+#fcm-eco .fcm-eco-panel {
+  background: #fafafa;
+  padding: 14px 16px;
+  margin: 0 0 12px;
+}
+#fcm-eco .fcm-eco-bars {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin: 8px 0 6px;
+}
+#fcm-eco .fcm-eco-barcol {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#fcm-eco .fcm-eco-barval {
+  min-height: 2.5em;
+  font-size: 0.75rem !important;
+  line-height: 1.25 !important;
+  text-align: center;
+  color: #222 !important;
+}
+#fcm-eco .fcm-eco-barspace {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+#fcm-eco .fcm-eco-barfill {
+  width: 68%;
+  max-width: 48px;
+  background: #222;
+  border-top: 2px solid #9a7b4f;
+  min-height: 0;
+}
+#fcm-eco .fcm-eco-barlab {
+  margin-top: 6px;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.06em;
+  color: #5c5854 !important;
+}
+#fcm-eco table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 4px;
+  font-size: 0.95rem;
+}
+#fcm-eco th,
+#fcm-eco td {
+  padding: 7px 0;
+  border-bottom: 1px solid #e6e2dc;
+  text-align: left;
+  font-weight: 400;
+  color: #222;
+  vertical-align: top;
+}
+#fcm-eco th {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5c5854;
+  font-weight: 400;
+}
+#fcm-eco td.fcm-eco-num,
+#fcm-eco th.fcm-eco-num { text-align: right; font-variant-numeric: tabular-nums; }
+#fcm-eco .fcm-eco-asm-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e6e2dc;
+}
+#fcm-eco .fcm-eco-asm-row span:last-child {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+#fcm-eco .fcm-eco-asm-total {
+  border-bottom: 0;
+  border-top: 1px solid #222;
+  margin-top: 2px;
+}
+#fcm-eco .fcm-eco-neg { color: #5c5854 !important; }
+#fcm-eco ol.fcm-eco-questions,
+#fcm-eco ul.fcm-eco-assumptions {
+  margin: 8px 0 0;
+  padding-left: 1.15rem;
+}
+#fcm-eco li { margin: 0 0 8px; }
+#fcm-eco details { margin-top: 16px; }
+#fcm-eco summary {
+  cursor: pointer;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase;
+  color: #5c5854 !important;
+}
+#fcm-eco .fcm-eco-optin {
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px solid #9a7b4f;
+}
+#fcm-eco .fcm-eco-formgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0;
+}
+#fcm-eco .fcm-eco-hp {
+  position: absolute !important;
+  left: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+#fcm-eco p.fcm-eco-disclaimer {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid #e6e2dc;
+  font-style: italic !important;
+  font-size: 0.95rem !important;
+  color: #5c5854 !important;
+}
+#fcm-eco .fcm-eco-sr {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
+}
+@media (max-width: 720px) {
+  #fcm-eco { padding: 20px 16px 40px; }
+  #fcm-eco .fcm-eco-header { flex-direction: column; align-items: flex-start; }
+  #fcm-eco .fcm-eco-metrics { grid-template-columns: 1fr 1fr; }
+  #fcm-eco .fcm-eco-pair,
+  #fcm-eco .fcm-eco-formgrid,
+  #fcm-eco .fcm-eco-grid { grid-template-columns: 1fr; }
+  #fcm-eco .fcm-eco-barspace { height: 130px; }
+  #fcm-eco button.fcm-eco-btn-block { display: block; width: 100%; }
+}
+@media (max-width: 420px) {
+  #fcm-eco .fcm-eco-metrics { grid-template-columns: 1fr; }
+  #fcm-eco .fcm-eco-metric-value { font-size: 1.7rem !important; }
+}
+@media print {
+  #fcm-eco { max-width: none; padding: 0; }
+  #fcm-eco .fcm-eco-noprint { display: none !important; }
+  #fcm-eco .fcm-eco-barfill,
+  #fcm-eco .fcm-eco-fill {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  #fcm-eco .fcm-eco-section,
+  #fcm-eco .fcm-eco-metric,
+  #fcm-eco .fcm-eco-panel { break-inside: avoid; }
+}
+</style>
+
+<div id="fcm-eco">
+  <header class="fcm-eco-header">
+    <div class="fcm-eco-brand">Forecast Capital Management<span>Equity award illustration</span></div>
+    <div class="fcm-eco-pill">Educational tool</div>
+  </header>
+
+  <p class="fcm-eco-kicker">Compensation planning · Equity awards</p>
+  <h1>You know the headline value. <em>This page estimates what the model keeps.</em></h1>
+  <p class="fcm-eco-lede">A single grant of RSUs, nonqualified options, or incentive options. Pretax value, a federal-tax estimate, and the size of the position next to an investable-asset figure you enter. The numbers update as you type. Nothing is sent unless you use the optional form at the bottom.</p>
+  <div class="fcm-eco-callout">
+    <p class="fcm-eco-muted">Illustrative calculations only. State tax is not included. Withholding can differ from the rate entered here. The rate is an assumption, not a determination of tax.</p>
+  </div>
+  <p class="fcm-eco-kicker fcm-eco-glance">At a glance</p>
+  <p id="fcm-eco-snapshot" class="fcm-eco-snapshot">The example is calculating…</p>
+  <p id="fcm-eco-snapshot-stale" class="fcm-eco-stale" hidden>The line above is the last complete illustration.</p>
+  <div class="fcm-eco-noprint"><button type="button" class="fcm-eco-textbtn" id="fcm-eco-jump">See the full breakdown</button></div>
+
+  <section class="fcm-eco-section" id="fcm-eco-assumptions" aria-labelledby="fcm-eco-assumptions-title">
+    <h2 id="fcm-eco-assumptions-title">Assumptions</h2>
+    <p class="fcm-eco-muted">Prefilled with an example so a result is on the page immediately. Replace any figure with the grant you want to illustrate.</p>
+
+    <div class="fcm-eco-grid">
+      <div>
+        <div class="fcm-eco-labelrow">
+          <label for="fcm-eco-ticker">Ticker symbol</label>
+          <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-ticker">Explain</button>
+        </div>
+        <p id="fcm-eco-tip-ticker" class="fcm-eco-tip" hidden>A label in the summary and in the optional email. This page does not look up a market price.</p>
+        <p class="fcm-eco-help">Label only.</p>
+        <input id="fcm-eco-ticker" type="text" value="AAPL" maxlength="12" spellcheck="false" autocapitalize="characters" autocomplete="off">
+        <p id="fcm-eco-err-ticker" class="fcm-eco-warn" hidden></p>
+      </div>
+      <div>
+        <div class="fcm-eco-labelrow">
+          <label for="fcm-eco-price">Current price per share</label>
+          <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-price">Explain</button>
+        </div>
+        <p id="fcm-eco-tip-price" class="fcm-eco-tip" hidden>Every dollar figure uses this price. The older hosted page could fetch a Yahoo Finance quote and used $150 when that failed. This page starts at $150. Type the price you want to illustrate.</p>
+        <p class="fcm-eco-help">Used for every figure. No live quote is fetched.</p>
+        <input id="fcm-eco-price" type="text" inputmode="decimal" value="150.00" autocomplete="off">
+        <p id="fcm-eco-err-price" class="fcm-eco-error" hidden></p>
+      </div>
+
+      <div class="fcm-eco-span">
+        <fieldset>
+          <div class="fcm-eco-labelrow">
+            <legend>Type of compensation</legend>
+            <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-type">Explain</button>
+          </div>
+          <p id="fcm-eco-tip-type" class="fcm-eco-tip" hidden>RSU means restricted stock units, taxed in this model as ordinary income at vest. NSO means nonqualified stock options, taxed in this model on the bargain element at exercise. ISO means incentive stock options, with the AMT rate applied here to the next tranche’s bargain element.</p>
+          <div class="fcm-eco-choices">
+            <label><input type="radio" name="fcm-eco-type" value="RSU" checked> RSU</label>
+            <label><input type="radio" name="fcm-eco-type" value="NSO"> NSO</label>
+            <label><input type="radio" name="fcm-eco-type" value="ISO"> ISO</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div>
+        <div class="fcm-eco-labelrow">
+          <label for="fcm-eco-shares">Shares in the grant</label>
+          <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-shares">Explain</button>
+        </div>
+        <p id="fcm-eco-tip-shares" class="fcm-eco-tip" hidden>The whole grant, including shares that vest later. This model’s minimum is 100 shares, the same floor as the original tool.</p>
+        <p class="fcm-eco-help">Whole grant. At least 100 shares.</p>
+        <input id="fcm-eco-shares" type="text" inputmode="numeric" value="5,000" autocomplete="off">
+        <p id="fcm-eco-err-shares" class="fcm-eco-error" hidden></p>
+      </div>
+      <div>
+        <div class="fcm-eco-labelrow">
+          <label for="fcm-eco-strike">Strike price per share</label>
+          <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-strike">Explain</button>
+        </div>
+        <p id="fcm-eco-tip-strike" class="fcm-eco-tip" hidden>The price paid to exercise an option. The bargain element is the market price minus the strike, and it is never below zero. RSUs do not use the strike. It stays on the page so switching the award type does not lose it.</p>
+        <p class="fcm-eco-help">Not used for RSUs. Options use price minus strike.</p>
+        <input id="fcm-eco-strike" type="text" inputmode="decimal" value="45.00" autocomplete="off">
+        <p id="fcm-eco-err-strike" class="fcm-eco-error" hidden></p>
+      </div>
+
+      <div class="fcm-eco-span">
+        <div class="fcm-eco-labelrow">
+          <label for="fcm-eco-rate">Estimated marginal federal tax rate</label>
+          <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-rate">Explain</button>
+        </div>
+        <p id="fcm-eco-tip-rate" class="fcm-eco-tip" hidden>One flat rate applied wherever this model uses federal tax. The original tool offered 22% through 37% only. It is not a bracket calculation, and it is not withholding.</p>
+        <p class="fcm-eco-help">Flat rate from 22% to 37%. State tax is not applied.</p>
+        <div class="fcm-eco-rate">
+          <input id="fcm-eco-rate" type="range" min="22" max="37" step="1" value="32" aria-valuemin="22" aria-valuemax="37">
+          <input id="fcm-eco-rate-num" type="text" inputmode="numeric" value="32" aria-label="Federal rate percent">
+        </div>
+        <p id="fcm-eco-err-rate" class="fcm-eco-error" hidden></p>
+      </div>
+
+      <div class="fcm-eco-span" id="fcm-eco-amt-wrap" hidden>
+        <div class="fcm-eco-labelrow">
+          <label for="fcm-eco-amt">Estimated AMT rate</label>
+          <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-amt">Explain</button>
+        </div>
+        <p id="fcm-eco-tip-amt" class="fcm-eco-tip" hidden>Used only for ISOs, and only on the bargain element of the next vesting tranche. The original tool offered 0% through 28%. The growth chart does not use this rate.</p>
+        <p class="fcm-eco-help">ISO tranche only. 0% to 28%.</p>
+        <div class="fcm-eco-rate">
+          <input id="fcm-eco-amt" type="range" min="0" max="28" step="1" value="26">
+          <input id="fcm-eco-amt-num" type="text" inputmode="numeric" value="26" aria-label="AMT rate percent">
+        </div>
+        <p id="fcm-eco-err-amt" class="fcm-eco-error" hidden></p>
+      </div>
+
+      <div>
+        <div class="fcm-eco-labelrow">
+          <label for="fcm-eco-vest-date">Next vesting date</label>
+          <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-date">Explain</button>
+        </div>
+        <p id="fcm-eco-tip-date" class="fcm-eco-tip" hidden>The countdown uses the date on this computer as “today.” The model converts the gap into months by dividing days by 30 and dropping the remainder. It does not count calendar months. The default is the later of June 1, 2026 and today.</p>
+        <p class="fcm-eco-help">Countdown from today. A model month is 30 days.</p>
+        <input id="fcm-eco-vest-date" type="date">
+        <p id="fcm-eco-err-date" class="fcm-eco-error" hidden></p>
+        <p id="fcm-eco-warn-date" class="fcm-eco-warn" hidden></p>
+      </div>
+      <div>
+        <div class="fcm-eco-labelrow">
+          <label for="fcm-eco-vest-shares">Shares vesting on that date</label>
+          <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-vshares">Explain</button>
+        </div>
+        <p id="fcm-eco-tip-vshares" class="fcm-eco-tip" hidden>The next tranche only. Zero is allowed. If this count is larger than the grant, the model does not cap it.</p>
+        <p class="fcm-eco-help">This tranche only. Zero is allowed.</p>
+        <input id="fcm-eco-vest-shares" type="text" inputmode="numeric" value="1,250" autocomplete="off">
+        <p id="fcm-eco-err-vshares" class="fcm-eco-error" hidden></p>
+        <p id="fcm-eco-warn-vshares" class="fcm-eco-warn" hidden></p>
+      </div>
+
+      <div class="fcm-eco-span">
+        <div class="fcm-eco-labelrow">
+          <label for="fcm-eco-networth">Investable assets, excluding a primary home</label>
+          <button type="button" class="fcm-eco-textbtn fcm-eco-tipbtn" aria-expanded="false" aria-controls="fcm-eco-tip-nw">Explain</button>
+        </div>
+        <p id="fcm-eco-tip-nw" class="fcm-eco-tip" hidden>The denominator for the concentration percentages. A rough figure is enough. This model’s floor is $100,000, the same floor as the original tool. The position value in the numerator is described under the result.</p>
+        <p class="fcm-eco-help">Rough figure. Minimum in this model is $100,000.</p>
+        <input id="fcm-eco-networth" type="text" inputmode="numeric" value="2,000,000" autocomplete="off">
+        <p id="fcm-eco-err-nw" class="fcm-eco-error" hidden></p>
+      </div>
+    </div>
+
+    <div class="fcm-eco-chips fcm-eco-noprint">
+      <button type="button" class="fcm-eco-btn" id="fcm-eco-ex-rsu">Example RSU</button>
+      <button type="button" class="fcm-eco-btn" id="fcm-eco-ex-nso">Example NSO</button>
+      <button type="button" class="fcm-eco-btn" id="fcm-eco-ex-iso">Example ISO</button>
+      <button type="button" class="fcm-eco-btn" id="fcm-eco-ex-otm">Example: price below strike</button>
+    </div>
+  </section>
+
+  <section class="fcm-eco-section" id="fcm-eco-results" aria-labelledby="fcm-eco-results-title">
+    <h2 id="fcm-eco-results-title">Your results</h2>
+    <p id="fcm-eco-asof" class="fcm-eco-muted"></p>
+    <p id="fcm-eco-example" class="fcm-eco-example">Showing the prefilled example. Change any assumption to illustrate a different grant.</p>
+    <p id="fcm-eco-stale" class="fcm-eco-stale" hidden>The figures below have not been updated. Adjust the highlighted assumptions and the illustration will run again.</p>
+    <div class="fcm-eco-actions fcm-eco-noprint">
+      <button type="button" class="fcm-eco-btn" id="fcm-eco-print">Print</button>
+      <button type="button" class="fcm-eco-btn" id="fcm-eco-copy">Copy summary</button>
+      <button type="button" class="fcm-eco-btn" id="fcm-eco-link">Copy link</button>
+    </div>
+    <p id="fcm-eco-copy-status" class="fcm-eco-status fcm-eco-noprint" role="status"></p>
+
+    <div class="fcm-eco-metrics">
+      <div class="fcm-eco-metric">
+        <span class="fcm-eco-metric-label">Current price</span>
+        <span class="fcm-eco-metric-value" id="fcm-eco-metric-price">—</span>
+      </div>
+      <div class="fcm-eco-metric">
+        <span class="fcm-eco-metric-label">Total gross value</span>
+        <span class="fcm-eco-metric-value" id="fcm-eco-metric-gross">—</span>
+      </div>
+      <div class="fcm-eco-metric">
+        <span class="fcm-eco-metric-label">Net after-tax value</span>
+        <span class="fcm-eco-metric-value" id="fcm-eco-metric-net">—</span>
+      </div>
+      <div class="fcm-eco-metric">
+        <span class="fcm-eco-metric-label">Est. tax on next vesting</span>
+        <span class="fcm-eco-metric-value" id="fcm-eco-metric-tax">—</span>
+      </div>
+    </div>
+    <p id="fcm-eco-definition" class="fcm-eco-muted"></p>
+
+    <h3>What this means</h3>
+    <p id="fcm-eco-summary" aria-live="polite"></p>
+
+    <div class="fcm-eco-panel">
+      <p class="fcm-eco-kicker">Tax line from the model</p>
+      <p id="fcm-eco-tax-note"></p>
+      <p id="fcm-eco-award-note" class="fcm-eco-muted"></p>
+      <p id="fcm-eco-timing-note" class="fcm-eco-muted"></p>
+    </div>
+
+    <h3>Concentration</h3>
+    <p>Full position: <strong id="fcm-eco-conc-pct">—</strong> of the investable-asset figure.</p>
+    <div id="fcm-eco-track" class="fcm-eco-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Position as a share of investable assets">
+      <div id="fcm-eco-conc-fill" class="fcm-eco-fill"></div>
+    </div>
+    <p id="fcm-eco-vest-warn" class="fcm-eco-warn" hidden></p>
+    <p>Classification: <strong id="fcm-eco-risk">—</strong></p>
+    <p id="fcm-eco-risk-detail" class="fcm-eco-muted"></p>
+    <p id="fcm-eco-position-note" class="fcm-eco-muted"></p>
+
+    <div class="fcm-eco-section">
+      <h3>What if the stock price grows in the next year?</h3>
+      <p id="fcm-eco-chart-note" class="fcm-eco-muted"></p>
+      <div id="fcm-eco-bars" class="fcm-eco-bars" role="img" aria-label="Growth chart"></div>
+      <table>
+        <caption class="fcm-eco-sr">Model net figure at 0, 5, 10, 15, and 20 percent growth</caption>
+        <thead>
+          <tr><th>Growth</th><th class="fcm-eco-num">Illustrated price</th><th class="fcm-eco-num">Model net figure</th></tr>
+        </thead>
+        <tbody id="fcm-eco-growth-body"></tbody>
+      </table>
+    </div>
+
+    <div class="fcm-eco-section">
+      <h3>If the price moves down as well as up</h3>
+      <p id="fcm-eco-wide-note" class="fcm-eco-muted"></p>
+      <div id="fcm-eco-wide-bars" class="fcm-eco-bars" role="img" aria-label="Downside and upside chart"></div>
+      <table>
+        <caption class="fcm-eco-sr">Model net figure from 20 percent down to 20 percent up</caption>
+        <thead>
+          <tr><th>Price move</th><th class="fcm-eco-num">Illustrated price</th><th class="fcm-eco-num">Model net figure</th></tr>
+        </thead>
+        <tbody id="fcm-eco-wide-body"></tbody>
+      </table>
+    </div>
+
+    <div class="fcm-eco-section">
+      <h3>How the net figure is assembled</h3>
+      <div id="fcm-eco-assembly"></div>
+    </div>
+
+    <div class="fcm-eco-section">
+      <h3>At the next vesting date</h3>
+      <p class="fcm-eco-muted">Two illustrations of that tranche, using the original formulas. They are not a preference for selling or holding.</p>
+      <div class="fcm-eco-pair">
+        <div class="fcm-eco-metric">
+          <span class="fcm-eco-metric-label">Sell at the price entered</span>
+          <span class="fcm-eco-metric-value" id="fcm-eco-sell">—</span>
+        </div>
+        <div class="fcm-eco-metric">
+          <span class="fcm-eco-metric-label">Hold illustration</span>
+          <span class="fcm-eco-metric-value" id="fcm-eco-hold">—</span>
+        </div>
+      </div>
+      <p id="fcm-eco-sell-note" class="fcm-eco-muted"></p>
+      <p id="fcm-eco-hold-note" class="fcm-eco-muted"></p>
+      <p>Post-vesting concentration in the original model: <strong id="fcm-eco-post">—</strong></p>
+      <p id="fcm-eco-post-note" class="fcm-eco-muted"></p>
+    </div>
+
+    <div class="fcm-eco-section">
+      <h3>Questions this illustration leaves open</h3>
+      <ol id="fcm-eco-questions" class="fcm-eco-questions"></ol>
+    </div>
+
+    <details>
+      <summary>Show the math for these inputs</summary>
+      <div id="fcm-eco-math"></div>
+    </details>
+    <details>
+      <summary>Assumptions in this model</summary>
+      <ul class="fcm-eco-assumptions">
+        <li>One flat federal rate. No state tax, net investment income tax, or payroll tax.</li>
+        <li>A month is 30 days, not a calendar month. The month count is never negative.</li>
+        <li>The growth charts move today’s price by a percentage and apply the same net formula. They do not include dividends, and the result is not discounted.</li>
+        <li>RSUs: the net figure is price × shares × (1 − federal rate). Tax on the next vest is price × vesting shares × federal rate.</li>
+        <li>NSOs: tax on the next vest is that tranche’s bargain element × federal rate. The headline net is the full grant’s bargain element × (1 − federal rate), plus strike × all shares.</li>
+        <li>ISOs: tax on the next vest is that tranche’s bargain element × the AMT rate. The headline net is that tranche’s bargain element minus the AMT estimate, plus strike × all shares. The growth chart uses the NSO formula instead, at the federal rate.</li>
+        <li>Concentration for RSUs uses price × shares. For options it uses the bargain element plus strike × shares.</li>
+        <li>The post-vesting percentage adds the next tranche’s pretax value on top of that position value.</li>
+        <li>The sell and hold lines use those original formulas. Neither line is a suggestion to sell or to hold.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="fcm-eco-optin fcm-eco-noprint" aria-labelledby="fcm-eco-optin-title">
+    <h2 id="fcm-eco-optin-title">Email me my results</h2>
+    <p class="fcm-eco-muted">Get the full breakdown. Optional — the figures above are already on this page. Submitting this form is the only step that sends anything.</p>
+    <!--
+      Action is assigned from FCM_ECO_CONFIG.optInFormAction on load.
+      Posted fields: first_name, email_address, source, ticker, option_type,
+      price, total_shares, strike, federal_tax_rate, amt_rate, vesting_date,
+      shares_vesting, investable_assets, as_of, gross_value,
+      net_after_tax_value, est_tax_next_vesting, concentration_pct, risk_band,
+      vesting_concentration_pct, sell_after_tax, hold_value,
+      post_vesting_concentration_pct, future_net, results_summary.
+      fcm_eco_hp is a honeypot and should be ignored when it is filled in.
+    -->
+    <form id="fcm-eco-optin" method="post" action="https://REPLACE-WITH-YOUR-FORM-ENDPOINT.example/exec-comp" accept-charset="UTF-8">
+      <div class="fcm-eco-formgrid">
+        <div>
+          <label for="fcm-eco-name">First name</label>
+          <input id="fcm-eco-name" name="first_name" type="text" autocomplete="given-name">
+        </div>
+        <div>
+          <label for="fcm-eco-email">Email</label>
+          <input id="fcm-eco-email" name="email_address" type="email" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="fcm-eco-hp">
+        <label for="fcm-eco-hp">Company website</label>
+        <input id="fcm-eco-hp" name="fcm_eco_hp" type="text" tabindex="-1" autocomplete="off">
+      </div>
+      <input type="hidden" name="source" value="exec-comp-optimizer">
+      <input type="hidden" name="ticker" id="fcm-eco-h-ticker">
+      <input type="hidden" name="option_type" id="fcm-eco-h-type">
+      <input type="hidden" name="price" id="fcm-eco-h-price">
+      <input type="hidden" name="total_shares" id="fcm-eco-h-shares">
+      <input type="hidden" name="strike" id="fcm-eco-h-strike">
+      <input type="hidden" name="federal_tax_rate" id="fcm-eco-h-rate">
+      <input type="hidden" name="amt_rate" id="fcm-eco-h-amt">
+      <input type="hidden" name="vesting_date" id="fcm-eco-h-date">
+      <input type="hidden" name="shares_vesting" id="fcm-eco-h-vshares">
+      <input type="hidden" name="investable_assets" id="fcm-eco-h-nw">
+      <input type="hidden" name="as_of" id="fcm-eco-h-asof">
+      <input type="hidden" name="gross_value" id="fcm-eco-h-gross">
+      <input type="hidden" name="net_after_tax_value" id="fcm-eco-h-net">
+      <input type="hidden" name="est_tax_next_vesting" id="fcm-eco-h-tax">
+      <input type="hidden" name="concentration_pct" id="fcm-eco-h-conc">
+      <input type="hidden" name="risk_band" id="fcm-eco-h-risk">
+      <input type="hidden" name="vesting_concentration_pct" id="fcm-eco-h-vconc">
+      <input type="hidden" name="sell_after_tax" id="fcm-eco-h-sell">
+      <input type="hidden" name="hold_value" id="fcm-eco-h-hold">
+      <input type="hidden" name="post_vesting_concentration_pct" id="fcm-eco-h-post">
+      <input type="hidden" name="future_net" id="fcm-eco-h-future">
+      <input type="hidden" name="results_summary" id="fcm-eco-h-summary">
+      <button type="submit" class="fcm-eco-btn fcm-eco-btn-solid fcm-eco-btn-block">Email me my results</button>
+      <p id="fcm-eco-form-status" class="fcm-eco-status" role="status"></p>
+    </form>
+  </section>
+
+  <p class="fcm-eco-eyes">Want a second set of eyes? <a id="fcm-eco-contact" href="https://www.forecastcapitalmanagement.com/contact">https://www.forecastcapitalmanagement.com/contact</a></p>
+  <p class="fcm-eco-disclaimer">For educational purposes only; not investment, tax, or legal advice. Forecast Capital Management is a registered investment adviser. Results are hypothetical estimates based on your inputs.</p>
+  <noscript><p>This illustration runs in the browser and needs JavaScript enabled.</p></noscript>
+</div>
+
+<script>
+/* FCM_ECO_LIB_START */
+(function (root) {
+  "use strict";
+
+  var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var GROWTH_RATES = [0, 0.05, 0.1, 0.15, 0.2];
+  var WIDE_RATES = [-0.2, -0.1, 0, 0.1, 0.2];
+
+  function roundHalfEvenDecimal(absValue, digits) {
+    if (absValue === 0) {
+      if (digits === 0) return "0";
+      return "0." + "0".repeat(digits);
+    }
+    var buf = new ArrayBuffer(8);
+    var view = new DataView(buf);
+    view.setFloat64(0, absValue, false);
+    var bits = view.getBigUint64(0);
+    var exponent = Number((bits >> 52n) & 0x7ffn);
+    var mantissa = bits & ((1n << 52n) - 1n);
+    var sig;
+    var exp;
+    if (exponent === 0x7ff) return "";
+    if (exponent === 0) {
+      sig = mantissa;
+      exp = -1022 - 52;
+    } else {
+      sig = mantissa | (1n << 52n);
+      exp = exponent - 1023 - 52;
+    }
+    var numer = sig;
+    var i;
+    for (i = 0; i < digits; i += 1) numer *= 5n;
+    var shift = exp + digits;
+    var rounded;
+    if (shift >= 0) {
+      rounded = numer << BigInt(shift);
+    } else {
+      var k = BigInt(-shift);
+      var denom = 1n << k;
+      var q = numer / denom;
+      var r = numer % denom;
+      var twice = r << 1n;
+      if (twice > denom || (twice === denom && (q & 1n) === 1n)) rounded = q + 1n;
+      else rounded = q;
+    }
+    var s = rounded.toString();
+    if (digits === 0) return s;
+    if (s.length <= digits) s = "0".repeat(digits - s.length + 1) + s;
+    return s.slice(0, -digits) + "." + s.slice(-digits);
+  }
+
+  function fcmEcoFormatFixed(n, digits) {
+    if (!Number.isFinite(n)) return "";
+    var neg = n < 0;
+    var body = roundHalfEvenDecimal(Math.abs(n), digits);
+    var split = body.split(".");
+    var whole = split[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var out = split.length > 1 ? whole + "." + split[1] : whole;
+    return neg ? "-" + out : out;
+  }
+
+  function fcmEcoFormatMoney(n, digits) {
+    return "$" + fcmEcoFormatFixed(n, digits);
+  }
+
+  function formatLongDate(iso) {
+    var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+    if (!match) return String(iso || "");
+    return MONTHS[Number(match[2]) - 1] + " " + Number(match[3]) + ", " + match[1];
+  }
+
+  function utcMillis(iso) {
+    var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+    if (!match) return NaN;
+    return Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  }
+
+  function daysBetween(asOf, vesting) {
+    return Math.round((utcMillis(vesting) - utcMillis(asOf)) / 86400000);
+  }
+
+  function growthLabel(rate) {
+    return String(Math.trunc(rate * 100)) + "%";
+  }
+
+  function futurePoint(price, rate, optionType, totalShares, strike, federalTaxRate) {
+    var futurePrice = price * (1 + rate);
+    var net;
+    if (optionType === "RSU") {
+      net = futurePrice * totalShares * (1 - federalTaxRate / 100);
+    } else {
+      var intrinsic = Math.max(0, futurePrice - strike) * totalShares;
+      net = intrinsic * (1 - federalTaxRate / 100) + totalShares * strike;
+    }
+    return { price: futurePrice, net: net };
+  }
+
+  function fcmEcoCalculate(input) {
+    var price = input.price;
+    var totalShares = input.totalShares;
+    var optionType = input.optionType;
+    var strike = input.strike;
+    var federalTaxRate = input.federalTaxRate;
+    var amtRate = input.amtRate;
+    var sharesVesting = input.sharesVesting;
+    var netWorth = input.netWorth;
+
+    var grossValue = price * totalShares;
+    var intrinsicValue = Math.max(0, price - strike) * totalShares;
+    var vestingGross = price * sharesVesting;
+    var vestingIntrinsic = Math.max(0, price - strike) * sharesVesting;
+    var vestingTax;
+    var netValue;
+    var taxNote;
+
+    if (optionType === "RSU") {
+      vestingTax = vestingGross * (federalTaxRate / 100);
+      netValue = grossValue * (1 - federalTaxRate / 100);
+      taxNote = "RSU: Est. tax on next vesting ≈ " + fcmEcoFormatMoney(vestingTax, 0);
+    } else {
+      vestingTax = optionType === "NSO"
+        ? vestingIntrinsic * (federalTaxRate / 100)
+        : vestingIntrinsic * (amtRate / 100);
+      netValue = optionType !== "ISO"
+        ? (intrinsicValue * (1 - federalTaxRate / 100)) + (totalShares * strike)
+        : (vestingIntrinsic - vestingTax) + (totalShares * strike);
+      taxNote = optionType === "ISO"
+        ? "ISO: Est. AMT on next vesting spread ≈ " + fcmEcoFormatMoney(vestingTax, 0)
+        : "NSO: Est. tax on next vesting spread ≈ " + fcmEcoFormatMoney(vestingTax, 0);
+    }
+
+    var daysToVesting = daysBetween(input.asOf, input.nextVestingDate);
+    var monthsToVesting = Math.max(0, Math.floor(daysToVesting / 30));
+    var timingBand = monthsToVesting <= 3 ? "near" : monthsToVesting <= 12 ? "mid" : "far";
+    var positionValue = optionType === "RSU" ? grossValue : (intrinsicValue + totalShares * strike);
+    var concentrationPct = netWorth > 0 ? positionValue / netWorth * 100 : 0;
+    var vestingConcentration = netWorth > 0 ? vestingGross / netWorth * 100 : 0;
+    var postVestingConc = netWorth > 0 ? (positionValue + vestingGross) / netWorth * 100 : 0;
+    var riskBand = concentrationPct < 10 ? "low" : concentrationPct < 20 ? "moderate" : "high";
+
+    var future = GROWTH_RATES.map(function (rate) {
+      return futurePoint(price, rate, optionType, totalShares, strike, federalTaxRate);
+    });
+    var futureWide = WIDE_RATES.map(function (rate) {
+      return futurePoint(price, rate, optionType, totalShares, strike, federalTaxRate);
+    });
+
+    var sellAfterTax = optionType === "RSU"
+      ? vestingGross * (1 - federalTaxRate / 100)
+      : (vestingIntrinsic * (1 - federalTaxRate / 100));
+    var holdValue = optionType === "RSU"
+      ? vestingGross
+      : vestingIntrinsic + sharesVesting * strike;
+
+    return {
+      price: price,
+      grossValue: grossValue,
+      intrinsicValue: intrinsicValue,
+      vestingGross: vestingGross,
+      vestingIntrinsic: vestingIntrinsic,
+      vestingTax: vestingTax,
+      netValue: netValue,
+      taxNote: taxNote,
+      daysToVesting: daysToVesting,
+      monthsToVesting: monthsToVesting,
+      timingBand: timingBand,
+      positionValue: positionValue,
+      concentrationPct: concentrationPct,
+      vestingConcentration: vestingConcentration,
+      showVestingWarning: vestingConcentration > 5,
+      riskBand: riskBand,
+      growthLabels: GROWTH_RATES.map(growthLabel),
+      futurePrices: future.map(function (point) { return point.price; }),
+      futureNet: future.map(function (point) { return point.net; }),
+      wideLabels: WIDE_RATES.map(growthLabel),
+      futurePricesWide: futureWide.map(function (point) { return point.price; }),
+      futureNetWide: futureWide.map(function (point) { return point.net; }),
+      sellAfterTax: sellAfterTax,
+      holdValue: holdValue,
+      postVestingConc: postVestingConc,
+      strikeTimesShares: totalShares * strike,
+      display: {
+        price: fcmEcoFormatMoney(price, 2),
+        grossValue: fcmEcoFormatMoney(grossValue, 0),
+        netValue: fcmEcoFormatMoney(netValue, 0),
+        vestingTax: fcmEcoFormatMoney(vestingTax, 0),
+        concentrationPct: fcmEcoFormatFixed(concentrationPct, 1),
+        vestingConcentration: fcmEcoFormatFixed(vestingConcentration, 1),
+        sellAfterTax: fcmEcoFormatMoney(sellAfterTax, 0),
+        holdValue: fcmEcoFormatMoney(holdValue, 0),
+        postVestingConc: fcmEcoFormatFixed(postVestingConc, 1),
+        futureNet: future.map(function (point) { return fcmEcoFormatMoney(point.net, 0); })
+      }
+    };
+  }
+
+  function isRealDate(iso) {
+    var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+    if (!match) return false;
+    var year = Number(match[1]);
+    var month = Number(match[2]);
+    var day = Number(match[3]);
+    var utc = new Date(Date.UTC(year, month - 1, day));
+    return utc.getUTCFullYear() === year && utc.getUTCMonth() === month - 1 && utc.getUTCDate() === day;
+  }
+
+  function isWhole(n) {
+    return typeof n === "number" && Number.isFinite(n) && Math.abs(n - Math.round(n)) < 1e-8;
+  }
+
+  function fcmEcoValidate(input) {
+    var errors = [];
+    var warnings = [];
+    if (typeof input.price !== "number" || !Number.isFinite(input.price) || input.price <= 0) {
+      errors.push({ field: "price", message: "Enter a price above zero. Every figure uses this price." });
+    }
+    if (!isWhole(input.totalShares) || input.totalShares < 100) {
+      errors.push({ field: "totalShares", message: "The grant size in this model is a whole number of shares, at least 100." });
+    }
+    if (typeof input.strike !== "number" || !Number.isFinite(input.strike) || input.strike < 0) {
+      errors.push({ field: "strike", message: "Strike price is zero or greater. RSUs do not use it. NSOs and ISOs do." });
+    }
+    if (!isWhole(input.federalTaxRate) || input.federalTaxRate < 22 || input.federalTaxRate > 37) {
+      errors.push({ field: "federalTaxRate", message: "This model’s federal rate runs from 22% to 37%, in whole percentages." });
+    }
+    if (input.optionType === "ISO" && (!isWhole(input.amtRate) || input.amtRate < 0 || input.amtRate > 28)) {
+      errors.push({ field: "amtRate", message: "This model’s AMT rate runs from 0% to 28%, in whole percentages." });
+    }
+    if (!isRealDate(input.nextVestingDate)) {
+      errors.push({ field: "nextVestingDate", message: "Enter the vesting date as a calendar date." });
+    } else if (isRealDate(input.asOf) && input.nextVestingDate < input.asOf) {
+      warnings.push({ field: "nextVestingDate", message: "That vesting date is before the as-of date on this computer. Months to vesting are shown as 0." });
+    }
+    if (!isWhole(input.sharesVesting) || input.sharesVesting < 0) {
+      errors.push({ field: "sharesVesting", message: "Vesting shares are a whole number, zero or greater." });
+    } else if (isWhole(input.totalShares) && input.sharesVesting > input.totalShares) {
+      warnings.push({ field: "sharesVesting", message: "The vesting count is larger than the grant total. The illustration does not cap it." });
+    }
+    if (typeof input.netWorth !== "number" || !Number.isFinite(input.netWorth) || input.netWorth < 100000) {
+      errors.push({ field: "netWorth", message: "The investable-asset figure in this model is at least $100,000." });
+    }
+    if (input.optionType !== "RSU" && input.optionType !== "NSO" && input.optionType !== "ISO") {
+      errors.push({ field: "optionType", message: "Choose RSU, NSO, or ISO." });
+    }
+    if (input.ticker && !/^[A-Za-z][A-Za-z0-9.\-]{0,9}$/.test(String(input.ticker))) {
+      warnings.push({ field: "ticker", message: "The symbol is only a label. It does not look like a typical ticker, and no quote is fetched." });
+    }
+    return { ok: errors.length === 0, errors: errors, warnings: warnings };
+  }
+
+  function fcmEcoNarrative(calc, input) {
+    var type = input.optionType;
+    var price = fcmEcoFormatMoney(calc.price, 2);
+    var shares = fcmEcoFormatFixed(input.totalShares, 0);
+    var vshares = fcmEcoFormatFixed(input.sharesVesting, 0);
+    var gross = fcmEcoFormatMoney(calc.grossValue, 0);
+    var net = fcmEcoFormatMoney(calc.netValue, 0);
+    var vtax = fcmEcoFormatMoney(calc.vestingTax, 0);
+    var vgross = fcmEcoFormatMoney(calc.vestingGross, 0);
+    var vintr = fcmEcoFormatMoney(calc.vestingIntrinsic, 0);
+    var intrinsic = fcmEcoFormatMoney(calc.intrinsicValue, 0);
+    var nw = fcmEcoFormatMoney(input.netWorth, 0);
+    var conc = fcmEcoFormatFixed(calc.concentrationPct, 1) + "%";
+    var vconc = fcmEcoFormatFixed(calc.vestingConcentration, 1) + "%";
+    var post = fcmEcoFormatFixed(calc.postVestingConc, 1) + "%";
+    var strike = fcmEcoFormatMoney(input.strike, 2);
+    var strikeAdd = fcmEcoFormatMoney(calc.strikeTimesShares, 0);
+    var position = fcmEcoFormatMoney(calc.positionValue, 0);
+    var sell = fcmEcoFormatMoney(calc.sellAfterTax, 0);
+    var hold = fcmEcoFormatMoney(calc.holdValue, 0);
+    var dateText = formatLongDate(input.nextVestingDate);
+    var asOfText = formatLongDate(input.asOf);
+    var label = input.ticker ? shares + " " + input.ticker : shares;
+    var concSentence = "Set next to an investable-asset figure of " + nw + ", the position value used here (" + position + ") is " + conc + ". This model classifies under 10% as low, at least 10% and under 20% as moderate, and 20% or more as high. This result is " + calc.riskBand + ".";
+    var summary;
+    if (type === "RSU") {
+      summary = "At " + price + " a share, " + label + " RSUs have a pretax value of " + gross + " in this model. Applying a " + input.federalTaxRate + "% federal rate, the after-tax figure is " + net + ". The next tranche is " + vshares + " shares on " + dateText + " (" + calc.daysToVesting + " days from " + asOfText + ", counted as " + calc.monthsToVesting + " months of 30 days). That tranche is " + vgross + " before tax, and the estimated federal tax on it is " + vtax + ". " + concSentence;
+    } else if (type === "NSO") {
+      var spreadSentence = calc.intrinsicValue > 0
+        ? "The bargain element on the full grant is " + intrinsic + "."
+        : "The price is not above the strike, so the bargain element on the full grant is " + intrinsic + ".";
+      summary = "At " + price + " a share and a " + strike + " strike, " + label + " NSOs are illustrated as follows. " + spreadSentence + " The model's net figure is " + net + ": the bargain element after a " + input.federalTaxRate + "% federal rate, plus strike times shares (" + strikeAdd + "). The next tranche is " + vshares + " shares on " + dateText + ", with a spread of " + vintr + " and an estimated federal tax of " + vtax + ". " + concSentence;
+    } else {
+      summary = "At " + price + " a share and a " + strike + " strike, the next tranche of " + vshares + " ISO shares" + (input.ticker ? " (" + input.ticker + ")" : "") + " has a bargain element of " + vintr + ". The model subtracts an AMT estimate of " + vtax + " (" + input.amtRate + "% of that spread) and then adds strike times all " + shares + " shares (" + strikeAdd + "), for a net figure of " + net + ". The full-grant bargain element is " + intrinsic + ". " + concSentence;
+    }
+
+    var definitionNet = {
+      RSU: "Price times all shares, times (1 minus the federal rate entered above).",
+      NSO: "After-tax bargain element on the full grant, plus strike times all shares. Cash from an exercise-and-sell would be the after-tax bargain element alone. This net figure also adds the strike.",
+      ISO: "Bargain element on the next vesting tranche, minus the AMT estimate, plus strike times all shares in the grant. The growth chart uses the federal rate and the full grant, so its 0% bar is a different number."
+    }[type];
+
+    var awardNote = {
+      RSU: "RSUs are generally taxed as ordinary income when they vest. This model applies one federal rate to the pretax value. It does not compute state tax, payroll tax, or a gap between withholding and the rate entered here.",
+      NSO: "NSOs generally create ordinary income on the bargain element — market price minus strike — when they are exercised. This model applies the federal rate entered here to that spread.",
+      ISO: "ISOs can qualify for long-term capital-gain treatment when the statutory holding periods are met. An exercise can create an alternative minimum tax adjustment on the bargain element. This model applies the AMT rate entered here to the next vesting tranche's spread, not to the whole grant."
+    }[type];
+
+    var timingNote = calc.timingBand === "near"
+      ? "The vesting date falls in this model's within-3-months band (" + calc.monthsToVesting + " months, using 30-day months)."
+      : calc.timingBand === "mid"
+        ? "The vesting date falls in this model's 4-to-12-month band (" + calc.monthsToVesting + " months, using 30-day months)."
+        : "The vesting date falls outside one year in this model (" + calc.monthsToVesting + " months, using 30-day months).";
+
+    var vestingWarning = calc.showVestingWarning
+      ? "The next tranche's pretax value is " + vconc + " of the investable-asset figure. This note appears when that ratio is above 5%."
+      : "";
+
+    var sellNote;
+    var holdNote;
+    if (type === "RSU") {
+      sellNote = "Pretax value of the vesting shares, times (1 minus the federal rate): " + sell + ". For RSUs, tax is generally due at vest whether the shares are sold or kept.";
+      holdNote = "Pretax market value of the vesting shares: " + hold + ". The federal tax is not subtracted on this line. Keeping the shares does not, by itself, remove tax at vest.";
+    } else if (type === "NSO") {
+      sellNote = "The vesting tranche's bargain element after the federal rate: " + sell + ". That is this model's illustration of exercise-and-sell proceeds on the tranche, before state tax.";
+      holdNote = "Bargain element on the vesting tranche, plus strike times vesting shares: " + hold + ". When the price is above the strike, that equals the pretax value of those shares. It is not an after-tax figure.";
+    } else {
+      sellNote = "The vesting tranche's bargain element after the federal rate: " + sell + ". This line uses the federal rate, not the AMT rate used in the headline net figure.";
+      holdNote = "Bargain element on the vesting tranche, plus strike times vesting shares: " + hold + ". It is a pretax illustration, and it is not the headline net figure.";
+    }
+
+    var postVestingNote = "This percentage adds the next tranche's pretax value (" + vgross + ") to the full-grant position value (" + position + "), then divides by the investable-asset figure. The result is " + post + ". If the vesting shares are already included in the grant total, those shares sit in both amounts. The full-position percentage above does not add them a second time.";
+
+    var assembly;
+    var mathLines;
+    if (type === "RSU") {
+      assembly = [
+        { label: "Pretax value of the grant (price times shares)", amount: calc.grossValue },
+        { label: "Federal tax estimate at " + input.federalTaxRate + "%", amount: -(calc.grossValue * (input.federalTaxRate / 100)) },
+        { label: "Model net figure", amount: calc.netValue, total: true }
+      ];
+      mathLines = [
+        "Gross value = " + price + " × " + shares + " = " + gross + ".",
+        "Net = gross × (1 − " + input.federalTaxRate + "%) = " + net + ".",
+        "Next tranche pretax = " + price + " × " + vshares + " = " + vgross + ".",
+        "Tax on that tranche = " + vgross + " × " + input.federalTaxRate + "% = " + vtax + ".",
+        "Position value = gross value = " + position + ".",
+        "Concentration = " + position + " / " + nw + " = " + conc + ".",
+        "Days to vesting = " + calc.daysToVesting + ". Months = max(0, days ÷ 30) = " + calc.monthsToVesting + "."
+      ];
+    } else if (type === "NSO") {
+      assembly = [
+        { label: "Bargain element on the full grant", amount: calc.intrinsicValue },
+        { label: "Federal tax estimate at " + input.federalTaxRate + "% of that spread", amount: -(calc.intrinsicValue * (input.federalTaxRate / 100)) },
+        { label: "Strike times all shares, added by this model", amount: calc.strikeTimesShares },
+        { label: "Model net figure", amount: calc.netValue, total: true }
+      ];
+      mathLines = [
+        "Bargain element = max(0, " + price + " − " + strike + ") × " + shares + " = " + intrinsic + ".",
+        "Net = bargain element × (1 − " + input.federalTaxRate + "%) + strike × shares = " + net + ".",
+        "Next tranche spread = " + vintr + ". Tax on that spread = " + vtax + ".",
+        "Position value = bargain element + strike × shares = " + position + ".",
+        "Concentration = " + position + " / " + nw + " = " + conc + ".",
+        "Days to vesting = " + calc.daysToVesting + ". Months = max(0, days ÷ 30) = " + calc.monthsToVesting + "."
+      ];
+    } else {
+      assembly = [
+        { label: "Bargain element on the next vesting tranche only", amount: calc.vestingIntrinsic },
+        { label: "AMT estimate at " + input.amtRate + "% of that spread", amount: -calc.vestingTax },
+        { label: "Strike times all shares in the grant, added by this model", amount: calc.strikeTimesShares },
+        { label: "Model net figure", amount: calc.netValue, total: true }
+      ];
+      mathLines = [
+        "Full-grant bargain element = " + intrinsic + ".",
+        "Next tranche spread = " + vintr + ".",
+        "AMT estimate = tranche spread × " + input.amtRate + "% = " + vtax + ".",
+        "Net = (tranche spread − AMT estimate) + strike × all shares = " + net + ".",
+        "The growth chart does not use this net. It uses the federal rate on the full grant and then adds strike × shares.",
+        "Position value = bargain element + strike × shares = " + position + ".",
+        "Concentration = " + position + " / " + nw + " = " + conc + ".",
+        "Days to vesting = " + calc.daysToVesting + ". Months = max(0, days ÷ 30) = " + calc.monthsToVesting + "."
+      ];
+    }
+
+    var openQuestions = [
+      "How withholding on a vesting or exercise date can differ from the marginal federal rate entered here.",
+      "How state tax would change the result. This model does not include it.",
+      "What a sell-to-cover is: shares sold at vest to satisfy withholding, with the rest kept. This page does not split the tranche that way.",
+      "How shares already held, or a second grant, would change the concentration figure. This page models one grant."
+    ];
+    if (type === "ISO") {
+      openQuestions.push("How an AMT credit and the ISO holding periods can change tax in a later year. This page applies the AMT rate entered here to one tranche and stops there.");
+    }
+
+    var chartNote = type === "ISO"
+      ? "Each bar uses the federal rate and the full grant, then adds strike times shares. It does not use the AMT rate, so the 0% bar is not the headline net figure. Dividends are not included, and the figure is not discounted."
+      : type === "NSO"
+        ? "Each bar is the same net figure as the headline, at a higher price: after-tax bargain element on the full grant, plus strike times shares. When the higher price is still at or below the strike, the bar stays at strike times shares. Dividends are not included, and the figure is not discounted."
+        : "Each bar is the after-tax value of the full grant if today's price is higher by that percentage in one year. The federal rate stays constant. Dividends are not included, and the figure is not discounted.";
+
+    return {
+      summary: summary,
+      definitionNet: definitionNet,
+      awardNote: awardNote,
+      timingNote: timingNote,
+      vestingWarning: vestingWarning,
+      sellNote: sellNote,
+      holdNote: holdNote,
+      postVestingNote: postVestingNote,
+      assembly: assembly,
+      openQuestions: openQuestions,
+      chartNote: chartNote,
+      wideNote: "The same net-figure formula as the chart above, also run at 20% and 10% below today's price so a lower price is visible.",
+      positionNote: type === "RSU"
+        ? "For RSUs, position value is price times shares."
+        : "For options, position value is the bargain element plus strike times shares. When the price is above the strike, that equals price times shares. When it is not, it equals strike times shares.",
+      riskLabel: calc.riskBand === "low" ? "Low" : calc.riskBand === "moderate" ? "Moderate" : "High",
+      riskDetail: calc.riskBand === "low"
+        ? "Under 10% of the investable-asset figure."
+        : calc.riskBand === "moderate"
+          ? "At least 10% and under 20% of the investable-asset figure."
+          : "20% or more of the investable-asset figure.",
+      mathLines: mathLines
+    };
+  }
+
+  root.fcmEcoFormatFixed = fcmEcoFormatFixed;
+  root.fcmEcoFormatMoney = fcmEcoFormatMoney;
+  root.fcmEcoFormatLongDate = formatLongDate;
+  root.fcmEcoCalculate = fcmEcoCalculate;
+  root.fcmEcoValidate = fcmEcoValidate;
+  root.fcmEcoNarrative = fcmEcoNarrative;
+})(typeof globalThis !== "undefined" ? globalThis : this);
+/* FCM_ECO_LIB_END */
+
+(function () {
+  "use strict";
+  if (window.__fcmEcoBooted) return;
+  window.__fcmEcoBooted = true;
+
+  var lastInput = null;
+  var lastCalc = null;
+  var lastNarrative = null;
+  var sawUserEdit = false;
+  var eventTimer = null;
+  var lastSignature = null;
+
+  function byId(id) { return document.getElementById(id); }
+  function el(tag, cls, text) {
+    var node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  }
+  function parseLoose(str) {
+    if (typeof str !== "string") return NaN;
+    var trimmed = str.trim().replace(/[$,]/g, "").replace(/\s/g, "");
+    if (!trimmed || !/^[+-]?(\d+(\.\d*)?|\.\d+)$/.test(trimmed)) return NaN;
+    return Number(trimmed);
+  }
+  function todayISO() {
+    var now = new Date();
+    var month = String(now.getMonth() + 1).padStart(2, "0");
+    var day = String(now.getDate()).padStart(2, "0");
+    return now.getFullYear() + "-" + month + "-" + day;
+  }
+  function defaultVest(asOf) {
+    return asOf > "2026-06-01" ? asOf : "2026-06-01";
+  }
+  function optionType() {
+    var checked = document.querySelector('#fcm-eco input[name="fcm-eco-type"]:checked');
+    return checked ? checked.value : "RSU";
+  }
+  function setType(value) {
+    var radio = document.querySelector('#fcm-eco input[name="fcm-eco-type"][value="' + value + '"]');
+    if (radio) radio.checked = true;
+  }
+  function readInput() {
+    return {
+      ticker: byId("fcm-eco-ticker").value.trim().toUpperCase(),
+      totalShares: parseLoose(byId("fcm-eco-shares").value),
+      optionType: optionType(),
+      strike: parseLoose(byId("fcm-eco-strike").value),
+      federalTaxRate: parseLoose(byId("fcm-eco-rate-num").value),
+      amtRate: parseLoose(byId("fcm-eco-amt-num").value),
+      nextVestingDate: byId("fcm-eco-vest-date").value,
+      sharesVesting: parseLoose(byId("fcm-eco-vest-shares").value),
+      netWorth: parseLoose(byId("fcm-eco-networth").value),
+      price: parseLoose(byId("fcm-eco-price").value),
+      asOf: todayISO()
+    };
+  }
+  function showMessage(id, text, invalidTarget) {
+    var node = byId(id);
+    if (!node) return;
+    if (text) {
+      node.hidden = false;
+      node.textContent = text;
+    } else {
+      node.hidden = true;
+      node.textContent = "";
+    }
+    if (invalidTarget) byId(invalidTarget).setAttribute("aria-invalid", text ? "true" : "false");
+  }
+  function showValidation(result) {
+    var map = {
+      price: ["fcm-eco-err-price", "fcm-eco-price"],
+      totalShares: ["fcm-eco-err-shares", "fcm-eco-shares"],
+      strike: ["fcm-eco-err-strike", "fcm-eco-strike"],
+      federalTaxRate: ["fcm-eco-err-rate", "fcm-eco-rate-num"],
+      amtRate: ["fcm-eco-err-amt", "fcm-eco-amt-num"],
+      nextVestingDate: ["fcm-eco-err-date", "fcm-eco-vest-date"],
+      sharesVesting: ["fcm-eco-err-vshares", "fcm-eco-vest-shares"],
+      netWorth: ["fcm-eco-err-nw", "fcm-eco-networth"]
+    };
+    Object.keys(map).forEach(function (field) {
+      showMessage(map[field][0], "", map[field][1]);
+    });
+    showMessage("fcm-eco-warn-date", "");
+    showMessage("fcm-eco-warn-vshares", "");
+    showMessage("fcm-eco-err-ticker", "");
+    result.errors.forEach(function (item) {
+      if (map[item.field]) showMessage(map[item.field][0], item.message, map[item.field][1]);
+    });
+    result.warnings.forEach(function (item) {
+      if (item.field === "nextVestingDate") showMessage("fcm-eco-warn-date", item.message);
+      else if (item.field === "sharesVesting") showMessage("fcm-eco-warn-vshares", item.message);
+      else if (item.field === "ticker") showMessage("fcm-eco-err-ticker", item.message);
+    });
+  }
+  function trimCompact(text) {
+    return text.replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "");
+  }
+  function compactMoney(n) {
+    var neg = n < 0 ? "-" : "";
+    var abs = Math.abs(n);
+    var body;
+    if (abs >= 1e9) body = trimCompact(globalThis.fcmEcoFormatFixed(abs / 1e9, 2)) + "B";
+    else if (abs >= 1e6) body = trimCompact(globalThis.fcmEcoFormatFixed(abs / 1e6, 2)) + "M";
+    else if (abs >= 1e3) body = globalThis.fcmEcoFormatFixed(abs / 1e3, 1).replace(/\.0$/, "") + "k";
+    else body = globalThis.fcmEcoFormatFixed(abs, 0);
+    return neg + "$" + body;
+  }
+  function fillBars(container, labels, values) {
+    container.textContent = "";
+    var max = 0;
+    values.forEach(function (value) { if (value > max) max = value; });
+    labels.forEach(function (label, index) {
+      var value = values[index];
+      var pct = max > 0 ? (value / max) * 100 : 0;
+      if (value > 0 && pct < 2) pct = 2;
+      var col = el("div", "fcm-eco-barcol");
+      col.appendChild(el("div", "fcm-eco-barval", compactMoney(value)));
+      var space = el("div", "fcm-eco-barspace");
+      var fill = el("div", "fcm-eco-barfill");
+      fill.style.height = pct + "%";
+      space.appendChild(fill);
+      col.appendChild(space);
+      col.appendChild(el("div", "fcm-eco-barlab", label));
+      container.appendChild(col);
+    });
+    container.setAttribute("aria-label", labels.map(function (label, index) {
+      return label + " " + globalThis.fcmEcoFormatMoney(values[index], 0);
+    }).join(", "));
+  }
+  function fillBody(id, rows) {
+    var body = byId(id);
+    body.textContent = "";
+    rows.forEach(function (row) {
+      var tr = document.createElement("tr");
+      row.forEach(function (cell, index) {
+        var td = el("td", index === 0 ? "" : "fcm-eco-num", cell);
+        tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+  }
+  function isExample(input) {
+    return input.ticker === "AAPL" &&
+      input.optionType === "RSU" &&
+      input.price === 150 &&
+      input.totalShares === 5000 &&
+      input.strike === 45 &&
+      input.federalTaxRate === 32 &&
+      input.sharesVesting === 1250 &&
+      input.netWorth === 2000000 &&
+      input.nextVestingDate === defaultVest(input.asOf);
+  }
+  function plainText(input, calc, narrative) {
+    var lines = [
+      "Forecast Capital Management — educational illustration",
+      "As of " + globalThis.fcmEcoFormatLongDate(input.asOf),
+      "",
+      "Award: " + input.optionType + (input.ticker ? " (" + input.ticker + ")" : ""),
+      "Price: " + calc.display.price,
+      "Shares in the grant: " + globalThis.fcmEcoFormatFixed(input.totalShares, 0),
+      "Strike: " + globalThis.fcmEcoFormatMoney(input.strike, 2),
+      "Federal rate: " + input.federalTaxRate + "%"
+    ];
+    if (input.optionType === "ISO") lines.push("AMT rate: " + input.amtRate + "%");
+    lines.push(
+      "Next vest: " + input.nextVestingDate + " (" + globalThis.fcmEcoFormatFixed(input.sharesVesting, 0) + " shares)",
+      "Investable assets entered: " + globalThis.fcmEcoFormatMoney(input.netWorth, 0),
+      "",
+      narrative.summary,
+      "",
+      calc.taxNote,
+      "Total gross value: " + calc.display.grossValue,
+      "Net after-tax value: " + calc.display.netValue,
+      "Est. tax on next vesting: " + calc.display.vestingTax,
+      "Concentration: " + calc.display.concentrationPct + "% (" + narrative.riskLabel + ")",
+      "Sell illustration: " + calc.display.sellAfterTax,
+      "Hold illustration: " + calc.display.holdValue,
+      "Post-vesting concentration: " + calc.display.postVestingConc + "%",
+      "",
+      "One-year growth, model net figure:"
+    );
+    calc.growthLabels.forEach(function (label, index) {
+      lines.push(label + "  " + calc.display.futureNet[index]);
+    });
+    lines.push(
+      "",
+      "For educational purposes only; not investment, tax, or legal advice. Forecast Capital Management is a registered investment adviser. Results are hypothetical estimates based on your inputs."
+    );
+    return lines.join("\n");
+  }
+  function fillForm(input, calc, narrative) {
+    byId("fcm-eco-h-ticker").value = input.ticker;
+    byId("fcm-eco-h-type").value = input.optionType;
+    byId("fcm-eco-h-price").value = String(input.price);
+    byId("fcm-eco-h-shares").value = String(input.totalShares);
+    byId("fcm-eco-h-strike").value = String(input.strike);
+    byId("fcm-eco-h-rate").value = String(input.federalTaxRate);
+    byId("fcm-eco-h-amt").value = String(input.amtRate);
+    byId("fcm-eco-h-date").value = input.nextVestingDate;
+    byId("fcm-eco-h-vshares").value = String(input.sharesVesting);
+    byId("fcm-eco-h-nw").value = String(input.netWorth);
+    byId("fcm-eco-h-asof").value = input.asOf;
+    byId("fcm-eco-h-gross").value = calc.display.grossValue;
+    byId("fcm-eco-h-net").value = calc.display.netValue;
+    byId("fcm-eco-h-tax").value = calc.display.vestingTax;
+    byId("fcm-eco-h-conc").value = calc.display.concentrationPct;
+    byId("fcm-eco-h-risk").value = calc.riskBand;
+    byId("fcm-eco-h-vconc").value = calc.display.vestingConcentration;
+    byId("fcm-eco-h-sell").value = calc.display.sellAfterTax;
+    byId("fcm-eco-h-hold").value = calc.display.holdValue;
+    byId("fcm-eco-h-post").value = calc.display.postVestingConc;
+    byId("fcm-eco-h-future").value = calc.growthLabels.map(function (label, index) {
+      return label + " " + calc.display.futureNet[index];
+    }).join("; ");
+    byId("fcm-eco-h-summary").value = narrative.summary;
+  }
+  function queueEvent(input) {
+    window.clearTimeout(eventTimer);
+    eventTimer = window.setTimeout(function () {
+      var signature = JSON.stringify(input);
+      if (signature === lastSignature) return;
+      lastSignature = signature;
+      var detail = {
+        event: "calculation_completed",
+        tool: "exec_comp_optimizer",
+        option_type: input.optionType,
+        initial: !sawUserEdit
+      };
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(detail);
+      document.dispatchEvent(new CustomEvent("calculation_completed", { bubbles: true, detail: detail }));
+    }, 400);
+  }
+  function paint(input, calc, narrative) {
+    lastInput = input;
+    lastCalc = calc;
+    lastNarrative = narrative;
+    byId("fcm-eco-stale").hidden = true;
+    byId("fcm-eco-snapshot-stale").hidden = true;
+    byId("fcm-eco-snapshot").textContent = "Net after federal tax " + calc.display.netValue + ". Estimated federal tax on the next vest " + calc.display.vestingTax + ". Position " + calc.display.concentrationPct + "% of the investable-asset figure (" + narrative.riskLabel.toLowerCase() + ").";
+    byId("fcm-eco-example").hidden = !isExample(input);
+    byId("fcm-eco-asof").textContent = "As of " + globalThis.fcmEcoFormatLongDate(input.asOf) + ". That date is taken from this computer and is used only for the vesting countdown.";
+    byId("fcm-eco-metric-price").textContent = calc.display.price;
+    byId("fcm-eco-metric-gross").textContent = calc.display.grossValue;
+    byId("fcm-eco-metric-net").textContent = calc.display.netValue;
+    byId("fcm-eco-metric-tax").textContent = calc.display.vestingTax;
+    byId("fcm-eco-definition").textContent = narrative.definitionNet;
+    byId("fcm-eco-summary").textContent = narrative.summary;
+    byId("fcm-eco-tax-note").textContent = calc.taxNote;
+    byId("fcm-eco-award-note").textContent = narrative.awardNote;
+    byId("fcm-eco-timing-note").textContent = narrative.timingNote;
+    byId("fcm-eco-conc-pct").textContent = calc.display.concentrationPct + "%";
+    var capped = Math.max(0, Math.min(calc.concentrationPct, 100));
+    byId("fcm-eco-conc-fill").style.width = capped + "%";
+    var track = byId("fcm-eco-track");
+    track.setAttribute("aria-valuenow", String(Math.round(capped)));
+    track.setAttribute("aria-valuetext", calc.display.concentrationPct + "%");
+    byId("fcm-eco-vest-warn").hidden = !narrative.vestingWarning;
+    byId("fcm-eco-vest-warn").textContent = narrative.vestingWarning;
+    byId("fcm-eco-risk").textContent = narrative.riskLabel;
+    byId("fcm-eco-risk-detail").textContent = narrative.riskDetail;
+    byId("fcm-eco-position-note").textContent = narrative.positionNote;
+    byId("fcm-eco-chart-note").textContent = narrative.chartNote;
+    byId("fcm-eco-wide-note").textContent = narrative.wideNote;
+    fillBars(byId("fcm-eco-bars"), calc.growthLabels, calc.futureNet);
+    fillBars(byId("fcm-eco-wide-bars"), calc.wideLabels, calc.futureNetWide);
+    fillBody("fcm-eco-growth-body", calc.growthLabels.map(function (label, index) {
+      return [label, globalThis.fcmEcoFormatMoney(calc.futurePrices[index], 2), calc.display.futureNet[index]];
+    }));
+    fillBody("fcm-eco-wide-body", calc.wideLabels.map(function (label, index) {
+      return [label, globalThis.fcmEcoFormatMoney(calc.futurePricesWide[index], 2), globalThis.fcmEcoFormatMoney(calc.futureNetWide[index], 0)];
+    }));
+    var assembly = byId("fcm-eco-assembly");
+    assembly.textContent = "";
+    narrative.assembly.forEach(function (row) {
+      var line = el("div", "fcm-eco-asm-row" + (row.total ? " fcm-eco-asm-total" : ""));
+      line.appendChild(el("span", "", row.label));
+      var amountText = row.amount < 0
+        ? "−" + globalThis.fcmEcoFormatMoney(Math.abs(row.amount), 0)
+        : globalThis.fcmEcoFormatMoney(row.amount, 0);
+      var amount = el("span", row.amount < 0 ? "fcm-eco-neg" : "", amountText);
+      line.appendChild(amount);
+      assembly.appendChild(line);
+    });
+    byId("fcm-eco-sell").textContent = calc.display.sellAfterTax;
+    byId("fcm-eco-hold").textContent = calc.display.holdValue;
+    byId("fcm-eco-sell-note").textContent = narrative.sellNote;
+    byId("fcm-eco-hold-note").textContent = narrative.holdNote;
+    byId("fcm-eco-post").textContent = calc.display.postVestingConc + "%";
+    byId("fcm-eco-post-note").textContent = narrative.postVestingNote;
+    var questions = byId("fcm-eco-questions");
+    questions.textContent = "";
+    narrative.openQuestions.forEach(function (item) {
+      questions.appendChild(el("li", "", item));
+    });
+    var math = byId("fcm-eco-math");
+    math.textContent = "";
+    narrative.mathLines.forEach(function (line) {
+      math.appendChild(el("p", "", line));
+    });
+    byId("fcm-eco-amt-wrap").hidden = input.optionType !== "ISO";
+    fillForm(input, calc, narrative);
+    queueEvent(input);
+  }
+  function render() {
+    var input = readInput();
+    byId("fcm-eco-amt-wrap").hidden = input.optionType !== "ISO";
+    var validation = globalThis.fcmEcoValidate(input);
+    showValidation(validation);
+    if (!validation.ok) {
+      if (lastCalc) {
+        byId("fcm-eco-stale").hidden = false;
+        byId("fcm-eco-snapshot-stale").hidden = false;
+      }
+      return;
+    }
+    var calc = globalThis.fcmEcoCalculate(input);
+    var narrative = globalThis.fcmEcoNarrative(calc, input);
+    paint(input, calc, narrative);
+  }
+  function formatField(id, digits) {
+    var node = byId(id);
+    var value = parseLoose(node.value);
+    if (Number.isFinite(value)) node.value = globalThis.fcmEcoFormatFixed(value, digits);
+  }
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function (resolve, reject) {
+      var area = document.createElement("textarea");
+      area.value = text;
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand("copy");
+        resolve();
+      } catch (err) {
+        reject(err);
+      } finally {
+        area.remove();
+      }
+    });
+  }
+  function applyState(state) {
+    if (!state || typeof state !== "object") return;
+    if (state.t != null) byId("fcm-eco-ticker").value = String(state.t);
+    if (state.p != null) byId("fcm-eco-price").value = globalThis.fcmEcoFormatFixed(Number(state.p), 2);
+    if (state.s != null) byId("fcm-eco-shares").value = globalThis.fcmEcoFormatFixed(Number(state.s), 0);
+    if (state.k != null) byId("fcm-eco-strike").value = globalThis.fcmEcoFormatFixed(Number(state.k), 2);
+    if (state.y) setType(String(state.y));
+    if (state.r != null) {
+      byId("fcm-eco-rate-num").value = String(state.r);
+      byId("fcm-eco-rate").value = String(state.r);
+    }
+    if (state.a != null) {
+      byId("fcm-eco-amt-num").value = String(state.a);
+      byId("fcm-eco-amt").value = String(state.a);
+    }
+    if (state.d) byId("fcm-eco-vest-date").value = String(state.d);
+    if (state.v != null) byId("fcm-eco-vest-shares").value = globalThis.fcmEcoFormatFixed(Number(state.v), 0);
+    if (state.w != null) byId("fcm-eco-networth").value = globalThis.fcmEcoFormatFixed(Number(state.w), 0);
+  }
+  function loadHash() {
+    var hash = window.location.hash || "";
+    if (hash.indexOf("#fcm=") !== 0) return false;
+    try {
+      applyState(JSON.parse(decodeURIComponent(hash.slice(5))));
+      return true;
+    } catch (err) {
+      byId("fcm-eco-copy-status").textContent = "That link could not be read. Showing the example instead.";
+      return false;
+    }
+  }
+  function setExample(kind) {
+    sawUserEdit = true;
+    var asOf = todayISO();
+    byId("fcm-eco-ticker").value = kind === "otm" ? "XYZ" : "AAPL";
+    byId("fcm-eco-price").value = kind === "otm" ? "30.00" : "150.00";
+    byId("fcm-eco-shares").value = "5,000";
+    byId("fcm-eco-strike").value = "45.00";
+    byId("fcm-eco-rate").value = "32";
+    byId("fcm-eco-rate-num").value = "32";
+    byId("fcm-eco-amt").value = "26";
+    byId("fcm-eco-amt-num").value = "26";
+    byId("fcm-eco-vest-date").value = defaultVest(asOf);
+    byId("fcm-eco-vest-shares").value = "1,250";
+    byId("fcm-eco-networth").value = "2,000,000";
+    setType(kind === "nso" || kind === "otm" ? "NSO" : kind === "iso" ? "ISO" : "RSU");
+    render();
+  }
+
+  var form = byId("fcm-eco-optin");
+  form.action = FCM_ECO_CONFIG.optInFormAction;
+  byId("fcm-eco-contact").href = FCM_ECO_CONFIG.contactUrl;
+  byId("fcm-eco-contact").textContent = FCM_ECO_CONFIG.contactUrl;
+
+  byId("fcm-eco-vest-date").value = defaultVest(todayISO());
+  loadHash();
+  var vestValue = byId("fcm-eco-vest-date").value;
+  var today = todayISO();
+  byId("fcm-eco-vest-date").min = vestValue && vestValue < today ? vestValue : today;
+
+  byId("fcm-eco-assumptions").addEventListener("input", function (event) {
+    sawUserEdit = true;
+    if (event.target.id === "fcm-eco-rate") byId("fcm-eco-rate-num").value = event.target.value;
+    if (event.target.id === "fcm-eco-amt") byId("fcm-eco-amt-num").value = event.target.value;
+    if (event.target.id === "fcm-eco-rate-num") {
+      var rate = parseLoose(event.target.value);
+      if (rate >= 22 && rate <= 37) byId("fcm-eco-rate").value = String(rate);
+    }
+    if (event.target.id === "fcm-eco-amt-num") {
+      var amt = parseLoose(event.target.value);
+      if (amt >= 0 && amt <= 28) byId("fcm-eco-amt").value = String(amt);
+    }
+    render();
+  });
+  ["fcm-eco-price", "fcm-eco-strike"].forEach(function (id) {
+    byId(id).addEventListener("blur", function () { formatField(id, 2); render(); });
+  });
+  ["fcm-eco-shares", "fcm-eco-vest-shares", "fcm-eco-networth"].forEach(function (id) {
+    byId(id).addEventListener("blur", function () { formatField(id, 0); render(); });
+  });
+  document.querySelectorAll("#fcm-eco .fcm-eco-tipbtn").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var panel = byId(button.getAttribute("aria-controls"));
+      var open = panel.hidden;
+      panel.hidden = !open;
+      button.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+  byId("fcm-eco-jump").addEventListener("click", function () {
+    byId("fcm-eco-results").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  byId("fcm-eco-ex-rsu").addEventListener("click", function () { setExample("rsu"); });
+  byId("fcm-eco-ex-nso").addEventListener("click", function () { setExample("nso"); });
+  byId("fcm-eco-ex-iso").addEventListener("click", function () { setExample("iso"); });
+  byId("fcm-eco-ex-otm").addEventListener("click", function () { setExample("otm"); });
+  byId("fcm-eco-print").addEventListener("click", function () { window.print(); });
+  byId("fcm-eco-copy").addEventListener("click", function () {
+    if (!lastCalc) return;
+    copyText(plainText(lastInput, lastCalc, lastNarrative)).then(function () {
+      byId("fcm-eco-copy-status").textContent = "Summary copied. It includes the assumptions, the figures, and the educational disclaimer.";
+    }).catch(function () {
+      byId("fcm-eco-copy-status").textContent = "The summary could not be copied from this browser.";
+    });
+  });
+  byId("fcm-eco-link").addEventListener("click", function () {
+    if (!lastInput) return;
+    var state = {
+      t: lastInput.ticker,
+      p: lastInput.price,
+      s: lastInput.totalShares,
+      k: lastInput.strike,
+      y: lastInput.optionType,
+      r: lastInput.federalTaxRate,
+      a: lastInput.amtRate,
+      d: lastInput.nextVestingDate,
+      v: lastInput.sharesVesting,
+      w: lastInput.netWorth
+    };
+    var next = "#fcm=" + encodeURIComponent(JSON.stringify(state));
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", next);
+    } else {
+      window.location.hash = next;
+    }
+    copyText(window.location.href).then(function () {
+      byId("fcm-eco-copy-status").textContent = "Link copied. It contains the assumptions on this page, including the investable-asset figure. It does not contain a name or email.";
+    }).catch(function () {
+      byId("fcm-eco-copy-status").textContent = "The link is in the address bar. This browser did not copy it automatically.";
+    });
+  });
+  form.addEventListener("submit", function (event) {
+    if (byId("fcm-eco-hp").value) {
+      event.preventDefault();
+      return;
+    }
+    if (!lastCalc) {
+      event.preventDefault();
+      byId("fcm-eco-form-status").textContent = "The illustration needs a complete set of assumptions before it can be sent.";
+      return;
+    }
+    fillForm(lastInput, lastCalc, lastNarrative);
+    var action = FCM_ECO_CONFIG.optInFormAction || "";
+    form.action = action;
+    if (action.indexOf("REPLACE-WITH-YOUR-FORM-ENDPOINT") !== -1) {
+      event.preventDefault();
+      byId("fcm-eco-form-status").textContent = "Email is not connected on this page yet. The illustration is still here to print or copy. The firm can attach this form to its email system later.";
+    }
+  });
+  window.addEventListener("hashchange", function () {
+    if (loadHash()) render();
+  });
+
+  render();
+})();
+</script>
+<!-- FCM-ECO-EMBED-END -->
+</body>
+</html>
